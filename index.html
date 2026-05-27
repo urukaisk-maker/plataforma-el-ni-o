@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Niño | Plataforma Gamer</title>
+  <meta name="description" content="Plataforma gamer personalizada El Niño, creada como experiencia especial de cumpleaños.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Ir al inicio">
+        <span class="brand__icon">EN</span>
+        <span class="brand__text">El Niño</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="./index.html">Inicio</a>
+        <a href="./misiones.html">Misiones</a>
+        <a href="./youtube.html">YouTube</a>
+        <a href="./recuerdos.html">Recuerdos</a>
+        <a href="./sorpresa.html">Sorpresa</a>
+        <a href="./proyecto.html">Proyecto</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero section">
+        <div class="hero__content">
+          <p class="eyebrow">Cumpleaños modo gamer activado</p>
+          <h1>Bienvenido a <span>El Niño</span></h1>
+          <p class="hero__description">
+            Una plataforma gamer personalizada, creada para convertir este cumpleaños en una aventura digital llena de misiones, recuerdos, música, videos y sorpresas.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="./misiones.html">Iniciar partida</a>
+            <a class="button button--ghost" href="./youtube.html">Ver zona YouTube</a>
+            <button class="button button--ghost music-control" id="musicButton" type="button">Escuchar canción</button>
+          </div>
+        </div>
+
+        <div class="player-card" aria-label="Tarjeta del jugador principal">
+          <div class="player-card__rank">LEVEL UP</div>
+          <div class="player-card__avatar">??</div>
+          <h2>Jugador principal</h2>
+          <p>Hoy la misión más importante es celebrar a lo grande.</p>
+          <div class="stats-grid">
+            <div>
+              <strong>100%</strong>
+              <span>Energía</span>
+            </div>
+            <div>
+              <strong>XP+</strong>
+              <span>Diversión</span>
+            </div>
+            <div>
+              <strong>8</strong>
+              <span>Cariño</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="misiones" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Campaña principal</p>
+          <h2>Misiones de cumpleaños</h2>
+          <p>Cada sección puede crecer después con recompensas, rankings, minijuegos o usuarios registrados.</p>
+        </div>
+
+        <div class="cards-grid" id="missionsList"></div>
+      </section>
+
+      <section id="youtube" class="section feature-panel">
+        <div>
+          <p class="eyebrow">Zona multimedia activa</p>
+          <h2>Zona YouTube API</h2>
+          <p>
+            Explora playlists gamer, recuerdos en video, filtros de búsqueda y un reproductor preparado para funcionar con listas guardadas o con YouTube Data API.
+          </p>
+          <a class="button button--ghost" href="./youtube.html">Abrir zona YouTube</a>
+        </div>
+
+        <a class="youtube-preview" id="youtubePreview" href="./youtube.html" aria-label="Abrir zona YouTube">
+          <span class="youtube-preview__play">?</span>
+          <h3>Playlists y videos</h3>
+          <p>Entra para buscar, filtrar, puntuar y reproducir contenido gamer.</p>
+        </a>
+      </section>
+
+      <section id="recuerdos" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Galería</p>
+          <h2>Recuerdos desbloqueados</h2>
+          <p>Espacio reservado para fotos, clips, mensajes familiares y momentos especiales.</p>
+        </div>
+
+        <div class="memory-grid" id="memoriesList" data-memory-limit="3"></div>
+      </section>
+
+      <section id="sorpresa" class="section surprise">
+        <p class="eyebrow">Botón secreto</p>
+        <h2>Desbloquea la sorpresa final</h2>
+        <div class="surprise__countdown" id="surpriseCountdownTimer" aria-live="polite">Cuenta regresiva: esperando...</div>
+        <a class="button button--primary button--disabled" id="surpriseButton" href="#" aria-disabled="true">Regalo bloqueado</a>
+        <p class="surprise__message" id="surpriseMessage" role="status"></p>
+      </section>
+          <section class="section content-panel">
+        <p class="eyebrow">Video temático</p>
+        <h2>Video sobre el cumpleaños gamer</h2>
+        <p>Disfruta un video inspirado en la temática de El Niño: misiones, sorpresas y celebración gamer.</p>
+        <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
+          <iframe src="https://www.youtube.com/embed/b_9zcgfbs08" title="Video de bienvenida gamer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="birthdayModal" aria-hidden="true" role="dialog" aria-labelledby="birthdayModalTitle" style="display:none;">
+      <div class="modal__overlay" id="closeCountdownOverlay"></div>
+      <div class="modal__dialog">
+        <div class="modal__header">
+          <h2 id="birthdayModalTitle">Cuenta atrás: 24 de junio de 2026</h2>
+          <button class="modal__close" type="button" id="closeCountdownButton" aria-label="Cerrar ventana">×</button>
+        </div>
+        <div class="modal__body">
+          <p class="modal__copy">Esta plataforma se ha preparado como regalo de cumpleaños para El Niño. El día ya está casi aquí, así que vamos a celebrar con estilo gamer.</p>
+          <div class="modal__countdown" id="countdownTimer" aria-live="polite">Cargando cuenta atrás...</div>
+          <button class="button button--ghost music-control" type="button">Escuchar canción</button>
+          <a class="button button--primary" id="unlockButton" href="./regalo-digital.html" hidden>Entrar a la sorpresa</a>
+          <button class="button button--ghost" id="closeCountdownAction" type="button">Cerrar y seguir explorando</button>
+        </div>
+      </div>
+    </div>
+
+      <div class="modal" id="adminModal" aria-hidden="true" role="dialog" aria-labelledby="adminModalTitle">
+        <div class="modal__overlay" id="closeAdminOverlay"></div>
+        <div class="modal__dialog">
+          <div class="modal__header">
+            <h2 id="adminModalTitle">Acceso propietario</h2>
+            <button class="modal__close" type="button" id="closeAdminButton" aria-label="Cerrar">×</button>
+          </div>
+          <div class="modal__body">
+            <p class="modal__copy">Introduce la clave secreta para desbloquear la sorpresa antes de tiempo.</p>
+            <input id="adminSecretInput" class="admin-input" placeholder="Clave secreta" type="password" />
+            <div style="display:flex;gap:10px;margin-top:12px;">
+              <button class="button button--primary" id="adminUnlockAction">Desbloquear</button>
+              <button class="button button--ghost" id="adminCancelAction">Cancelar</button>
+            </div>
+            <p id="adminMessage" class="surprise__message"></p>
+          </div>
+        </div>
+      </div>
+
+      <audio id="introAudio" preload="auto" controls>
+        <source src="/audio/Untitled ‑ Made with FlexClip.mp3" type="audio/mp3">
+        Tu navegador no puede reproducir esta canción.
+      </audio>
+
+    <div class="floating-buttons">
+      <button class="floating-button floating-button--music" type="button" aria-label="Abrir app de música" title="App de música">🎵</button>
+      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">↑</button>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer__video-bg">
+        <iframe src="https://www.youtube.com/embed/pjnwYRwUA08?autoplay=1&mute=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="Video de fondo gamer" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+      </div>
+      <div class="site-footer__brand">
+        <a class="brand" href="./index.html" aria-label="Ir al inicio">
+          <span class="brand__icon">EN</span>
+          <span class="brand__text">El Niño</span>
+        </a>
+        <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
+      </div>
+
+      <div class="site-footer__grid">
+        <div>
+          <h3>Explorar</h3>
+          <a href="./misiones.html">Misiones</a>
+          <a href="./youtube.html">YouTube</a>
+          <a href="./recuerdos.html">Recuerdos</a>
+          <a href="./sorpresa.html">Sorpresa</a>
+          <a href="./regalo-digital.html">Regalo digital</a>
+          <a href="./rincon-gamer.html">Rincón gamer</a>
+        </div>
+        <div>
+          <h3>Campaña</h3>
+          <a href="./ceremonia-digital.html">Ceremonia digital</a>
+          <a href="./recompensas.html">Recompensas</a>
+          <a href="./premio-sorpresa.html">Premio sorpresa</a>
+          <a href="./final-epico.html">Final épico</a>
+        </div>
+        <div>
+          <h3>Proyecto</h3>
+          <a href="./proyecto.html">Visión general</a>
+          <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
+          <a href="./proyecto.html#api">APIs futuras</a>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <a href="./cookies.html">Cookies</a>
+          <a href="./privacidad.html">Privacidad</a>
+          <a href="./terminos.html">Términos</a>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>© 2026 El Niño. Todos los recuerdos reservados.</span>
+        <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="./src/js/app.js"></script>
+  <script>
+    document.getElementById('scrollToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

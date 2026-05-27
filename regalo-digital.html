@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regalo Digital | El Niño</title>
+  <meta name="description" content="Regalo digital especial de cumpleaños dentro de la plataforma gamer El Niño.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body id="top">
+  
+  <script>
+    (function(){
+      try {
+        const isOwner = localStorage.getItem('elnino_owner') === '1';
+        const unlockDate = new Date('2026-06-24T00:00:00').getTime();
+        if (!isOwner && Date.now() < unlockDate) {
+          alert('El regalo digital no está disponible hasta el 24/06/2026. Volviendo al inicio.');
+          location.replace('./index.html');
+        }
+      } catch (e) {
+        console.warn('Verificación regalo falló', e);
+      }
+    })();
+  </script>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Ir al inicio">
+        <span class="brand__icon">EN</span>
+        <span class="brand__text">El Niño</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav main-nav--scroll" id="mainNav" aria-label="Navegación de regalo digital">
+        <a href="./index.html">Inicio</a>
+        <a href="#regalo">Regalo</a>
+        <a href="#mensaje">Mensaje</a>
+        <a href="#entretenimiento">Videos</a>
+        <a href="#explorar">Explorar</a>
+        <a href="#footer">Footer</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero gift-hero">
+        <p class="eyebrow">Regalo desbloqueado</p>
+        <h1>Abrir Regalo Digital</h1>
+        <p class="hero__description">Has superado la misión final. Este regalo digital guarda un mensaje especial, una recompensa gamer y una aventura que empieza hoy.</p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="./index.html">Ir al inicio</a>
+          <a class="button button--primary" href="#mensaje">Leer mensaje</a>
+          <a class="button button--ghost" href="#entretenimiento">Videos de regalos</a>
+        </div>
+      </section>
+
+      <section id="regalo" class="section gift-unlock" aria-label="Regalo digital desbloqueado">
+        <div class="gift-card">
+          <p class="eyebrow">Nivel completado</p>
+          <div class="gift-card__icon">??</div>
+          <h2>¡Feliz cumpleaños, campeón!</h2>
+          <p>Hoy desbloqueas una recompensa legendaria: una plataforma creada especialmente para ti, llena de cariño, diversión y momentos inolvidables.</p>
+          <div class="gift-card__code">CODIGO: EL-NINO-LEVEL-UP</div>
+        </div>
+
+        <div class="gift-reward">
+          <p class="eyebrow">Recompensa especial</p>
+          <h2>Pack gamer de cumpleaños</h2>
+          <div class="gift-reward__grid">
+            <article>
+              <strong>+1000 XP</strong>
+              <span>Diversión desbloqueada</span>
+            </article>
+            <article>
+              <strong>Skin legendaria</strong>
+              <span>Jugador principal</span>
+            </article>
+            <article>
+              <strong>Modo familia</strong>
+              <span>Cariño infinito</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="mensaje" class="section content-panel gift-message">
+        <p class="eyebrow">Mensaje secreto</p>
+        <h2>Para el jugador más importante</h2>
+        <p>Esta aventura digital fue creada para celebrar tu día de una forma única. Cada sección de esta plataforma representa una parte especial de tu cumpleaños: las misiones, los recuerdos, los videos y esta sorpresa final.</p>
+        <p>Que este nuevo nivel venga cargado de alegría, sueños cumplidos, partidas ganadas, abrazos fuertes y momentos que recuerdes siempre.</p>
+        <p class="gift-message__signature">Con mucho cariño, tu familia.</p>
+      </section>
+
+      <section id="entretenimiento" class="section gift-entertainment">
+        <div class="section-heading">
+          <p class="eyebrow">Abrir regalos</p>
+          <h2>Videos de recompensas y botín</h2>
+          <p>Un pequeño cine gamer con videos de abrir regalos para seguir celebrando después de desbloquear la recompensa legendaria.</p>
+        </div>
+
+        <div class="gift-entertainment__featured content-panel">
+          <div>
+            <p class="eyebrow">Video destacado</p>
+            <h3>Abrir regalos: recompensa principal</h3>
+            <p>Pulsa el botón para abrir el video en una ventana emergente dentro de la plataforma.</p>
+            <button class="button button--primary gift-video-button" type="button" data-video-id="5-ylL-nj7mw" data-video-title="Abrir regalos: recompensa principal">Abrir video principal</button>
+          </div>
+          <button class="youtube-preview gift-video-button" type="button" data-video-id="5-ylL-nj7mw" data-video-title="Abrir regalos: recompensa principal" aria-label="Abrir video principal de regalos">
+            <span class="youtube-preview__play">▶</span>
+            <h3>Abrir ventana</h3>
+            <p>Recompensa principal</p>
+          </button>
+        </div>
+
+        <div class="gift-entertainment__grid">
+          <article class="content-panel">
+            <p class="eyebrow">Cómo verlos</p>
+            <h3>Enlaces directos</h3>
+            <ul class="gift-list">
+              <li>Los videos se abren en una ventana emergente dentro de la web.</li>
+              <li>La página queda en segundo plano mientras ves el regalo.</li>
+              <li>Puedes cerrar la ventana con la X, pulsando fuera o con la tecla Escape.</li>
+              <li>Después puedes saltar a la zona YouTube para seguir explorando contenido.</li>
+            </ul>
+            <a class="button button--primary" href="./youtube.html">Abrir zona YouTube</a>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Recompensas extra</p>
+            <h3>Videos rápidos de abrir regalos</h3>
+            <ul class="gift-list">
+              <li>Regalo 01: botín extra.</li>
+              <li>Regalo 02: recompensa especial.</li>
+              <li>Regalo 03: celebración final.</li>
+            </ul>
+            <a class="button button--ghost" href="./recuerdos.html">Ver recuerdos antes del cine</a>
+          </article>
+        </div>
+
+        <div class="gift-entertainment__grid">
+          <article class="content-panel">
+            <p class="eyebrow">Regalo 01</p>
+            <h3>Botín extra</h3>
+            <p>Abre el primer video extra de regalos en una ventana emergente.</p>
+            <button class="button button--primary gift-video-button" type="button" data-video-id="30l3ZermUEs" data-video-title="Regalo 01: botín extra">Abrir regalo 01</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Regalo 02</p>
+            <h3>Recompensa especial</h3>
+            <p>Abre el segundo video extra para continuar la zona de recompensas.</p>
+            <button class="button button--primary gift-video-button" type="button" data-video-id="YFq4zslj0sg" data-video-title="Regalo 02: recompensa especial">Abrir regalo 02</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Regalo 03</p>
+            <h3>Celebración final</h3>
+            <p>Abre el video final para cerrar la sección de abrir regalos.</p>
+            <button class="button button--primary gift-video-button" type="button" data-video-id="ektSo5_6ZIU" data-video-title="Regalo 03: celebración final">Abrir regalo 03</button>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <p class="eyebrow">Regalos de YouTube</p>
+          <h2>Canales favoritos para abrir videos</h2>
+          <p>Elige un creador y abre su ventana emergente para ir directo a sus videos.</p>
+        </div>
+
+        <div class="gift-entertainment__grid">
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>Mikecrack</h3>
+            <p>Youtube.com/@Mikecrack</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Mikecrack/videos" data-video-title="Mikecrack">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>El Rubius</h3>
+            <p>Youtube.com/@elrubiusOMG</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@elrubiusOMG/videos" data-video-title="El Rubius">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>Vegetta777</h3>
+            <p>Youtube.com/@Vegetta777</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Vegetta777/videos" data-video-title="Vegetta777">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>Invictor</h3>
+            <p>Youtube.com/@Invictor</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Invictor/videos" data-video-title="Invictor">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>ElTrollino</h3>
+            <p>Youtube.com/@ElTrollino</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@ElTrollino/videos" data-video-title="ElTrollino">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>TheGrefg</h3>
+            <p>Youtube.com/@TheGrefg</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@TheGrefg/videos" data-video-title="TheGrefg">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canales gamer</p>
+            <h3>Willyrex y TheWillyrex</h3>
+            <p>Youtube.com/@Willyrex y Youtube.com/@TheWillyrex</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Willyrex/videos" data-secondary-channel-url="https://www.youtube.com/@TheWillyrex/videos" data-secondary-channel-title="TheWillyrex" data-video-title="Willyrex y TheWillyrex">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>Acenix</h3>
+            <p>Youtube.com/@Acenix</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Acenix/videos" data-video-title="Acenix">Abrir videos</button>
+          </article>
+
+          <article class="content-panel">
+            <p class="eyebrow">Canal gamer</p>
+            <h3>AuronPlay</h3>
+            <p>Youtube.com/@AuronPlay</p>
+            <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@AuronPlay/videos" data-video-title="AuronPlay">Abrir videos</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="explorar" class="section two-column">
+        <article class="content-panel">
+          <p class="eyebrow">Siguiente misión</p>
+          <h2>Explorar la plataforma</h2>
+          <p>Después de abrir el regalo, puedes seguir navegando por las zonas de misiones, recuerdos y YouTube.</p>
+          <a class="button button--primary" href="./misiones.html">Ir a misiones</a>
+        </article>
+        <article class="content-panel">
+          <p class="eyebrow">Recuerdo especial</p>
+          <h2>Guardar este momento</h2>
+          <p>Esta página puede crecer después con fotos reales, audios familiares, videos privados o nuevas sorpresas desbloqueables.</p>
+          <a class="button button--ghost" href="./recuerdos.html">Ver recuerdos</a>
+        </article>
+      </section>
+          <section class="section content-panel">
+        <p class="eyebrow">Video temático</p>
+        <h2>Video sobre el cumpleaños gamer</h2>
+        <p>Disfruta un video inspirado en la temática de El Niño: misiones, sorpresas y celebración gamer.</p>
+        <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
+          <iframe src="https://www.youtube.com/embed/T9IKTEBymuM" title="Video sobre cumpleaños gamer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__brand">
+        <a class="brand" href="./index.html" aria-label="Ir al inicio">
+          <span class="brand__icon">EN</span>
+          <span class="brand__text">El Niño</span>
+        </a>
+        <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
+      </div>
+
+      <div class="site-footer__grid">
+        <div>
+          <h3>Explorar</h3>
+          <a href="./misiones.html">Misiones El Niño</a>
+          <a href="./youtube.html">YouTube Videos</a>
+          <a href="./recuerdos.html">Recuerdos de E.N.</a>
+          <a href="./sorpresa.html">Sorpresa para E.N.</a>
+          <a href="./rincon-gamer.html">Rincón gamer</a>
+          <a href="./ceremonia-digital.html">Ceremonia digital</a>
+          <a href="./recompensas.html">Recompensas</a>
+          <a href="./premio-sorpresa.html">Premio sorpresa</a>
+          <a href="./final-epico.html">Final Épico</a>
+        </div>
+        <div>
+          <h3>Proyecto</h3>
+          <a href="./proyecto.html">Visión general</a>
+          <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
+          <a href="./proyecto.html#api">APIs futuras</a>
+        </div>
+        <div><h3>Legal</h3><a href="./cookies.html">Cookies de la plataforma</a><a href="./privacidad.html">Política de privacidad</a><a href="./terminos.html">Términos de uso</a></div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>© 2026 El Niño. Todos los recuerdos reservados.</span>
+        <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
+      </div>
+    </footer>
+  </div>
+
+  <div class="video-modal" id="giftVideoModal" aria-hidden="true">
+    <div class="video-modal__overlay" data-close-gift-video></div>
+    <div class="video-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="giftVideoTitle">
+      <div class="video-modal__header">
+        <h2 id="giftVideoTitle">Video de regalo</h2>
+        <button class="video-modal__close" type="button" aria-label="Cerrar video" data-close-gift-video>×</button>
+      </div>
+      <div class="video-player">
+        <iframe id="giftVideoFrame" src="" title="Reproductor de video de regalo" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <div class="content-panel" id="giftChannelPanel" hidden>
+        <p>Este canal se abre directamente en YouTube porque las páginas de canal no permiten reproducirse dentro de una ventana incrustada.</p>
+        <div class="hero__actions" id="giftChannelActions"></div>
+      </div>
+      <div class="video-modal__actions">
+        <span>Si el video queda en negro, ese enlace no permite verse dentro de una web.</span>
+        <button class="button button--ghost" type="button" data-close-gift-video>Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const giftVideoModal = document.getElementById("giftVideoModal");
+    const giftVideoFrame = document.getElementById("giftVideoFrame");
+    const giftVideoTitle = document.getElementById("giftVideoTitle");
+    const giftChannelPanel = document.getElementById("giftChannelPanel");
+    const giftChannelActions = document.getElementById("giftChannelActions");
+    const giftVideoButtons = document.querySelectorAll(".gift-video-button");
+    const closeGiftVideoButtons = document.querySelectorAll("[data-close-gift-video]");
+
+    function openGiftVideo(videoId, title) {
+      giftVideoTitle.textContent = title;
+      giftChannelPanel.hidden = true;
+      giftChannelActions.innerHTML = "";
+      giftVideoFrame.hidden = false;
+      giftVideoFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`;
+      giftVideoModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("is-video-modal-open");
+    }
+
+    function openGiftChannel(button) {
+      const channelUrl = button.dataset.channelUrl;
+      const secondaryChannelUrl = button.dataset.secondaryChannelUrl;
+      const secondaryChannelTitle = button.dataset.secondaryChannelTitle;
+
+      giftVideoTitle.textContent = `Videos de ${button.dataset.videoTitle}`;
+      giftVideoFrame.src = "";
+      giftVideoFrame.hidden = true;
+      giftChannelPanel.hidden = false;
+      giftChannelActions.innerHTML = `
+        <a class="button button--primary" href="${channelUrl}" target="_blank" rel="noopener noreferrer">Abrir canal principal</a>
+        ${secondaryChannelUrl ? `<a class="button button--ghost" href="${secondaryChannelUrl}" target="_blank" rel="noopener noreferrer">Abrir ${secondaryChannelTitle}</a>` : ""}
+      `;
+      giftVideoModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("is-video-modal-open");
+    }
+
+    function closeGiftVideo() {
+      giftVideoFrame.src = "";
+      giftVideoFrame.hidden = false;
+      giftChannelPanel.hidden = true;
+      giftChannelActions.innerHTML = "";
+      giftVideoModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("is-video-modal-open");
+    }
+
+    giftVideoButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.dataset.channelUrl) {
+          openGiftChannel(button);
+          return;
+        }
+
+        openGiftVideo(button.dataset.videoId, button.dataset.videoTitle);
+      });
+    });
+
+    closeGiftVideoButtons.forEach((button) => {
+      button.addEventListener("click", closeGiftVideo);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && giftVideoModal.getAttribute("aria-hidden") === "false") {
+        closeGiftVideo();
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
