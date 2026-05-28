@@ -5,13 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Niño | Plataforma Gamer</title>
   <meta name="description" content="Plataforma gamer personalizada El Niño, creada como experiencia especial de cumpleaños.">
+  <meta name="theme-color" content="#00f5ff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="El Niño">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./src/styles/main.css">
 </head>
 <body>
+  <div class="video-background">
+    <iframe class="video-background__video" src="/videos/Invencible (Canción Heavy Metal en español).mp4" title="Video de fondo gamer" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <div class="video-background__overlay"></div>
+  </div>
   <div class="app-shell">
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="Ir al inicio">
@@ -31,6 +40,9 @@
         <a href="./youtube.html">YouTube</a>
         <a href="./recuerdos.html">Recuerdos</a>
         <a href="./sorpresa.html">Sorpresa</a>
+        <a href="./leaderboard.html">Leaderboard</a>
+        <a href="./perfil.html">Mi Perfil</a>
+        <a href="./insignias.html">Insignias</a>
         <a href="./proyecto.html">Proyecto</a>
       </nav>
     </header>
@@ -47,12 +59,15 @@
             <a class="button button--primary" href="./misiones.html">Iniciar partida</a>
             <a class="button button--ghost" href="./youtube.html">Ver zona YouTube</a>
             <button class="button button--ghost music-control" id="musicButton" type="button">Escuchar canción</button>
+            <a class="button button--ghost" href="#" id="installPWA" aria-label="Instalar app" title="Instalar app">Instalar App</a>
           </div>
         </div>
 
         <div class="player-card" aria-label="Tarjeta del jugador principal">
           <div class="player-card__rank">LEVEL UP</div>
-          <div class="player-card__avatar">??</div>
+          <div class="player-card__avatar">
+            <img src="./el-niño----026-05-27-15-51.jpeg" alt="Avatar del jugador principal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          </div>
           <h2>Jugador principal</h2>
           <p>Hoy la misión más importante es celebrar a lo grande.</p>
           <div class="stats-grid">
@@ -162,14 +177,41 @@
         </div>
       </div>
 
+      <div class="modal" id="installModal" aria-hidden="true" role="dialog" aria-labelledby="installModalTitle">
+        <div class="modal__overlay" id="closeInstallOverlay"></div>
+        <div class="modal__dialog">
+          <div class="modal__header">
+            <h2 id="installModalTitle">Instalar App</h2>
+            <button class="modal__close" type="button" id="closeInstallButton" aria-label="Cerrar">×</button>
+          </div>
+          <div class="modal__body">
+            <p class="modal__copy">Para instalar la plataforma como app en tu dispositivo:</p>
+            <ul style="margin: 16px 0; padding-left: 20px; line-height: 1.8;">
+              <li><strong>En Android (Chrome):</strong> Toca el menú (⋮) → "Instalar app" o "Añadir a pantalla de inicio"</li>
+              <li><strong>En iOS (Safari):</strong> Toca el botón compartir (⎋) → "Añadir a pantalla de inicio"</li>
+              <li><strong>En PC (Chrome/Edge):</strong> Toca el icono de instalación en la barra de direcciones</li>
+            </ul>
+            <p class="modal__copy" style="margin-top: 16px;">La instalación permite:</p>
+            <ul style="margin: 8px 0; padding-left: 20px; line-height: 1.6;">
+              <li>Acceso offline a la plataforma</li>
+              <li>Icono en la pantalla de inicio</li>
+              <li>Experiencia de app nativa</li>
+            </ul>
+            <div style="display:flex;gap:10px;margin-top:16px;">
+              <button class="button button--primary" id="closeInstallAction">Entendido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <audio id="introAudio" preload="auto" controls>
         <source src="/audio/Untitled - Made with FlexClip.mp3" type="audio/mp3">
         Tu navegador no puede reproducir esta canción.
       </audio>
 
     <div class="floating-buttons">
-      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">??</button>
-      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">?</button>
+      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">Música</button>
+      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">Subir</button>
     </div>
 
     <footer class="site-footer">
@@ -200,6 +242,7 @@
           <a href="./recompensas.html">Recompensas</a>
           <a href="./premio-sorpresa.html">Premio sorpresa</a>
           <a href="./final-epico.html">Final épico</a>
+          
         </div>
         <div>
           <h3>Proyecto</h3>
@@ -228,6 +271,43 @@
     document.getElementById('scrollToTop').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Script inline para el botón de instalación
+    const installPWAButton = document.getElementById('installPWA');
+    if (installPWAButton) {
+      installPWAButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const installModal = document.getElementById('installModal');
+        if (installModal) {
+          installModal.setAttribute('aria-hidden', 'false');
+          installModal.style.display = 'grid';
+        }
+      });
+
+      document.getElementById('closeInstallButton')?.addEventListener('click', () => {
+        const installModal = document.getElementById('installModal');
+        if (installModal) {
+          installModal.setAttribute('aria-hidden', 'true');
+          installModal.style.display = 'none';
+        }
+      });
+
+      document.getElementById('closeInstallAction')?.addEventListener('click', () => {
+        const installModal = document.getElementById('installModal');
+        if (installModal) {
+          installModal.setAttribute('aria-hidden', 'true');
+          installModal.style.display = 'none';
+        }
+      });
+
+      document.getElementById('closeInstallOverlay')?.addEventListener('click', () => {
+        const installModal = document.getElementById('installModal');
+        if (installModal) {
+          installModal.setAttribute('aria-hidden', 'true');
+          installModal.style.display = 'none';
+        }
+      });
+    }
 
     document.getElementById('openMusicApp').addEventListener('click', () => {
       window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');

@@ -1,6 +1,103 @@
 import { renderMissions } from "./ui/missions-view.js";
 import { renderMemories } from "./ui/memories-view.js";
 import { renderYoutubeResults } from "./ui/youtube-view.js";
+import { dailyLogin, completeMission, unlockMemory, watchVideo, playMusic, unlockSurpriseEarly } from "./services/gamification-service.js";
+import { showLevelUpNotification, showBadgeUnlockedNotification, showXPGainedNotification } from "./ui/gamification-view.js";
+
+// Registrar Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((registration) => {
+        console.log('Service Worker registrado con éxito:', registration.scope);
+      })
+      .catch((error) => {
+        console.log('Error al registrar Service Worker:', error);
+      });
+  });
+}
+
+// Lógica para instalación de PWA
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // No prevenimos el evento para que el banner nativo aparezca
+  deferredPrompt = e;
+  console.log('Evento beforeinstallprompt detectado');
+});
+
+function openInstallModal() {
+  const installModal = document.querySelector('#installModal');
+  if (installModal) {
+    installModal.setAttribute('aria-hidden', 'false');
+    installModal.style.display = 'grid';
+  }
+}
+
+function closeInstallModal() {
+  const installModal = document.querySelector('#installModal');
+  if (installModal) {
+    installModal.setAttribute('aria-hidden', 'true');
+    installModal.style.display = 'none';
+  }
+}
+
+// Añadir event listeners después de que el DOM esté cargado
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const installPWAButton = document.querySelector('#installPWA');
+    installPWAButton?.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('PWA instalada');
+          if (installPWAButton) {
+            installPWAButton.style.display = 'none';
+          }
+        }
+        deferredPrompt = null;
+      } else {
+        openInstallModal();
+      }
+    });
+
+    document.querySelector('#closeInstallButton')?.addEventListener('click', closeInstallModal);
+    document.querySelector('#closeInstallAction')?.addEventListener('click', closeInstallModal);
+    document.querySelector('#closeInstallOverlay')?.addEventListener('click', closeInstallModal);
+  });
+} else {
+  const installPWAButton = document.querySelector('#installPWA');
+  installPWAButton?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('PWA instalada');
+        if (installPWAButton) {
+          installPWAButton.style.display = 'none';
+        }
+      }
+      deferredPrompt = null;
+    } else {
+      openInstallModal();
+    }
+  });
+
+  document.querySelector('#closeInstallButton')?.addEventListener('click', closeInstallModal);
+  document.querySelector('#closeInstallAction')?.addEventListener('click', closeInstallModal);
+  document.querySelector('#closeInstallOverlay')?.addEventListener('click', closeInstallModal);
+}
+
+window.addEventListener('appinstalled', () => {
+  const installPWAButton = document.querySelector('#installPWA');
+  if (installPWAButton) {
+    installPWAButton.style.display = 'none';
+  }
+  console.log('PWA instalada');
+});
 
 
 const missionsList = document.querySelector("#missionsList");
@@ -250,6 +347,64 @@ renderMissions(missionsList);
 renderYoutubeResults(youtubeResults, youtubeStatus);
 renderMemories(memoriesList, {
   limit: Number(memoriesList?.dataset.memoryLimit) || undefined
+});
+
+// Integración del sistema de gamificación
+// Iniciar sesión diario al cargar la página
+dailyLogin();
+
+// Integrar con el sistema de audio/música
+if (audioButtons.length && introAudio) {
+  audioButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (introAudio.paused) {
+        introAudio.play().catch(() => {});
+        audioButtons.forEach((btn) => (btn.textContent = "Pausar canción"));
+        // Registrar reproducción de música en gamificación
+        const musicResult = playMusic();
+        if (musicResult.newBadges.length > 0) {
+          musicResult.newBadges.forEach(badge => showBadgeUnlockedNotification(badge));
+        }
+        if (musicResult.levelUp) {
+          showLevelUpNotification(musicResult.oldLevel, musicResult.newLevel);
+        }
+      } else {
+        introAudio.pause();
+        audioButtons.forEach((btn) => (btn.textContent = "Escuchar canción"));
+      }
+    });
+  });
+
+  introAudio.addEventListener("ended", () => {
+    audioButtons.forEach((btn) => (btn.textContent = "Escuchar canción"));
+  });
+}
+
+// Integrar con el desbloqueo de sorpresa
+adminUnlockAction?.addEventListener("click", () => {
+  const val = adminSecretInput?.value || "";
+  if (val === OWNER_SECRET) {
+    localStorage.setItem("elnino_owner", "1");
+    if (adminMessage) adminMessage.textContent = "Acceso concedido. Sorpresa desbloqueada.";
+    if (adminModal) {
+      adminModal.setAttribute("aria-hidden", "true");
+      adminModal.style.display = "none";
+    }
+    showUnlockButton();
+    unlockSurpriseButton();
+    
+    // Registrar desbloqueo de sorpresa en gamificación
+    const surpriseResult = unlockSurpriseEarly();
+    if (surpriseResult.newBadges.length > 0) {
+      surpriseResult.newBadges.forEach(badge => showBadgeUnlockedNotification(badge));
+    }
+    if (surpriseResult.levelUp) {
+      showLevelUpNotification(surpriseResult.oldLevel, surpriseResult.newLevel);
+    }
+    showXPGainedNotification(surpriseResult.xpGained);
+  } else {
+    if (adminMessage) adminMessage.textContent = "Clave incorrecta.";
+  }
 });
 
 
