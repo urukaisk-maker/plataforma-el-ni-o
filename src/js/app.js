@@ -307,24 +307,6 @@ surpriseButton?.addEventListener("click", (event) => {
   }
 });
 
-if (audioButtons.length && introAudio) {
-  audioButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if (introAudio.paused) {
-        introAudio.play().catch(() => {});
-        audioButtons.forEach((btn) => (btn.textContent = "Pausar canción"));
-      } else {
-        introAudio.pause();
-        audioButtons.forEach((btn) => (btn.textContent = "Escuchar canción"));
-      }
-    });
-  });
-
-  introAudio.addEventListener("ended", () => {
-    audioButtons.forEach((btn) => (btn.textContent = "Escuchar canción"));
-  });
-}
-
 if (navToggle && siteHeader) {
   navToggle.addEventListener("click", () => {
     const isOpen = siteHeader.classList.toggle("nav-open");
