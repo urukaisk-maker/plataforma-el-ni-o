@@ -4850,3 +4850,84 @@ h2 {
     height: 48px;
   }
 }
+
+/* Movie cards */
+.movie-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.movie-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.movie-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--panel-strong);
+}
+
+.movie-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-card__thumb img {
+  transform: scale(1.05);
+}
+
+.movie-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 1.25rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.movie-card:hover .movie-card__play {
+  background: rgba(0, 245, 255, 0.9);
+  color: var(--bg);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.movie-card__info {
+  padding: 16px;
+}
+
+.movie-card__title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.movie-card__desc {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}

@@ -38,15 +38,9 @@
         <div class="section-heading">
           <p class="eyebrow">Colección</p>
           <h2>Películas temáticas</h2>
-          <p>Aquí aparecerán las películas y videos que elijas compartir. Pueden ser trailers, clips especiales, recuerdos en video o cualquier contenido cinematográfico relacionado.</p>
+          <p>Colección de videos temáticos seleccionados. Haz clic en cualquier tarjeta para ver el video en YouTube.</p>
         </div>
-        <div class="cards-grid" id="peliculasContainer">
-          <!-- Los videos se insertarán aquí dinámicamente o manualmente -->
-          <article class="placeholder-card">
-            <h3>Próximamente</h3>
-            <p>Esta sección está preparada para recibir videos. Cuando me pases los enlaces o archivos, los integraré aquí con miniaturas, títulos y descripciones.</p>
-          </article>
-        </div>
+        <div class="cards-grid" id="peliculasContainer"></div>
       </section>
     </main>
 
@@ -97,7 +91,10 @@
   </div>
 
   <script type="module" src="./src/js/app.js"></script>
-  <script>
+  <script type="module">
+    import { renderMovies } from "./src/js/ui/movies-view.js";
+    renderMovies(document.getElementById("peliculasContainer"));
+
     document.getElementById('scrollToTop').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
