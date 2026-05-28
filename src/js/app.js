@@ -18,13 +18,21 @@ if ('serviceWorker' in navigator) {
 }
 
 // Lógica para instalación de PWA
-let deferredPrompt;
+let deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // No prevenimos el evento para que el banner nativo aparezca
-  deferredPrompt = e;
-  console.log('Evento beforeinstallprompt detectado');
-});
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+
+function showInstallButton() {
+  const btn = document.querySelector('#installPWA');
+  if (btn) btn.style.display = '';
+}
+
+function hideInstallButton() {
+  const btn = document.querySelector('#installPWA');
+  if (btn) btn.style.display = 'none';
+}
 
 function openInstallModal() {
   const installModal = document.querySelector('#installModal');
@@ -42,43 +50,35 @@ function closeInstallModal() {
   }
 }
 
-// Añadir event listeners después de que el DOM esté cargado
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    const installPWAButton = document.querySelector('#installPWA');
-    installPWAButton?.addEventListener('click', async (e) => {
-      e.preventDefault();
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          console.log('PWA instalada');
-          if (installPWAButton) {
-            installPWAButton.style.display = 'none';
-          }
-        }
-        deferredPrompt = null;
-      } else {
-        openInstallModal();
-      }
-    });
+// Ocultar botón si ya estamos en modo app
+if (isStandalone()) {
+  hideInstallButton();
+}
 
-    document.querySelector('#closeInstallButton')?.addEventListener('click', closeInstallModal);
-    document.querySelector('#closeInstallAction')?.addEventListener('click', closeInstallModal);
-    document.querySelector('#closeInstallOverlay')?.addEventListener('click', closeInstallModal);
-  });
-} else {
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallButton();
+  console.log('Evento beforeinstallprompt detectado');
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  hideInstallButton();
+  console.log('PWA instalada');
+});
+
+function setupInstallListeners() {
   const installPWAButton = document.querySelector('#installPWA');
-  installPWAButton?.addEventListener('click', async (e) => {
+  if (!installPWAButton) return;
+
+  installPWAButton.addEventListener('click', async (e) => {
     e.preventDefault();
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
-        console.log('PWA instalada');
-        if (installPWAButton) {
-          installPWAButton.style.display = 'none';
-        }
+        hideInstallButton();
       }
       deferredPrompt = null;
     } else {
@@ -91,13 +91,11 @@ if (document.readyState === 'loading') {
   document.querySelector('#closeInstallOverlay')?.addEventListener('click', closeInstallModal);
 }
 
-window.addEventListener('appinstalled', () => {
-  const installPWAButton = document.querySelector('#installPWA');
-  if (installPWAButton) {
-    installPWAButton.style.display = 'none';
-  }
-  console.log('PWA instalada');
-});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupInstallListeners);
+} else {
+  setupInstallListeners();
+}
 
 
 const missionsList = document.querySelector("#missionsList");
