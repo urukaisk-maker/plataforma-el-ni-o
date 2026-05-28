@@ -46,7 +46,7 @@
         <h1>¡Partida ganada!</h1>
         <p class="hero__description">Has llegado al final de la aventura. Este es tu momento de gloria, campeón. Guarda la partida y celebra tu victoria.</p>
         <div class="hero__actions">
-          <button class="button button--primary" id="launchConfettiBtn" type="button">Lanzar celebración</button>
+          <a class="button button--primary" href="./celebracion.html">Lanzar celebración</a>
           <a class="button button--ghost" href="./sorpresa.html">Volver a la sorpresa</a>
         </div>
       </section>
@@ -303,8 +303,6 @@
       }
       draw();
     }
-
-    document.getElementById('launchConfettiBtn').addEventListener('click', launchConfetti);
 
     /* === CONTADORES ANIMADOS === */
     const statNumbers = document.querySelectorAll('.epic-stat__number');
