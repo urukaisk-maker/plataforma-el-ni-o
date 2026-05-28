@@ -40,59 +40,154 @@
     </header>
 
     <main>
-      <section class="page-hero">
-        <p class="eyebrow">Final Ã©pico</p>
-        <h1>Cierre con detalle</h1>
-        <p class="hero__description">Termina con pastel, una playlist en vivo o un mensaje grabado de sus amigos y familia para cerrar la experiencia con broche de oro.</p>
+      <section class="page-hero epic-victory">
+        <div class="victory-badge">MISIÓN COMPLETADA</div>
+        <p class="eyebrow">Final épico</p>
+        <h1>¡Partida ganada!</h1>
+        <p class="hero__description">Has llegado al final de la aventura. Este es tu momento de gloria, campeón. Guarda la partida y celebra tu victoria.</p>
         <div class="hero__actions">
-          <a class="button button--primary" href="./sorpresa.html">Volver a la sorpresa</a>
-          <a class="button button--ghost" href="./rincon-gamer.html">Primero: RincÃ³n gamer</a>
+          <button class="button button--primary" id="launchConfettiBtn" type="button">Lanzar celebración</button>
+          <a class="button button--ghost" href="./sorpresa.html">Volver a la sorpresa</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Logros del día</p>
+          <h2>Estadísticas del cumpleaños</h2>
+          <p>Tu partida ha dejado huella. Estos son los números que hacen de este día algo legendario.</p>
+        </div>
+        <div class="cards-grid epic-stats">
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">🏆</div>
+            <strong class="epic-stat__number" data-target="3">0</strong>
+            <span class="epic-stat__label">Misiones completadas</span>
+          </article>
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">💾</div>
+            <strong class="epic-stat__number" data-target="12">0</strong>
+            <span class="epic-stat__label">Recuerdos guardados</span>
+          </article>
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">⭐</div>
+            <strong class="epic-stat__number" data-target="8">0</strong>
+            <span class="epic-stat__label">Insignias desbloqueadas</span>
+          </article>
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">🎬</div>
+            <strong class="epic-stat__number" data-target="24">0</strong>
+            <span class="epic-stat__label">Películas descubiertas</span>
+          </article>
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">🎮</div>
+            <strong class="epic-stat__number" data-target="99">0</strong>
+            <span class="epic-stat__label">Nivel de diversión</span>
+          </article>
+          <article class="content-panel epic-stat">
+            <div class="epic-stat__icon">❤️</div>
+            <strong class="epic-stat__number" data-target="100">0</strong>
+            <span class="epic-stat__label">Por ciento de cariño</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Recompensa legendaria</p>
+          <h2>El cofre del tesoro</h2>
+          <p>Todo campeón merece su botín. Pulsa el cofre para abrir tu recompensa final.</p>
+        </div>
+        <div class="treasure-chest-container" id="treasureChestContainer">
+          <button class="treasure-chest" id="treasureChest" type="button" aria-label="Abrir cofre del tesoro">
+            <div class="treasure-chest__lid">
+              <div class="treasure-chest__lock"></div>
+            </div>
+            <div class="treasure-chest__body"></div>
+            <div class="treasure-chest__glow"></div>
+          </button>
+          <div class="treasure-reveal" id="treasureReveal" hidden>
+            <div class="treasure-reveal__card">
+              <div class="treasure-reveal__icon">👑</div>
+              <h3>Recompensa legendaria desbloqueada</h3>
+              <p>Has ganado el título de <strong>Campeón del Cumpleaños</strong>. Tu nombre quedará grabado en el salón de la fama de esta plataforma para siempre.</p>
+              <div class="treasure-reveal__code">CÓDIGO: EL-NIÑO-LEGEND-2026</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Diploma digital</p>
+          <h2>Certificado de campeón</h2>
+          <p>Reconocimiento oficial por completar la campaña de cumpleaños con honores.</p>
+        </div>
+        <div class="diploma-card">
+          <div class="diploma-card__border">
+            <div class="diploma-card__inner">
+              <div class="diploma-card__seal">🏅</div>
+              <h3>Diploma Oficial de Cumpleaños Gamer</h3>
+              <p class="diploma-card__subtitle">Otorgado a</p>
+              <p class="diploma-card__name">El Niño</p>
+              <p class="diploma-card__text">Por haber completado con éxito todas las misiones del día, demostrado valentía en cada reto, guardado recuerdos inolvidables y llevado la diversión al nivel máximo.</p>
+              <div class="diploma-card__footer">
+                <span>Fecha: <strong>24 de junio de 2026</strong></span>
+                <span>Firma: <strong>Familia Urukais</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Mensaje de la familia</p>
+          <h2>Carta del equipo de apoyo</h2>
+          <p>Unas palabras escritas con todo el cariño del mundo para cerrar esta aventura.</p>
+        </div>
+        <article class="content-panel family-letter">
+          <div class="family-letter__header">
+            <span class="family-letter__from">De: Tu familia</span>
+            <span class="family-letter__to">Para: El Niño</span>
+          </div>
+          <div class="family-letter__body">
+            <p>Querido campeón,</p>
+            <p>Hoy has demostrado que eres el verdadero jugador principal de esta familia. Has superado cada misión, has sonreído en cada reto y has guardado en tu corazón cada momento especial.</p>
+            <p>Esta plataforma fue construida pensando en ti, en todo lo que te gusta y en lo especial que eres para nosotros. Cada línea de código, cada vídeo, cada misión y cada sorpresa lleva nuestro cariño.</p>
+            <p>Que este nuevo año te traiga más niveles por completar, más aventuras por vivir, más risas por compartir y más sueños por cumplir. Siempre tendrás a tu equipo de apoyo aquí, listo para la siguiente partida.</p>
+            <p>Felicidades, campeón. Este día es tuyo.</p>
+          </div>
+          <div class="family-letter__signature">
+            Con todo nuestro amor,<br>
+            <strong>Tu familia</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Libro de firmas</p>
+          <h2>Deja tu mensaje para El Niño</h2>
+          <p>Cada invitado puede escribir una línea de felicitación que quedará guardada en esta página.</p>
+        </div>
+        <div class="guestbook">
+          <form class="guestbook__form content-panel" id="guestbookForm">
+            <label class="guestbook__label" for="guestName">Tu nombre</label>
+            <input class="guestbook__input" id="guestName" type="text" placeholder="Escribe tu nombre" required>
+            <label class="guestbook__label" for="guestMessage">Tu mensaje</label>
+            <textarea class="guestbook__input" id="guestMessage" rows="3" placeholder="Escribe tu felicitación para El Niño..." required></textarea>
+            <button class="button button--primary" type="submit">Dejar mensaje</button>
+          </form>
+          <div class="guestbook__messages" id="guestbookMessages"></div>
         </div>
       </section>
 
       <section class="section content-panel">
-        <p class="eyebrow">Cierre del evento</p>
-        <h2>El gran final del cumpleaÃ±os</h2>
-        <p>Un final bien pensado convierte toda la experiencia en un recuerdo emocional. Elige una opciÃ³n que conecte con lo vivido y con las personas presentes.</p>
-
-        <ul class="video-links">
-          <li class="video-item">
-            <strong>Pastel temÃ¡tico</strong>
-            <p>Termina con un pastel que refleje sus gustos gamer. El pastel es el momento perfecto para cantar, soplar velas y festejar juntos.</p>
-          </li>
-          <li class="video-item">
-            <strong>Playlist en vivo</strong>
-            <p>Prepara una lista de reproducciÃ³n con canciones favoritas o ritmos festivos para poner de fondo mientras celebra.</p>
-          </li>
-          <li class="video-item">
-            <strong>Mensaje grabado</strong>
-            <p>Reproduce un mensaje en video de sus amigos y familia. Es un detalle cÃ¡lido que hace que el cierre sea muy especial.</p>
-          </li>
-          <li class="video-item">
-            <strong>Ãšltimo reconocimiento</strong>
-            <p>Haz un pequeÃ±o resumen de lo logrado y agradece su presencia. Cierra la experiencia con una Ãºltima ovaciÃ³n o felicitaciÃ³n.</p>
-          </li>
-        </ul>
-      </section>
-
-      <section class="section feature-panel">
-        <div>
-          <p class="eyebrow">Final emotivo</p>
-          <h2>Cierra con broche de oro</h2>
-          <p>Un final Ã©pico no solo celebra el cumpleaÃ±os, sino que deja un recuerdo feliz y completo de todo lo que viviÃ³ durante la sorpresa.</p>
-        </div>
-        <article class="content-panel">
-          <p class="eyebrow">Sugerencia</p>
-          <h3>Prepara una despedida</h3>
-          <p>Antes de cerrar, agradece el momento y deja claro que la experiencia quedÃ³ registrada como un recuerdo gamer inolvidable.</p>
-        </article>
-      </section>
-          <section class="section content-panel">
-        <p class="eyebrow">Video temÃ¡tico</p>
-        <h2>Video para el final Ã©pico</h2>
-        <p>Un cierre con energÃ­a de victoria para guardar la partida, celebrar el dÃ­a y terminar con sensaciÃ³n de misiÃ³n completada.</p>
+        <p class="eyebrow">Video de cierre</p>
+        <h2>El último nivel</h2>
+        <p>Un cierre con energía de victoria para guardar la partida, celebrar el día y terminar con sensación de misión completada.</p>
         <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
-          <iframe src="https://www.youtube.com/embed/X7BhWhiCjMs" title="Video para el final Ã©pico" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+          <iframe src="https://www.youtube.com/embed/X7BhWhiCjMs" title="Video para el final épico" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
         </div>
       </section>
     </main>
@@ -161,6 +256,140 @@
     document.getElementById('openMusicApp').addEventListener('click', () => {
       window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
     });
+
+    /* === CONFETI === */
+    function launchConfetti() {
+      const canvas = document.createElement('canvas');
+      canvas.style.position = 'fixed';
+      canvas.style.inset = '0';
+      canvas.style.zIndex = '9999';
+      canvas.style.pointerEvents = 'none';
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#00f5ff', '#ff2bd6', '#ffd700', '#ff4444', '#44ff44', '#ffffff'];
+      const particles = Array.from({ length: 150 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 8 + 4,
+        h: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: Math.random() * 4 + 2,
+        angle: Math.random() * Math.PI * 2,
+        spin: Math.random() * 0.2 - 0.1,
+        opacity: 1
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+        particles.forEach(p => {
+          p.y += p.speed;
+          p.x += Math.sin(p.angle) * 2;
+          p.angle += p.spin;
+          if (p.y < canvas.height + 20) active = true;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle);
+          ctx.globalAlpha = Math.max(0, 1 - (p.y / canvas.height));
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        if (active) requestAnimationFrame(draw);
+        else canvas.remove();
+      }
+      draw();
+    }
+
+    document.getElementById('launchConfettiBtn').addEventListener('click', launchConfetti);
+
+    /* === CONTADORES ANIMADOS === */
+    const statNumbers = document.querySelectorAll('.epic-stat__number');
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target, 10);
+          let current = 0;
+          const step = Math.ceil(target / 40);
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) { current = target; clearInterval(timer); }
+            el.textContent = current;
+          }, 30);
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNumbers.forEach(n => statObserver.observe(n));
+
+    /* === COFRE DEL TESORO === */
+    const chest = document.getElementById('treasureChest');
+    const reveal = document.getElementById('treasureReveal');
+    chest.addEventListener('click', () => {
+      if (chest.classList.contains('is-open')) return;
+      chest.classList.add('is-open');
+      launchConfetti();
+      setTimeout(() => {
+        reveal.hidden = false;
+        reveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 600);
+    });
+
+    /* === LIBRO DE FIRMAS === */
+    const GUESTBOOK_KEY = 'elnino_guestbook';
+    const guestbookForm = document.getElementById('guestbookForm');
+    const guestbookMessages = document.getElementById('guestbookMessages');
+
+    function loadGuestbook() {
+      try {
+        const data = JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+        guestbookMessages.innerHTML = '';
+        data.forEach(entry => renderGuestbookEntry(entry));
+      } catch (e) { console.warn('Error cargando libro de firmas', e); }
+    }
+
+    function renderGuestbookEntry(entry) {
+      const div = document.createElement('div');
+      div.className = 'guestbook__message';
+      div.innerHTML = `
+        <div class="guestbook__message-name">${escapeHtml(entry.name)}</div>
+        <div class="guestbook__message-text">${escapeHtml(entry.message)}</div>
+        <div class="guestbook__message-time">${escapeHtml(entry.time)}</div>
+      `;
+      guestbookMessages.prepend(div);
+    }
+
+    function escapeHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    guestbookForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const message = document.getElementById('guestMessage').value.trim();
+      if (!name || !message) return;
+      const entry = {
+        name,
+        message,
+        time: new Date().toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+      };
+      try {
+        const data = JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+        data.push(entry);
+        localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(data));
+        renderGuestbookEntry(entry);
+        guestbookForm.reset();
+        launchConfetti();
+      } catch (err) { console.warn('Error guardando mensaje', err); }
+    });
+
+    loadGuestbook();
   </script>
   </div>
 </body>
