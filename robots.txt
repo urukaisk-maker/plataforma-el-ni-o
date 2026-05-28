@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://urukaisk-maker.github.io/plataforma-el-ni-o/sitemap.xml
