@@ -50,16 +50,23 @@ function closeInstallModal() {
   }
 }
 
+// Depuración inicial
+console.log('[PWA] standalone:', isStandalone());
+
 // Ocultar botón si ya estamos en modo app
 if (isStandalone()) {
   hideInstallButton();
+  console.log('[PWA] Botón oculto: app ya instalada');
+} else {
+  showInstallButton();
+  console.log('[PWA] Botón visible: app no instalada');
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   showInstallButton();
-  console.log('Evento beforeinstallprompt detectado');
+  console.log('[PWA] beforeinstallprompt detectado');
 });
 
 window.addEventListener('appinstalled', () => {
@@ -74,6 +81,7 @@ function setupInstallListeners() {
 
   installPWAButton.addEventListener('click', async (e) => {
     e.preventDefault();
+    console.log('[PWA] Botón clickeado. deferredPrompt:', !!deferredPrompt);
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
@@ -82,6 +90,7 @@ function setupInstallListeners() {
       }
       deferredPrompt = null;
     } else {
+      console.log('[PWA] Abriendo modal de instalación');
       openInstallModal();
     }
   });
