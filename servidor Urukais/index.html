@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Manager - PWA</title>
+    <meta name="theme-color" content="#f5f5f5">
+    <meta name="description" content="Gestor de posts para blog personal con funcionalidad offline">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f7f7;
+            --bg-tertiary: #f0f0f0;
+            --border-color: #e0e0e0;
+            --text-primary: #2c2c2c;
+            --text-secondary: #5f5f5f;
+            --text-muted: #9e9e9e;
+            --accent-color: #2196F3;
+            --accent-hover: #1976D2;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --error-color: #f44336;
+            --radius: 6px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+            --transition: all 0.2s ease;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .app-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+        }
+
+        .status-dot.offline {
+            background-color: var(--error-color);
+        }
+
+        .status-dot.syncing {
+            background-color: var(--warning-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .search-container {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            background-color: var(--bg-primary);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+        }
+
+        .categories-section {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            padding: 0 20px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-item:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .category-item.active {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .category-count {
+            font-size: 12px;
+            color: var(--text-muted);
+            background-color: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .new-category-btn {
+            margin: 12px 20px 0;
+            padding: 8px 12px;
+            background-color: transparent;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-secondary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .new-category-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .new-post-btn {
+            padding: 10px 16px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .new-post-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .post-card {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            line-clamp: 3;
+            overflow: hidden;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .post-category {
+            font-size: 12px;
+            color: var(--text-muted);
+            background-color: var(--bg-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .post-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--bg-primary);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .modal-close:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-family: inherit;
+            transition: var(--transition);
+            background-color: var(--bg-primary);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 200px;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 400px;
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .editor-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .image-upload-btn {
+            padding: 6px 12px;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .image-upload-btn:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .editor-textarea {
+            flex: 1;
+            resize: none;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 12px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .preview-panel {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 12px;
+            overflow-y: auto;
+            background-color: var(--bg-primary);
+        }
+
+        .preview-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .preview-content h1, .preview-content h2, .preview-content h3 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        .preview-content p {
+            margin-bottom: 16px;
+        }
+
+        .preview-content img {
+            max-width: 100%;
+            border-radius: var(--radius);
+            margin: 16px 0;
+        }
+
+        .preview-content blockquote {
+            border-left: 4px solid var(--border-color);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-secondary);
+        }
+
+        .preview-content code {
+            background-color: var(--bg-secondary);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+
+        .preview-content pre {
+            background-color: var(--bg-secondary);
+            padding: 16px;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .preview-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            padding: 12px 16px;
+            background-color: var(--bg-primary);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: var(--transition);
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .toast-success .toast-icon {
+            background-color: var(--success-color);
+        }
+
+        .toast-error .toast-icon {
+            background-color: var(--error-color);
+        }
+
+        .toast-warning .toast-icon {
+            background-color: var(--warning-color);
+        }
+
+        .toast-info .toast-icon {
+            background-color: var(--accent-color);
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 20;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 15;
+                background-color: var(--bg-primary);
+                border: 1px solid var(--border-color);
+                border-radius: var(--radius);
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: var(--shadow);
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="app-title">
+                <span>📝</span> Blog Manager
+            </div>
+            <div class="connection-status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Conectado</span>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar posts...">
+        </div>
+
+        <div class="categories-section">
+            <div class="section-title">Categorías</div>
+            <ul class="category-list" id="categoryList">
+                <!-- Las categorías se cargarán dinámicamente -->
+            </ul>
+            <button class="new-category-btn" id="newCategoryBtn">
+                <span>+</span> Nueva categoría
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        ☰
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-header">
+            <h1 class="page-title" id="pageTitle">Todos los posts</h1>
+            <button class="new-post-btn" id="newPostBtn">
+                <span>+</span> Nuevo post
+            </button>
+        </div>
+
+        <div class="posts-grid" id="postsGrid">
+            <!-- Los posts se cargarán dinámicamente -->
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <div class="empty-state-icon">📝</div>
+            <h3>No hay posts</h3>
+            <p>Crea tu primer post para comenzar</p>
+        </div>
+    </div>
+
+    <!-- Post Editor Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nuevo post</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="postTitle">Título</label>
+                    <input type="text" class="form-input" id="postTitle" placeholder="Título del post">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="postCategory">Categoría</label>
+                    <select class="form-select" id="postCategory">
+                        <!-- Las categorías se cargarán dinámicamente -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Contenido</label>
+                    <div class="editor-container">
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <span class="editor-title">Markdown</span>
+                                <button class="image-upload-btn" id="imageUploadBtn">
+                                    <span>📷</span> Insertar imagen
+                                </button>
+                            </div>
+                            <textarea class="editor-textarea" id="postContent" placeholder="Escribe tu contenido en markdown..."></textarea>
+                        </div>
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <span class="editor-title">Vista previa</span>
+                            </div>
+                            <div class="preview-panel">
+                                <div class="preview-content" id="postPreview"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                <button class="btn btn-danger" id="deleteBtn" style="display: none;">Eliminar</button>
+                <button class="btn btn-secondary" id="exportPdfBtn" style="display: none;">Exportar PDF</button>
+                <button class="btn btn-primary" id="saveBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Editor Modal -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="categoryModalTitle">Nueva categoría</h2>
+                <button class="modal-close" id="categoryModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label" for="categoryName">Nombre</label>
+                    <input type="text" class="form-input" id="categoryName" placeholder="Nombre de la categoría">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="categoryCancelBtn">Cancelar</button>
+                <button class="btn btn-primary" id="categorySaveBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Hidden file input for image upload -->
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+
+    <script>
+        // Configuración inicial
+        const APP_NAME = 'BlogManager';
+        const DB_VERSION = 1;
+        const STORES = {
+            POSTS: 'posts',
+            CATEGORIES: 'categories',
+            SYNC_QUEUE: 'sync_queue'
+        };
+
+        // Inicialización de la aplicación
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Registrar Service Worker
+            if ('serviceWorker' in navigator) {
+                try {
+                    await navigator.serviceWorker.register('sw.js');
+                    console.log('Service Worker registrado');
+                } catch (error) {
+                    console.error('Error registrando Service Worker:', error);
+                }
+            }
+
+            // Inicializar base de datos
+            await initDatabase();
+            
+            // Cargar datos iniciales
+            await loadCategories();
+            await loadPosts();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Configurar detección de conectividad
+            setupConnectivityDetection();
+            
+            // Configurar preview de markdown en tiempo real
+            setupMarkdownPreview();
+        });
+
+        // Clase para gestionar IndexedDB
+        class DatabaseManager {
+            constructor() {
+                this.db = null;
+            }
+
+            async init() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(APP_NAME, DB_VERSION);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => {
+                        this.db = request.result;
+                        resolve(this.db);
+                    };
+
+                    request.onupgradeneeded = (event) => {
+                        const db = event.target.result;
+
+                        // Crear store para posts
+                        if (!db.objectStoreNames.contains(STORES.POSTS)) {
+                            const postsStore = db.createObjectStore(STORES.POSTS, { keyPath: 'id', autoIncrement: true });
+                            postsStore.createIndex('title', 'title', { unique: false });
+                            postsStore.createIndex('category', 'category', { unique: false });
+                            postsStore.createIndex('createdAt', 'createdAt', { unique: false });
+                        }
+
+                        // Crear store para categorías
+                        if (!db.objectStoreNames.contains(STORES.CATEGORIES)) {
+                            const categoriesStore = db.createObjectStore(STORES.CATEGORIES, { keyPath: 'id', autoIncrement: true });
+                            categoriesStore.createIndex('name', 'name', { unique: true });
+                        }
+
+                        // Crear store para cola de sincronización
+                        if (!db.objectStoreNames.contains(STORES.SYNC_QUEUE)) {
+                            db.createObjectStore(STORES.SYNC_QUEUE, { keyPath: 'id', autoIncrement: true });
+                        }
+                    };
+                });
+            }
+
+            async getAll(storeName) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readonly');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.getAll();
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => resolve(request.result);
+                });
+            }
+
+            async get(storeName, id) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readonly');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.get(id);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => resolve(request.result);
+                });
+            }
+
+            async add(storeName, data) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readwrite');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.add(data);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => resolve(request.result);
+                });
+            }
+
+            async put(storeName, data) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readwrite');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.put(data);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => resolve(request.result);
+                });
+            }
+
+            async delete(storeName, id) {
+                return new Promise((resolve, reject) => {
+                    const transaction = this.db.transaction([storeName], 'readwrite');
+                    const store = transaction.objectStore(storeName);
+                    const request = store.delete(id);
+
+                    request.onerror = () => reject(request.error);
+                    request.onsuccess = () => resolve(request.result);
+                });
+            }
+        }
+
+        // Clase para gestionar posts
+        class PostManager {
+            constructor(dbManager) {
+                this.dbManager = dbManager;
+            }
+
+            async getAllPosts() {
+                return await this.dbManager.getAll(STORES.POSTS);
+            }
+
+            async getPost(id) {
+                return await this.dbManager.get(STORES.POSTS, id);
+            }
+
+            async createPost(postData) {
+                const post = {
+                    ...postData,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    synced: false
+                };
+                
+                const id = await this.dbManager.add(STORES.POSTS, post);
+                
+                // Agregar a la cola de sincronización
+                await this.addToSyncQueue('CREATE', { ...post, id });
+                
+                return id;
+            }
+
+            async updatePost(id, postData) {
+                const existingPost = await this.getPost(id);
+                if (!existingPost) throw new Error('Post no encontrado');
+
+                const updatedPost = {
+                    ...existingPost,
+                    ...postData,
+                    updatedAt: new Date().toISOString(),
+                    synced: false
+                };
+
+                await this.dbManager.put(STORES.POSTS, updatedPost);
+                
+                // Agregar a la cola de sincronización
+                await this.addToSyncQueue('UPDATE', updatedPost);
+                
+                return updatedPost;
+            }
+
+            async deletePost(id) {
+                const post = await this.getPost(id);
+                if (!post) throw new Error('Post no encontrado');
+
+                await this.dbManager.delete(STORES.POSTS, id);
+                
+                // Agregar a la cola de sincronización
+                await this.addToSyncQueue('DELETE', { id });
+                
+                return true;
+            }
+
+            async searchPosts(query) {
+                const allPosts = await this.getAllPosts();
+                if (!query) return allPosts;
+
+                const lowercaseQuery = query.toLowerCase();
+                return allPosts.filter(post => {
+                    const catName = (categoriesCache.find(c => Number(c.id) === Number(post.category)) || {}).name || '';
+                    return (
+                        post.title.toLowerCase().includes(lowercaseQuery) ||
+                        post.content.toLowerCase().includes(lowercaseQuery) ||
+                        catName.toLowerCase().includes(lowercaseQuery)
+                    );
+                });
+            }
+
+            async getPostsByCategory(category) {
+                const allPosts = await this.getAllPosts();
+                return allPosts.filter(post => Number(post.category) === Number(category));
+            }
+
+            async addToSyncQueue(action, data) {
+                const syncItem = {
+                    action,
+                    data,
+                    timestamp: new Date().toISOString()
+                };
+                
+                await this.dbManager.add(STORES.SYNC_QUEUE, syncItem);
+            }
+
+            async processSyncQueue() {
+                if (!navigator.onLine) return;
+
+                const syncItems = await this.dbManager.getAll(STORES.SYNC_QUEUE);
+                
+                for (const item of syncItems) {
+                    try {
+                        // Aquí iría la lógica para sincronizar con el servidor
+                        // Por ahora, simplemente marcamos como sincronizado
+                        if (item.action === 'CREATE' || item.action === 'UPDATE') {
+                            const post = await this.getPost(item.data.id);
+                            if (post) {
+                                post.synced = true;
+                                await this.dbManager.put(STORES.POSTS, post);
+                            }
+                        }
+                        
+                        // Eliminar de la cola después de procesar
+                        await this.dbManager.delete(STORES.SYNC_QUEUE, item.id);
+                    } catch (error) {
+                        console.error('Error procesando item de sincronización:', error);
+                    }
+                }
+                
+                // Actualizar la UI para reflejar el estado de sincronización
+                updateSyncStatus();
+            }
+        }
+
+        // Clase para gestionar categorías
+        class CategoryManager {
+            constructor(dbManager) {
+                this.dbManager = dbManager;
+            }
+
+            async getAllCategories() {
+                return await this.dbManager.getAll(STORES.CATEGORIES);
+            }
+
+            async createCategory(name) {
+                const category = {
+                    name,
+                    createdAt: new Date().toISOString()
+                };
+                
+                return await this.dbManager.add(STORES.CATEGORIES, category);
+            }
+
+            async deleteCategory(id) {
+                // Verificar si hay posts usando esta categoría
+                const postManager = new PostManager(this.dbManager);
+                const allPosts = await postManager.getAllPosts();
+                const postsWithCategory = allPosts.filter(post => post.category === id);
+
+                if (postsWithCategory.length > 0) {
+                    throw new Error('No se puede eliminar la categoría porque hay posts que la usan');
+                }
+
+                return await this.dbManager.delete(STORES.CATEGORIES, id);
+            }
+        }
+
+        // Variables globales
+        let dbManager, postManager, categoryManager;
+        let currentPostId = null;
+        let currentCategory = 'all';
+        let categoriesCache = [];
+
+        // Inicializar base de datos
+        async function initDatabase() {
+            dbManager = new DatabaseManager();
+            await dbManager.init();
+            
+            postManager = new PostManager(dbManager);
+            categoryManager = new CategoryManager(dbManager);
+        }
+
+        // Cargar categorías
+        async function loadCategories() {
+            const categories = await categoryManager.getAllCategories();
+            categoriesCache = categories;
+            const categoryList = document.getElementById('categoryList');
+            const postCategorySelect = document.getElementById('postCategory');
+            
+            // Limpiar listas
+            categoryList.innerHTML = '';
+            postCategorySelect.innerHTML = '<option value="">Seleccionar categoría</option>';
+            
+            // Agregar categoría "Todas"
+            const allItem = document.createElement('li');
+            allItem.className = `category-item ${currentCategory === 'all' ? 'active' : ''}`;
+            allItem.dataset.category = 'all';
+            allItem.innerHTML = `
+                <span>Todas</span>
+                <span class="category-count" id="allCount">0</span>
+            `;
+            categoryList.appendChild(allItem);
+            
+            // Agregar categorías
+            categories.forEach(category => {
+                // Para la lista de categorías
+                const listItem = document.createElement('li');
+                listItem.className = `category-item ${currentCategory === category.id ? 'active' : ''}`;
+                listItem.dataset.category = category.id;
+                listItem.innerHTML = `
+                    <span>${category.name}</span>
+                    <span class="category-count" id="categoryCount-${category.id}">0</span>
+                `;
+                categoryList.appendChild(listItem);
+                
+                // Para el selector en el modal
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                postCategorySelect.appendChild(option);
+            });
+            
+            // Actualizar contadores
+            await updateCategoryCounts();
+        }
+
+        // Cargar posts
+        async function loadPosts(searchQuery = '') {
+            let posts;
+            
+            if (searchQuery) {
+                posts = await postManager.searchPosts(searchQuery);
+            } else if (currentCategory === 'all') {
+                posts = await postManager.getAllPosts();
+            } else {
+                posts = await postManager.getPostsByCategory(currentCategory);
+            }
+            
+            const postsGrid = document.getElementById('postsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Mostrar/ocultar estado vacío
+            if (posts.length === 0) {
+                postsGrid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                
+                if (searchQuery) {
+                    emptyState.innerHTML = `
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>No se encontraron posts</h3>
+                        <p>Intenta con otros términos de búsqueda</p>
+                    `;
+                } else if (currentCategory !== 'all') {
+                    emptyState.innerHTML = `
+                        <div class="empty-state-icon">📁</div>
+                        <h3>No hay posts en esta categoría</h3>
+                        <p>Crea un nuevo post para comenzar</p>
+                    `;
+                } else {
+                    emptyState.innerHTML = `
+                        <div class="empty-state-icon">📝</div>
+                        <h3>No hay posts</h3>
+                        <p>Crea tu primer post para comenzar</p>
+                    `;
+                }
+            } else {
+                postsGrid.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                
+                // Renderizar posts
+                postsGrid.innerHTML = '';
+                posts.forEach(post => {
+                    const postCard = document.createElement('div');
+                    postCard.className = 'post-card';
+                    postCard.dataset.id = post.id;
+                    
+                    // Formatear fecha
+                    const date = new Date(post.createdAt);
+                    const formattedDate = date.toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    // Crear extracto del contenido
+                    const excerpt = post.content.length > 150 
+                        ? post.content.substring(0, 150) + '...' 
+                        : post.content;
+                    
+                    const catName = (categoriesCache.find(c => c.id === post.category) || {}).name || 'Sin categoría';
+                    postCard.innerHTML = `
+                        <h3 class="post-title">${post.title}</h3>
+                        <p class="post-excerpt">${excerpt}</p>
+                        <div class="post-meta">
+                            <span class="post-category">${catName}</span>
+                            <span class="post-date">${formattedDate}</span>
+                        </div>
+                    `;
+                    
+                    postsGrid.appendChild(postCard);
+                });
+            }
+            
+            // Actualizar título de página
+            updatePageTitle(searchQuery);
+            
+            // Actualizar contadores de categorías
+            await updateCategoryCounts();
+        }
+
+        // Actualizar contadores de categorías
+        async function updateCategoryCounts() {
+            const allPosts = await postManager.getAllPosts();
+            const allCount = document.getElementById('allCount');
+            allCount.textContent = allPosts.length;
+            
+            const categories = await categoryManager.getAllCategories();
+            categories.forEach(category => {
+                const countElement = document.getElementById(`categoryCount-${category.id}`);
+                if (countElement) {
+                    const postsInCategory = allPosts.filter(post => Number(post.category) === Number(category.id));
+                    countElement.textContent = postsInCategory.length;
+                }
+            });
+        }
+
+        // Actualizar título de página
+        function updatePageTitle(searchQuery) {
+            const pageTitle = document.getElementById('pageTitle');
+            
+            if (searchQuery) {
+                pageTitle.textContent = `Resultados de "${searchQuery}"`;
+            } else if (currentCategory === 'all') {
+                pageTitle.textContent = 'Todos los posts';
+            } else {
+                // Obtener nombre de la categoría actual
+                const categoryItems = document.querySelectorAll('.category-item');
+                let categoryName = 'Categoría';
+                
+                categoryItems.forEach(item => {
+                    if (item.dataset.category === currentCategory) {
+                        categoryName = item.querySelector('span').textContent;
+                    }
+                });
+                
+                pageTitle.textContent = categoryName;
+            }
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Botón nuevo post
+            document.getElementById('newPostBtn').addEventListener('click', () => {
+                openPostModal();
+            });
+
+            // Botón nueva categoría
+            document.getElementById('newCategoryBtn').addEventListener('click', () => {
+                openCategoryModal();
+            });
+
+            // Cerrar modales
+            document.getElementById('modalClose').addEventListener('click', closePostModal);
+            document.getElementById('cancelBtn').addEventListener('click', closePostModal);
+            document.getElementById('categoryModalClose').addEventListener('click', closeCategoryModal);
+            document.getElementById('categoryCancelBtn').addEventListener('click', closeCategoryModal);
+
+            // Guardar post
+            document.getElementById('saveBtn').addEventListener('click', savePost);
+
+            // Eliminar post
+            document.getElementById('deleteBtn').addEventListener('click', deletePost);
+
+            // Exportar PDF
+            document.getElementById('exportPdfBtn').addEventListener('click', () => {
+                if (currentPostId) exportToPDF(currentPostId);
+            });
+
+            // Guardar categoría
+            document.getElementById('categorySaveBtn').addEventListener('click', saveCategory);
+
+            // Búsqueda
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                const query = e.target.value;
+                loadPosts(query);
+            });
+
+            // Categorías
+            document.getElementById('categoryList').addEventListener('click', (e) => {
+                const categoryItem = e.target.closest('.category-item');
+                if (categoryItem) {
+                    const category = categoryItem.dataset.category;
+                    selectCategory(category);
+                }
+            });
+
+            // Posts (event delegation)
+            document.getElementById('postsGrid').addEventListener('click', (e) => {
+                const postCard = e.target.closest('.post-card');
+                if (postCard) {
+                    const postId = parseInt(postCard.dataset.id);
+                    openPostModal(postId);
+                }
+            });
+
+            // Carga de imágenes
+            document.getElementById('imageUploadBtn').addEventListener('click', () => {
+                document.getElementById('imageInput').click();
+            });
+
+            document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+
+            // Menú móvil
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+        }
+
+        // Configurar detección de conectividad
+        function setupConnectivityDetection() {
+            window.addEventListener('online', () => {
+                updateConnectionStatus(true);
+                postManager.processSyncQueue();
+            });
+
+            window.addEventListener('offline', () => {
+                updateConnectionStatus(false);
+            });
+
+            // Estado inicial
+            updateConnectionStatus(navigator.onLine);
+        }
+
+        // Actualizar estado de conexión
+        function updateConnectionStatus(online) {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            
+            if (online) {
+                statusDot.className = 'status-dot';
+                statusText.textContent = 'Conectado';
+            } else {
+                statusDot.className = 'status-dot offline';
+                statusText.textContent = 'Sin conexión';
+            }
+        }
+
+        // Actualizar estado de sincronización
+        function updateSyncStatus() {
+            // Esta función actualizaría la UI para mostrar el estado de sincronización
+            // Por ahora, es un placeholder para futuras implementaciones
+        }
+
+        // Configurar preview de markdown en tiempo real
+        function setupMarkdownPreview() {
+            const postContent = document.getElementById('postContent');
+            const postPreview = document.getElementById('postPreview');
+            
+            postContent.addEventListener('input', () => {
+                const markdown = postContent.value;
+                const html = marked.parse(markdown);
+                postPreview.innerHTML = html;
+            });
+        }
+
+        // Abrir modal de post
+        async function openPostModal(postId = null) {
+            const modal = document.getElementById('postModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            // Resetear formulario
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postCategory').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('postPreview').innerHTML = '';
+            
+            if (postId) {
+                // Modo edición
+                currentPostId = postId;
+                modalTitle.textContent = 'Editar post';
+                deleteBtn.style.display = 'block';
+                document.getElementById('exportPdfBtn').style.display = 'block';
+                
+                // Cargar datos del post
+                const post = await postManager.getPost(postId);
+                if (post) {
+                    document.getElementById('postTitle').value = post.title;
+                    document.getElementById('postCategory').value = String(post.category);
+                    document.getElementById('postContent').value = post.content;
+                    
+                    // Actualizar preview
+                    const html = marked.parse(post.content);
+                    document.getElementById('postPreview').innerHTML = html;
+                }
+            } else {
+                // Modo creación
+                currentPostId = null;
+                modalTitle.textContent = 'Nuevo post';
+                deleteBtn.style.display = 'none';
+                document.getElementById('exportPdfBtn').style.display = 'none';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        // Cerrar modal de post
+        function closePostModal() {
+            document.getElementById('postModal').classList.remove('active');
+        }
+
+        // Abrir modal de categoría
+        function openCategoryModal() {
+            document.getElementById('categoryModal').classList.add('active');
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryModalTitle').textContent = 'Nueva categoría';
+        }
+
+        // Cerrar modal de categoría
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').classList.remove('active');
+        }
+
+        // Guardar post
+        async function savePost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const category = document.getElementById('postCategory').value;
+            const categoryId = category ? parseInt(category, 10) : null;
+            const content = document.getElementById('postContent').value.trim();
+            
+            // Validaciones
+            if (!title) {
+                showToast('El título es obligatorio', 'error');
+                return;
+            }
+            
+            if (!categoryId && categoryId !== 0) {
+                showToast('Selecciona una categoría', 'error');
+                return;
+            }
+            
+            if (!content) {
+                showToast('El contenido es obligatorio', 'error');
+                return;
+            }
+            
+            try {
+                if (currentPostId) {
+                    // Actualizar post existente
+                    await postManager.updatePost(currentPostId, { title, category: categoryId, content });
+                    showToast('Post actualizado correctamente', 'success');
+                } else {
+                    // Crear nuevo post
+                    await postManager.createPost({ title, category: categoryId, content });
+                    showToast('Post creado correctamente', 'success');
+                }
+                
+                closePostModal();
+                await loadPosts();
+            } catch (error) {
+                console.error('Error guardando post:', error);
+                showToast('Error al guardar el post', 'error');
+            }
+        }
+
+        // Eliminar post
+        async function deletePost() {
+            if (!currentPostId) return;
+            
+            if (confirm('¿Estás seguro de que quieres eliminar este post?')) {
+                try {
+                    await postManager.deletePost(currentPostId);
+                    showToast('Post eliminado correctamente', 'success');
+                    closePostModal();
+                    await loadPosts();
+                } catch (error) {
+                    console.error('Error eliminando post:', error);
+                    showToast('Error al eliminar el post', 'error');
+                }
+            }
+        }
+
+        // Guardar categoría
+        async function saveCategory() {
+            const name = document.getElementById('categoryName').value.trim();
+            
+            if (!name) {
+                showToast('El nombre de la categoría es obligatorio', 'error');
+                return;
+            }
+            
+            try {
+                await categoryManager.createCategory(name);
+                showToast('Categoría creada correctamente', 'success');
+                closeCategoryModal();
+                await loadCategories();
+            } catch (error) {
+                console.error('Error creando categoría:', error);
+                showToast('Error al crear la categoría', 'error');
+            }
+        }
+
+        // Seleccionar categoría
+        function selectCategory(category) {
+            currentCategory = category;
+            
+            // Actualizar clases activas
+            const categoryItems = document.querySelectorAll('.category-item');
+            categoryItems.forEach(item => {
+                if (item.dataset.category === category) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Cargar posts de la categoría
+            loadPosts();
+        }
+
+        // Manejar carga de imágenes
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Validar tipo de archivo
+            if (!file.type.startsWith('image/')) {
+                showToast('Solo se permiten archivos de imagen', 'error');
+                return;
+            }
+            
+            // Validar tamaño (2MB máximo)
+            if (file.size > 2 * 1024 * 1024) {
+                showToast('La imagen no debe superar los 2MB', 'error');
+                return;
+            }
+            
+            // Leer imagen y convertir a base64
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const base64Image = event.target.result;
+                
+                // Insertar referencia markdown en el editor
+                const postContent = document.getElementById('postContent');
+                const cursorPos = postContent.selectionStart;
+                const textBefore = postContent.value.substring(0, cursorPos);
+                const textAfter = postContent.value.substring(cursorPos);
+                
+                // Crear referencia markdown
+                const markdownImage = `\n![${file.name}](${base64Image})\n`;
+                
+                // Insertar en la posición del cursor
+                postContent.value = textBefore + markdownImage + textAfter;
+                
+                // Actualizar preview
+                const html = marked.parse(postContent.value);
+                document.getElementById('postPreview').innerHTML = html;
+                
+                // Restablecer input de archivo
+                e.target.value = '';
+                
+                showToast('Imagen insertada correctamente', 'success');
+            };
+            
+            reader.onerror = () => {
+                showToast('Error al cargar la imagen', 'error');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // Alternar menú móvil
+        function toggleMobileMenu() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+
+        // Mostrar toast
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            const icons = {
+                success: '✓',
+                error: '✕',
+                warning: '⚠',
+                info: 'ℹ'
+            };
+            
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type]}</div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Mostrar toast
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            // Ocultar y eliminar después de 4 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 300);
+            }, 4000);
+        }
+
+        // Exportar post a PDF
+        async function exportToPDF(postId) {
+            try {
+                const post = await postManager.getPost(postId);
+                if (!post) {
+                    showToast('Post no encontrado', 'error');
+                    return;
+                }
+                
+                // Mostrar indicador de carga
+                const saveBtn = document.getElementById('saveBtn');
+                const originalText = saveBtn.textContent;
+                saveBtn.innerHTML = '<div class="loading"></div>';
+                saveBtn.disabled = true;
+                
+                // Usar jsPDF para generar PDF
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // Configurar fuentes y estilos
+                doc.setFont('helvetica');
+                doc.setFontSize(20);
+                doc.text(post.title, 20, 30);
+                
+                doc.setFontSize(12);
+                doc.setTextColor(100);
+                doc.text(`Categoría: ${post.category}`, 20, 45);
+                doc.text(`Fecha: ${new Date(post.createdAt).toLocaleDateString('es-ES')}`, 20, 55);
+                
+                // Convertir markdown a HTML y luego a texto para PDF
+                // Nota: Esta es una implementación básica. Para una mejor conversión,
+                // se necesitaría una librería más avanzada o un plugin para jsPDF
+                const htmlContent = marked.parse(post.content);
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                const textContent = tempDiv.textContent || tempDiv.innerText || '';
+                
+                // Dividir texto en líneas para el PDF
+                const lines = doc.splitTextToSize(textContent, 170);
+                doc.setFontSize(10);
+                doc.setTextColor(0);
+                doc.text(lines, 20, 70);
+                
+                // Guardar PDF
+                doc.save(`${post.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`);
+                
+                // Restaurar botón
+                saveBtn.textContent = originalText;
+                saveBtn.disabled = false;
+                
+                showToast('PDF generado correctamente', 'success');
+            } catch (error) {
+                console.error('Error generando PDF:', error);
+                showToast('Error al generar el PDF', 'error');
+                
+                // Restaurar botón en caso de error
+                const saveBtn = document.getElementById('saveBtn');
+                saveBtn.textContent = 'Guardar';
+                saveBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/rana.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#22d3ee">
+    <link rel="author" href="https://www.urukaiskick.com/">
+    <meta name="author" content="Manuel Casimiro Carrasco (Urukais Klick)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicación web de música completa con reproductor, búsqueda, playlists y favoritos integrados con YouTube">
+    <meta name="keywords" content="música, reproductor, YouTube, playlists, favoritos, streaming">
+    <meta name="author" content="MusicStream">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Urukais Klick Pro - Tu Reproductor de Música Online</title>
+    
+    <style>
+       /* ==================== CSS VARIABLES - MODERN PROFESSIONAL THEME ==================== */
+:root {
+    /* Color System - Modern Glassmorphism */
+    --primary-color: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-glow: rgba(59, 130, 246, 0.4);
+    --secondary-color: #1e293b;
+    --background-dark: #0f172a;
+    --background-light: #1e293b;
+    --background-card: rgba(30, 41, 59, 0.6);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #64748b;
+    --hover-color: #334155;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --info-color: #06b6d4;
+    
+    /* Spacing System */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    
+    /* Border Radius - Modern rounded */
+    --border-radius-sm: 8px;
+    --border-radius: 12px;
+    --border-radius-lg: 16px;
+    --border-radius-xl: 24px;
+    --border-radius-2xl: 32px;
+    
+    /* Transitions */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Shadows - Modern depth */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-primary: 0 4px 14px 0 rgba(59, 130, 246, 0.4);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(12px);
+}
+
+/* ==================== GLOBAL STYLES ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-bottom: 140px;
+    position: relative;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-dark);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ==================== HEADER ==================== */
+header {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    padding: var(--spacing-md) var(--spacing-lg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+}
+
+.header-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+h1 {
+    font-size: 1.75rem;
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px var(--primary-glow));
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+/* ==================== SEARCH SECTION ==================== */
+.search-container {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-xl);
+    margin: var(--spacing-lg) auto;
+    max-width: 1600px;
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.search-header h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-xs);
+}
+
+.search-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.search-form {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-md);
+}
+
+.search-input-group {
+    flex: 1;
+    min-width: 280px;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: var(--text-tertiary);
+    pointer-events: none;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 3rem;
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-lg);
+    background: rgba(15, 23, 42, 0.8);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition);
+    backdrop-filter: blur(4px);
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--background-dark);
+    box-shadow: var(--shadow-primary);
+}
+
+input[type="text"]::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* ==================== BUTTONS ==================== */
+button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--border-radius-lg);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+    filter: brightness(1.05);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    border-color: transparent;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--error-color), #dc2626);
+}
+
+.btn-icon {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    min-width: auto;
+    aspect-ratio: 1;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: none;
+}
+
+.btn-icon:hover {
+    background: var(--primary-color);
+    border-color: transparent;
+}
+
+/* ==================== MAIN LAYOUT ==================== */
+.main-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: var(--spacing-lg);
+}
+
+/* ==================== LOADER ==================== */
+.loader {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-xl);
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.loader.active {
+    display: flex;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--glass-border);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loader-text {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ==================== CATALOG ==================== */
+.catalog {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--glass-border);
+}
+
+.catalog-header h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.catalog-stats {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--glass-bg);
+    border-radius: var(--border-radius);
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.video-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(4px);
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.video-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    opacity: 0;
+    transition: var(--transition);
+    pointer-events: none;
+}
+
+.video-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-2xl);
+    border-color: var(--primary-color);
+}
+
+.video-card:hover::before {
+    opacity: 1;
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+    background: var(--background-dark);
+}
+
+.video-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.video-card:hover .video-thumbnail img {
+    transform: scale(1.1);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.video-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    transform: scale(0.8);
+    transition: var(--transition);
+    box-shadow: var(--shadow-lg);
+}
+
+.video-card:hover .play-icon {
+    transform: scale(1);
+}
+
+.video-info {
+    padding: var(--spacing-lg);
+}
+
+.video-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.video-channel {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.video-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.video-actions button {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.sidebar-section {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--glass-border);
+}
+
+.sidebar-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.playlist-list, .favorites-list {
+    list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.playlist-item, .favorite-item {
+    background: var(--background-card);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    border: 1px solid var(--glass-border);
+}
+
+.playlist-item:hover, .favorite-item:hover {
+    background: var(--hover-color);
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.item-info {
+    flex: 1;
+    cursor: pointer;
+    min-width: 0;
+}
+
+.item-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-count {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.item-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0;
+}
+
+/* ==================== PLAYER ==================== */
+.player-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-top: 1px solid var(--glass-border);
+    padding: var(--spacing-md) var(--spacing-lg);
+    z-index: 200;
+    box-shadow: var(--shadow-2xl);
+}
+
+.player-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.current-song {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.current-thumbnail {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--border-radius);
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
+}
+
+.current-info h4 {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.current-info p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.controls-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.controls-buttons button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1.125rem;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--glass-border);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+}
+
+.progress-bar:hover {
+    height: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.1s linear;
+    position: relative;
+    box-shadow: var(--shadow-glow);
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    transition: var(--transition);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.progress-bar:hover .progress-fill::after {
+    opacity: 1;
+}
+
+.time-display {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    min-width: 40px;
+    font-weight: 500;
+}
+
+.player-extras {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.volume-icon {
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.volume-icon:hover {
+    color: var(--primary-color);
+}
+
+input[type="range"] {
+    width: 100px;
+    height: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: var(--glass-border);
+    border-radius: 2px;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* ==================== MODALS ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 300;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-xl);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-2xl);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--glass-border);
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: auto;
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: var(--error-color);
+    transform: rotate(90deg);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--glass-border);
+}
+
+.playlist-selection-item {
+    background: var(--background-card);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid transparent;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.playlist-selection-item:hover {
+    border-color: var(--primary-color);
+    background: var(--hover-color);
+    transform: translateX(4px);
+}
+
+/* ==================== MESSAGES ==================== */
+.message {
+    position: fixed;
+    top: 100px;
+    right: 24px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-left: 4px solid var(--success-color);
+    color: var(--text-primary);
+    z-index: 400;
+    animation: slideInRight 0.3s ease;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-weight: 500;
+    min-width: 280px;
+}
+
+.message.error {
+    border-left-color: var(--error-color);
+}
+
+.message.warning {
+    border-left-color: var(--warning-color);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.6;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    font-size: 0.875rem;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1400px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        flex-direction: row;
+    }
+    
+    .sidebar-section {
+        flex: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .player-content {
+        grid-template-columns: 240px 1fr 240px;
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .search-form {
+        flex-direction: column;
+    }
+    
+    .search-input-group {
+        min-width: 100%;
+    }
+    
+    .player-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .current-song {
+        order: 1;
+    }
+    
+    .player-controls {
+        order: 2;
+    }
+    
+    .player-extras {
+        order: 3;
+        justify-content: space-between;
+    }
+    
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        flex-direction: column;
+    }
+    
+    .controls-buttons button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .current-thumbnail {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding-bottom: 180px;
+    }
+    
+    .video-actions {
+        flex-direction: column;
+    }
+    
+    .video-actions button {
+        width: 100%;
+    }
+    
+    .search-form button {
+        width: 100%;
+    }
+    
+    .player-extras {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* ==================== UTILITIES ==================== */
+.player-iframe-container {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.queue-indicator {
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    padding: 4px 8px;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Loading animation for images */
+img[loading="lazy"] {
+    background: linear-gradient(110deg, var(--glass-border) 8%, var(--hover-color) 18%, var(--glass-border) 33%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <h1>El Niño Pro 🐸</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-secondary" onclick="scrollToSection('favorites')">
+                    ❤️ Favoritos
+                </button>
+                <button class="btn-secondary" onclick="scrollToSection('playlists')">
+                    📁 Playlists
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-container">
+        <div class="search-header">
+            <h2>Buscar Música</h2>
+            <p>Explora millones de canciones y artistas en Urukais Music</p>
+        </div>
+        <form class="search-form" id="searchForm">
+            <div class="search-input-group">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Buscar canciones, artistas, álbumes..." 
+                    required
+                    autocomplete="off"
+                >
+            </div>
+            <button type="submit">
+                🎵 Buscar Canciones
+            </button>
+            <button type="button" id="searchByArtist" class="btn-secondary">
+                👤 Buscar Artista
+            </button>
+        </form>
+    </section>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p class="loader-text">Buscando música...🐸</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Catalog -->
+        <section class="catalog">
+            <div class="catalog-header">
+                <div>
+                    <h2 id="catalogTitle">Descubre Música</h2>
+                    <span class="catalog-stats" id="catalogStats">Realiza una búsqueda para comenzar</span>
+                </div>
+            </div>
+            <div class="catalog-grid" id="catalogGrid">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎵</div>
+                    <h3>Busca tu música favorita conmigo.🐸</h3>
+                    <p>Usa la barra de búsqueda para encontrar canciones y artistas de todo el mundo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Favorites -->
+            <div class="sidebar-section" id="favorites">
+                <div class="sidebar-header">
+                    <h3>❤️ Favoritos 🐸</h3>
+                    <button class="btn-icon" id="clearFavorites" title="Limpiar favoritos">
+                        🗑️
+                    </button>
+                </div>
+                <ul class="favorites-list" id="favoritesList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon" style="font-size: 3rem;">💔</div>
+                        <p>Sin favoritos</p>
+                    </div>
+                </ul>
+            </div>
+
+            <!-- Playlists -->
+            <div class="sidebar-section" id="playlists">
+                <div class="sidebar-header">
+                    <h3>📁 Mis Playlists 🐸</h3>
+                    <button class="btn-icon" id="createPlaylist" title="Crear playlist">
+                        ➕
+                    </button>
+                </div>
+                <ul class="playlist-list" id="playlistList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon" style="font-size: 3rem;">📂</div>
+                        <p>Sin playlists</p>
+                    </div>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Player -->
+    <div class="player-container">
+        <div class="player-content">
+            <!-- Current Song -->
+            <div class="current-song">
+                <img id="currentThumbnail" class="current-thumbnail" src="" alt="Thumbnail" style="display: none;">
+                <div class="current-info">
+                    <h4 id="currentTitle">No hay canción reproduciendo</h4>
+                    <p id="currentChannel">Selecciona una canción para comenzar</p>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="player-controls">
+                <div class="controls-buttons">
+                    <button id="prevBtn" title="Anterior" disabled>⏮️</button>
+                    <button id="playPauseBtn" title="Reproducir/Pausar" disabled>▶️</button>
+                    <button id="nextBtn" title="Siguiente" disabled>⏭️</button>
+                </div>
+                <div class="progress-container">
+                    <span class="time-display" id="currentTime">0:00</span>
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="time-display" id="totalTime">0:00</span>
+                </div>
+            </div>
+
+            <!-- Extras -->
+            <div class="player-extras">
+                <button id="favoriteBtn" class="btn-icon" title="Añadir a favoritos" disabled>🤍</button>
+                <button id="addToPlaylistBtn" class="btn-icon" title="Añadir a playlist" disabled>➕</button>
+                <div class="volume-control">
+                    <span class="volume-icon" id="volumeIcon">🔊</span>
+                    <input type="range" id="volumeControl" min="0" max="100" value="70">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden YouTube Player -->
+    <div class="player-iframe-container">
+        <div id="youtubePlayer"></div>
+    </div>
+
+    <!-- Create Playlist Modal -->
+    <div class="modal" id="createPlaylistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📁 Crear Nueva Playlist</h3>
+                <button class="close-btn" id="closeCreateModal">✖</button>
+            </div>
+            <div class="modal-body">
+                <input 
+                    type="text" 
+                    id="playlistNameInput" 
+                    placeholder="Ej: Mis Favoritas 2025, Rock Clásico, Viaje..." 
+                    style="width: 100%;"
+                    maxlength="50"
+                >
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelCreatePlaylist">Cancelar</button>
+                <button id="confirmCreatePlaylist">✓ Crear Playlist</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add to Playlist Modal -->
+    <div class="modal" id="addToPlaylistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Añadir a Playlist</h3>
+                <button class="close-btn" id="closeAddModal">✖</button>
+            </div>
+            <div class="modal-body">
+                <div id="playlistSelection"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelAddToPlaylist">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Playlist Modal -->
+    <div class="modal" id="viewPlaylistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="playlistModalTitle">Playlist</h3>
+                <button class="close-btn" id="closeViewModal">✖</button>
+            </div>
+            <div class="modal-body">
+                <div id="playlistContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-danger" id="deletePlaylist">🗑️ Eliminar Playlist</button>
+                <button class="btn-secondary" id="closePlaylistView">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // ==================== CONSTANTS & STATE ====================
+        const API_KEY = 'AIzaSyCj1dUq3C0HWoRiGrJbeo0aCs2RaFwlSZo';
+        const API_BASE_URL = 'https://www.googleapis.com/youtube/v3';
+        const MAX_RESULTS = 24;
+        
+        let player = null;
+        let playerReady = false;
+        let currentQueue = [];
+        let currentIndex = -1;
+        let currentVideo = null;
+        let isPlaying = false;
+        let updateInterval = null;
+        let isMuted = false;
+
+        // ==================== YOUTUBE PLAYER INITIALIZATION ====================
+        function onYouTubeIframeAPIReady() {
+            console.log('Initializing YouTube Player...');
+            player = new YT.Player('youtubePlayer', {
+                height: '1',
+                width: '1',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            playerReady = true;
+            player.setVolume(70);
+            console.log('✓ YouTube Player Ready');
+            showMessage('Reproductor listo', 'success');
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.getElementById('playPauseBtn').textContent = '⏸️';
+                startProgressUpdate();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                document.getElementById('playPauseBtn').textContent = '▶️';
+                stopProgressUpdate();
+            } else if (event.data === YT.PlayerState.ENDED) {
+                playNext();
+            } else if (event.data === YT.PlayerState.BUFFERING) {
+                console.log('Buffering...');
+            }
+        }
+
+        function onPlayerError(event) {
+            console.error('Player Error:', event.data);
+            const errorMessages = {
+                2: 'ID de video inválido',
+                5: 'Error del reproductor HTML5',
+                100: 'Video no encontrado',
+                101: 'El propietario no permite reproducir este video',
+                150: 'El propietario no permite reproducir este video'
+            };
+            showMessage(errorMessages[event.data] || 'Error al reproducir el video', 'error');
+            playNext();
+        }
+
+        // ==================== API FUNCTIONS ====================
+        async function searchVideos(query, maxResults = MAX_RESULTS) {
+            try {
+                showLoader(true);
+                
+                const searchUrl = `${API_BASE_URL}/search?part=snippet&type=video&videoCategoryId=10&maxResults=${maxResults}&q=${encodeURIComponent(query)}&key=${API_KEY}`;
+                
+                const response = await fetch(searchUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.items || data.items.length === 0) {
+                    showMessage('No se encontraron resultados para tu búsqueda', 'warning');
+                    displayCatalog([], query);
+                    return [];
+                }
+
+                // Get video details
+                const videoIds = data.items.map(item => item.id.videoId).join(',');
+                const detailsUrl = `${API_BASE_URL}/videos?part=contentDetails,statistics&id=${videoIds}&key=${API_KEY}`;
+                const detailsResponse = await fetch(detailsUrl);
+                const detailsData = await detailsResponse.json();
+                
+                const videos = data.items.map((item, index) => {
+                    const details = detailsData.items[index];
+                    return {
+                        id: item.id.videoId,
+                        title: decodeHTMLEntities(item.snippet.title),
+                        channel: decodeHTMLEntities(item.snippet.channelTitle),
+                        thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium.url,
+                        duration: details ? parseDuration(details.contentDetails.duration) : '00:00',
+                        publishedAt: item.snippet.publishedAt
+                    };
+                });
+                
+                showMessage(`Se encontraron ${videos.length} resultados`, 'success');
+                return videos;
+                
+            } catch (error) {
+                console.error('Error al buscar videos:', error);
+                showMessage('Error al realizar la búsqueda. Verifica tu conexión.', 'error');
+                return [];
+            } finally {
+                showLoader(false);
+            }
+        }
+
+        function parseDuration(duration) {
+            const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+            if (!match) return '00:00';
+            
+            const hours = (match[1] || '').replace('H', '');
+            const minutes = (match[2] || '').replace('M', '');
+            const seconds = (match[3] || '').replace('S', '');
+            
+            const h = hours ? parseInt(hours) : 0;
+            const m = minutes ? parseInt(minutes) : 0;
+            const s = seconds ? parseInt(seconds) : 0;
+            
+            if (h > 0) {
+                return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function decodeHTMLEntities(text) {
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = text;
+            return textarea.value;
+        }
+
+        // ==================== PLAYER FUNCTIONS ====================
+        function playVideo(video, queue = null, index = null) {
+            if (!playerReady) {
+                showMessage('El reproductor aún no está listo. Espera un momento...', 'warning');
+                return;
+            }
+
+            try {
+                currentVideo = video;
+                
+                if (queue) {
+                    currentQueue = queue;
+                    currentIndex = index !== null ? index : 0;
+                } else {
+                    currentQueue = [video];
+                    currentIndex = 0;
+                }
+
+                player.loadVideoById(video.id);
+                updatePlayerUI(video);
+                enablePlayerControls();
+                updateFavoriteButton();
+                saveLastPlayed(video);
+                
+                showMessage(`Reproduciendo: ${video.title}`, 'success');
+            } catch (error) {
+                console.error('Error playing video:', error);
+                showMessage('Error al reproducir el video', 'error');
+            }
+        }
+
+        function updatePlayerUI(video) {
+            document.getElementById('currentTitle').textContent = video.title;
+            document.getElementById('currentChannel').textContent = video.channel;
+            const thumbnail = document.getElementById('currentThumbnail');
+            thumbnail.src = video.thumbnail;
+            thumbnail.style.display = 'block';
+        }
+
+        function enablePlayerControls() {
+            document.getElementById('playPauseBtn').disabled = false;
+            document.getElementById('prevBtn').disabled = currentIndex <= 0;
+            document.getElementById('nextBtn').disabled = currentIndex >= currentQueue.length - 1;
+            document.getElementById('favoriteBtn').disabled = false;
+            document.getElementById('addToPlaylistBtn').disabled = false;
+        }
+
+        function togglePlayPause() {
+            if (!playerReady || !currentVideo) {
+                showMessage('No hay ninguna canción cargada', 'warning');
+                return;
+            }
+            
+            try {
+                if (isPlaying) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo();
+                }
+            } catch (error) {
+                console.error('Error toggling play/pause:', error);
+                showMessage('Error al controlar la reproducción', 'error');
+            }
+        }
+
+        function playNext() {
+            if (currentIndex < currentQueue.length - 1) {
+                currentIndex++;
+                playVideo(currentQueue[currentIndex], currentQueue, currentIndex);
+            } else {
+                showMessage('Has llegado al final de la cola', 'warning');
+                stopProgressUpdate();
+            }
+        }
+
+        function playPrevious() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                playVideo(currentQueue[currentIndex], currentQueue, currentIndex);
+            } else {
+                showMessage('Esta es la primera canción de la cola', 'warning');
+            }
+        }
+
+        function startProgressUpdate() {
+            stopProgressUpdate();
+            updateProgress();
+            updateInterval = setInterval(updateProgress, 500);
+        }
+
+        function stopProgressUpdate() {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+                updateInterval = null;
+            }
+        }
+
+        function updateProgress() {
+            if (!player || !playerReady) return;
+            
+            try {
+                const currentTime = player.getCurrentTime();
+                const duration = player.getDuration();
+                
+                if (duration > 0) {
+                    const percentage = (currentTime / duration) * 100;
+                    document.getElementById('progressFill').style.width = percentage + '%';
+                    document.getElementById('currentTime').textContent = formatTime(currentTime);
+                    document.getElementById('totalTime').textContent = formatTime(duration);
+                }
+            } catch (error) {
+                console.error('Error updating progress:', error);
+            }
+        }
+
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function seekTo(percentage) {
+            if (!player || !playerReady || !currentVideo) return;
+            
+            try {
+                const duration = player.getDuration();
+                const seekTime = (percentage / 100) * duration;
+                player.seekTo(seekTime, true);
+            } catch (error) {
+                console.error('Error seeking:', error);
+            }
+        }
+
+        function setVolume(volume) {
+            if (!player || !playerReady) return;
+            
+            try {
+                player.setVolume(volume);
+                updateVolumeIcon(volume);
+            } catch (error) {
+                console.error('Error setting volume:', error);
+            }
+        }
+
+        function updateVolumeIcon(volume) {
+            const icon = document.getElementById('volumeIcon');
+            if (volume === 0) {
+                icon.textContent = '🔇';
+            } else if (volume < 50) {
+                icon.textContent = '🔉';
+            } else {
+                icon.textContent = '🔊';
+            }
+        }
+
+        function toggleMute() {
+            if (!player || !playerReady) return;
+            
+            try {
+                if (isMuted) {
+                    player.unMute();
+                    const volume = document.getElementById('volumeControl').value;
+                    player.setVolume(volume);
+                    isMuted = false;
+                } else {
+                    player.mute();
+                    isMuted = true;
+                    document.getElementById('volumeIcon').textContent = '🔇';
+                }
+            } catch (error) {
+                console.error('Error toggling mute:', error);
+            }
+        }
+
+        // ==================== CATALOG FUNCTIONS ====================
+        function displayCatalog(videos, searchQuery = '') {
+            const catalogGrid = document.getElementById('catalogGrid');
+            const catalogTitle = document.getElementById('catalogTitle');
+            const catalogStats = document.getElementById('catalogStats');
+            
+            if (searchQuery) {
+                catalogTitle.textContent = `Resultados para: "${searchQuery}"`;
+            }
+            
+            catalogStats.textContent = videos.length > 0 ? 
+                `${videos.length} videos encontrados` : 
+                'Sin resultados';
+            
+            catalogGrid.innerHTML = '';
+            
+            if (videos.length === 0) {
+                catalogGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>No se encontraron resultados</h3>
+                        <p>Intenta con otra búsqueda o términos diferentes</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            videos.forEach((video, index) => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" loading="lazy">
+                        <div class="play-overlay">
+                            <div class="play-icon">▶️</div>
+                        </div>
+                        <span class="video-duration">${video.duration}</span>
+                        ${currentQueue.some(v => v.id === video.id) ? '<span class="queue-indicator">En cola</span>' : ''}
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">${escapeHtml(video.title)}</div>
+                        <div class="video-channel">👤 ${escapeHtml(video.channel)}</div>
+                        <div class="video-actions">
+                            <button onclick='playVideoFromCatalog(${index})'>
+                                ▶️ Reproducir
+                            </button>
+                            <button onclick='addToFavoritesFromCatalog(${index})' class="btn-secondary">
+                                ❤️
+                            </button>
+                            <button onclick='openAddToPlaylistModalFromCatalog(${index})' class="btn-secondary">
+                                ➕
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Quick play on click
+                card.querySelector('.video-thumbnail').addEventListener('click', () => {
+                    playVideoFromCatalog(index);
+                });
+                
+                catalogGrid.appendChild(card);
+            });
+        }
+
+        let lastSearchResults = [];
+
+        function playVideoFromCatalog(index) {
+            playVideo(lastSearchResults[index], lastSearchResults, index);
+        }
+
+        function addToFavoritesFromCatalog(index) {
+            addToFavorites(lastSearchResults[index]);
+        }
+
+        function openAddToPlaylistModalFromCatalog(index) {
+            openAddToPlaylistModal(lastSearchResults[index]);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ==================== FAVORITES FUNCTIONS ====================
+        function getFavorites() {
+            try {
+                const favorites = localStorage.getItem('musicstream_favorites');
+                return favorites ? JSON.parse(favorites) : [];
+            } catch (error) {
+                console.error('Error loading favorites:', error);
+                return [];
+            }
+        }
+
+        function saveFavorites(favorites) {
+            try {
+                localStorage.setItem('musicstream_favorites', JSON.stringify(favorites));
+            } catch (error) {
+                console.error('Error saving favorites:', error);
+                showMessage('Error al guardar favoritos', 'error');
+            }
+        }
+
+        function addToFavorites(video) {
+            const favorites = getFavorites();
+            
+            if (favorites.some(fav => fav.id === video.id)) {
+                showMessage('Ya está en favoritos', 'warning');
+                return;
+            }
+            
+            favorites.unshift(video);
+            saveFavorites(favorites);
+            displayFavorites();
+            updateFavoriteButton();
+            showMessage('✓ Añadido a favoritos', 'success');
+        }
+
+        function removeFromFavorites(videoId) {
+            let favorites = getFavorites();
+            favorites = favorites.filter(fav => fav.id !== videoId);
+            saveFavorites(favorites);
+            displayFavorites();
+            updateFavoriteButton();
+            showMessage('Eliminado de favoritos', 'success');
+        }
+
+        function clearAllFavorites() {
+            if (confirm('¿Estás seguro de que quieres eliminar todos los favoritos?')) {
+                saveFavorites([]);
+                displayFavorites();
+                updateFavoriteButton();
+                showMessage('Favoritos eliminados', 'success');
+            }
+        }
+
+        function displayFavorites() {
+            const favorites = getFavorites();
+            const favoritesList = document.getElementById('favoritesList');
+            
+            favoritesList.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon" style="font-size: 3rem;">💔</div>
+                        <p>Sin favoritos</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            favorites.forEach((video, index) => {
+                const item = document.createElement('li');
+                item.className = 'favorite-item';
+                item.innerHTML = `
+                    <div class="item-info" onclick='playVideoFromFavorites(${index})'>
+                        <div class="item-title">${escapeHtml(video.title)}</div>
+                        <div class="item-count">${escapeHtml(video.channel)}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-icon" onclick='playVideoFromFavorites(${index})' title="Reproducir">▶️</button>
+                        <button class="btn-icon btn-danger" onclick="removeFromFavorites('${video.id}')" title="Eliminar">🗑️</button>
+                    </div>
+                `;
+                favoritesList.appendChild(item);
+            });
+        }
+
+        function playVideoFromFavorites(index) {
+            const favorites = getFavorites();
+            playVideo(favorites[index], favorites, index);
+        }
+
+        function updateFavoriteButton() {
+            if (!currentVideo) return;
+            
+            const favorites = getFavorites();
+            const isFavorite = favorites.some(fav => fav.id === currentVideo.id);
+            document.getElementById('favoriteBtn').textContent = isFavorite ? '❤️' : '🤍';
+        }
+
+        function toggleCurrentFavorite() {
+            if (!currentVideo) {
+                showMessage('No hay ninguna canción reproduciendo', 'warning');
+                return;
+            }
+            
+            const favorites = getFavorites();
+            const isFavorite = favorites.some(fav => fav.id === currentVideo.id);
+            
+            if (isFavorite) {
+                removeFromFavorites(currentVideo.id);
+            } else {
+                addToFavorites(currentVideo);
+            }
+        }
+
+        // ==================== PLAYLIST FUNCTIONS ====================
+        function getPlaylists() {
+            try {
+                const playlists = localStorage.getItem('musicstream_playlists');
+                return playlists ? JSON.parse(playlists) : [];
+            } catch (error) {
+                console.error('Error loading playlists:', error);
+                return [];
+            }
+        }
+
+        function savePlaylists(playlists) {
+            try {
+                localStorage.setItem('musicstream_playlists', JSON.stringify(playlists));
+            } catch (error) {
+                console.error('Error saving playlists:', error);
+                showMessage('Error al guardar playlists', 'error');
+            }
+        }
+
+        function createPlaylist(name) {
+            if (!name || name.trim() === '') {
+                showMessage('Ingresa un nombre para la playlist', 'warning');
+                return false;
+            }
+            
+            const playlists = getPlaylists();
+            
+            if (playlists.some(pl => pl.name.toLowerCase() === name.toLowerCase())) {
+                showMessage('Ya existe una playlist con ese nombre', 'error');
+                return false;
+            }
+            
+            playlists.push({
+                id: Date.now().toString(),
+                name: name.trim(),
+                videos: [],
+                createdAt: new Date().toISOString()
+            });
+            
+            savePlaylists(playlists);
+            displayPlaylists();
+            showMessage(`✓ Playlist "${name}" creada`, 'success');
+            return true;
+        }
+
+        function deletePlaylist(playlistId) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            
+            if (!playlist) return;
+            
+            if (confirm(`¿Estás seguro de que quieres eliminar la playlist "${playlist.name}"?`)) {
+                const filtered = playlists.filter(pl => pl.id !== playlistId);
+                savePlaylists(filtered);
+                displayPlaylists();
+                closeModal('viewPlaylistModal');
+                showMessage('Playlist eliminada', 'success');
+            }
+        }
+
+        function addVideoToPlaylist(playlistId, video) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            
+            if (!playlist) {
+                showMessage('Playlist no encontrada', 'error');
+                return;
+            }
+            
+            if (playlist.videos.some(v => v.id === video.id)) {
+                showMessage('El video ya está en la playlist', 'warning');
+                return;
+            }
+            
+            playlist.videos.push(video);
+            savePlaylists(playlists);
+            displayPlaylists();
+            showMessage(`✓ Añadido a "${playlist.name}"`, 'success');
+        }
+
+        function removeVideoFromPlaylist(playlistId, videoId) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            
+            if (!playlist) return;
+            
+            playlist.videos = playlist.videos.filter(v => v.id !== videoId);
+            savePlaylists(playlists);
+            displayPlaylists();
+            viewPlaylist(playlistId);
+            showMessage('Video eliminado de la playlist', 'success');
+        }
+
+        function displayPlaylists() {
+            const playlists = getPlaylists();
+            const playlistList = document.getElementById('playlistList');
+            
+            playlistList.innerHTML = '';
+            
+            if (playlists.length === 0) {
+                playlistList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon" style="font-size: 3rem;">📂</div>
+                        <p>Sin playlists</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            playlists.forEach(playlist => {
+                const item = document.createElement('li');
+                item.className = 'playlist-item';
+                item.innerHTML = `
+                    <div class="item-info" onclick="viewPlaylist('${playlist.id}')">
+                        <div class="item-title">${escapeHtml(playlist.name)}</div>
+                        <div class="item-count">${playlist.videos.length} ${playlist.videos.length === 1 ? 'canción' : 'canciones'}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-icon" onclick="viewPlaylist('${playlist.id}')" title="Ver">👁️</button>
+                        <button class="btn-icon btn-danger" onclick="deletePlaylist('${playlist.id}')" title="Eliminar">🗑️</button>
+                    </div>
+                `;
+                playlistList.appendChild(item);
+            });
+        }
+
+        function viewPlaylist(playlistId) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            
+            if (!playlist) return;
+            
+            document.getElementById('playlistModalTitle').textContent = `📁 ${playlist.name}`;
+            const content = document.getElementById('playlistContent');
+            
+            if (playlist.videos.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📂</div>
+                        <p>Esta playlist está vacía</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Añade canciones desde los resultados de búsqueda</p>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div style="margin-bottom: 1rem;">
+                        <button onclick='playPlaylist("${playlist.id}")' style="width: 100%;">
+                            ▶️ Reproducir Playlist
+                        </button>
+                    </div>
+                    ${playlist.videos.map((video, index) => `
+                        <div class="favorite-item" style="margin-bottom: 10px;">
+                            <div class="item-info" onclick='playVideoFromPlaylist("${playlist.id}", ${index})'>
+                                <div class="item-title">${escapeHtml(video.title)}</div>
+                                <div class="item-count">${escapeHtml(video.channel)} • ${video.duration}</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick='playVideoFromPlaylist("${playlist.id}", ${index})' title="Reproducir">▶️</button>
+                                <button class="btn-icon btn-danger" onclick="removeVideoFromPlaylist('${playlist.id}', '${video.id}')" title="Eliminar">🗑️</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
+            }
+            
+            openModal('viewPlaylistModal');
+            
+            document.getElementById('deletePlaylist').onclick = () => deletePlaylist(playlist.id);
+        }
+
+        function playVideoFromPlaylist(playlistId, index) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            if (playlist && playlist.videos[index]) {
+                playVideo(playlist.videos[index], playlist.videos, index);
+                closeModal('viewPlaylistModal');
+            }
+        }
+
+        function playPlaylist(playlistId) {
+            const playlists = getPlaylists();
+            const playlist = playlists.find(pl => pl.id === playlistId);
+            if (playlist && playlist.videos.length > 0) {
+                playVideo(playlist.videos[0], playlist.videos, 0);
+                closeModal('viewPlaylistModal');
+            } else {
+                showMessage('La playlist está vacía', 'warning');
+            }
+        }
+
+        // ==================== MODAL FUNCTIONS ====================
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openAddToPlaylistModal(video) {
+            const playlists = getPlaylists();
+            const selection = document.getElementById('playlistSelection');
+            
+            if (playlists.length === 0) {
+                selection.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📁</div>
+                        <h3>No tienes playlists</h3>
+                        <p>Crea una playlist primero para añadir canciones</p>
+                        <button onclick="closeModal('addToPlaylistModal'); openModal('createPlaylistModal');" style="margin-top: 1rem;">
+                            ➕ Crear Playlist
+                        </button>
+                    </div>
+                `;
+            } else {
+                selection.innerHTML = playlists.map(playlist => `
+                    <div class="playlist-selection-item" onclick='addVideoToPlaylist("${playlist.id}", ${JSON.stringify(video).replace(/"/g, "&quot;")}); closeModal("addToPlaylistModal");'>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600;">${escapeHtml(playlist.name)}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">${playlist.videos.length} canciones</div>
+                            </div>
+                            <span style="font-size: 1.5rem;">➕</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            openModal('addToPlaylistModal');
+        }
+
+        // ==================== STORAGE FUNCTIONS ====================
+        function saveLastPlayed(video) {
+            try {
+                localStorage.setItem('musicstream_last_played', JSON.stringify({
+                    video: video,
+                    timestamp: new Date().toISOString()
+                }));
+            } catch (error) {
+                console.error('Error saving last played:', error);
+            }
+        }
+
+        function loadLastPlayed() {
+            try {
+                const data = localStorage.getItem('musicstream_last_played');
+                if (data) {
+                    const { video } = JSON.parse(data);
+                    return video;
+                }
+            } catch (error) {
+                console.error('Error loading last played:', error);
+            }
+            return null;
+        }
+
+        // ==================== UI HELPERS ====================
+        function showLoader(show) {
+            const loader = document.getElementById('loader');
+            if (show) {
+                loader.classList.add('active');
+            } else {
+                loader.classList.remove('active');
+            }
+        }
+
+        function showMessage(message, type = 'success') {
+            const existingMessages = document.querySelectorAll('.message');
+            existingMessages.forEach(msg => msg.remove());
+            
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            
+            const icon = type === 'success' ? '✓' : type === 'error' ? '✖' : '⚠';
+            messageEl.innerHTML = `<span style="font-size: 1.2rem;">${icon}</span> ${message}`;
+            
+            document.body.appendChild(messageEl);
+            
+            setTimeout(() => {
+                messageEl.remove();
+            }, 3000);
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Search Form
+            document.getElementById('searchForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const query = document.getElementById('searchInput').value.trim();
+                if (query) {
+                    const videos = await searchVideos(query + ' official music video');
+                    lastSearchResults = videos;
+                    displayCatalog(videos, query);
+                }
+            });
+
+            // Search by Artist
+            document.getElementById('searchByArtist').addEventListener('click', async () => {
+                const query = document.getElementById('searchInput').value.trim();
+                if (query) {
+                    const videos = await searchVideos(query + ' music channel');
+                    lastSearchResults = videos;
+                    displayCatalog(videos, query + ' (Artista)');
+                } else {
+                    showMessage('Ingresa un nombre de artista', 'warning');
+                }
+            });
+
+            // Player Controls
+            document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
+            document.getElementById('nextBtn').addEventListener('click', playNext);
+            document.getElementById('prevBtn').addEventListener('click', playPrevious);
+            document.getElementById('favoriteBtn').addEventListener('click', toggleCurrentFavorite);
+            document.getElementById('addToPlaylistBtn').addEventListener('click', () => {
+                if (currentVideo) {
+                    openAddToPlaylistModal(currentVideo);
+                } else {
+                    showMessage('No hay ninguna canción reproduciendo', 'warning');
+                }
+            });
+
+            // Volume Control
+            document.getElementById('volumeControl').addEventListener('input', (e) => {
+                setVolume(e.target.value);
+            });
+
+            document.getElementById('volumeIcon').addEventListener('click', toggleMute);
+
+            // Progress Bar
+            document.getElementById('progressBar').addEventListener('click', (e) => {
+                const rect = e.target.getBoundingClientRect();
+                const percentage = ((e.clientX - rect.left) / rect.width) * 100;
+                seekTo(percentage);
+            });
+
+            // Favorites
+            document.getElementById('clearFavorites').addEventListener('click', clearAllFavorites);
+
+            // Playlists
+            document.getElementById('createPlaylist').addEventListener('click', () => {
+                openModal('createPlaylistModal');
+                document.getElementById('playlistNameInput').value = '';
+                document.getElementById('playlistNameInput').focus();
+            });
+
+            document.getElementById('confirmCreatePlaylist').addEventListener('click', () => {
+                const name = document.getElementById('playlistNameInput').value.trim();
+                if (createPlaylist(name)) {
+                    closeModal('createPlaylistModal');
+                }
+            });
+
+            // Enter key in playlist name input
+            document.getElementById('playlistNameInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    document.getElementById('confirmCreatePlaylist').click();
+                }
+            });
+
+            // Modal Close Buttons
+            document.getElementById('closeCreateModal').addEventListener('click', () => closeModal('createPlaylistModal'));
+            document.getElementById('cancelCreatePlaylist').addEventListener('click', () => closeModal('createPlaylistModal'));
+            document.getElementById('closeAddModal').addEventListener('click', () => closeModal('addToPlaylistModal'));
+            document.getElementById('cancelAddToPlaylist').addEventListener('click', () => closeModal('addToPlaylistModal'));
+            document.getElementById('closeViewModal').addEventListener('click', () => closeModal('viewPlaylistModal'));
+            document.getElementById('closePlaylistView').addEventListener('click', () => closeModal('viewPlaylistModal'));
+
+            // Close modals on outside click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT') return;
+                
+                switch(e.code) {
+                    case 'Space':
+                        e.preventDefault();
+                        togglePlayPause();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        playNext();
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        playPrevious();
+                        break;
+                }
+            });
+
+            // Initialize
+            displayFavorites();
+            displayPlaylists();
+            
+            console.log('✓ MusicStream Pro initialized');
+        });
+
+        // Prevent memory leaks
+        window.addEventListener('beforeunload', () => {
+            stopProgressUpdate();
+            if (player && playerReady) {
+                player.destroy();
+            }
+        });
+    </script>
+    <script defer src="assets/js/main.js"></script>
+</body>
+</html>
