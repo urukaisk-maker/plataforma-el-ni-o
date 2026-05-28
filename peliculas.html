@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recuerdos | El Niño</title>
-  <meta name="description" content="Galería de recuerdos de la plataforma gamer El Niño.">
+  <title>Películas | El Niño</title>
+  <meta name="description" content="Colección de películas temáticas gamer y celebración para El Niño.">
+  <meta name="theme-color" content="#00f5ff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./src/styles/main.css">
 </head>
 <body>
   <div class="video-background">
-    
     <video class="video-background__video" autoplay muted loop playsinline>
       <source src="./videos/video-fondo.mp4" type="video/mp4">
       Tu navegador no soporta video HTML5.
@@ -21,21 +22,38 @@
     <div class="video-background__overlay"></div>
   </div>
   <div class="app-shell">
-    <header class="site-header"><a class="brand" href="./index.html"><span class="brand__icon">EN</span><span class="brand__text">El Niño</span></a><button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú"><span></span><span></span><span></span></button><nav class="main-nav" id="mainNav" aria-label="Navegación principal"><a href="./index.html">Inicio</a><a href="./misiones.html">Misiones</a><a href="./youtube.html">YouTube</a><a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a><a href="./sorpresa.html">Sorpresa</a><a href="./leaderboard.html">Leaderboard</a><a href="./perfil.html">Mi Perfil</a><a href="./insignias.html">Insignias</a><a href="./chat.html">Chat</a><a href="./galeria.html">Galería</a><a href="./proyecto.html">Proyecto</a></nav></header>
-    <main><section class="page-hero"><p class="eyebrow">Galería desbloqueada</p><h1>Recuerdos especiales</h1><p class="hero__description">Fotos, videos, mensajes y momentos familiares preparados para guardar la celebración como una aventura inolvidable.</p></section><section class="section memory-grid" id="memoriesList"></section>      <section class="section content-panel">
-        <p class="eyebrow">Video temático</p>
-        <h2>Video para guardar los recuerdos especiales</h2>
-        <p>Un video pensado para acompañar la galería de recuerdos, fotos, mensajes familiares y momentos que quedan guardados como parte de la aventura.</p>
-        <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
-          <iframe src="https://www.youtube.com/embed/fNEhOpLzKLE" title="Video para guardar los recuerdos especiales" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+    <header class="site-header"><a class="brand" href="./index.html"><span class="brand__icon">EN</span><span class="brand__text">El Niño</span></a><button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú"><span></span><span></span><span></span></button><nav class="main-nav" id="mainNav" aria-label="Navegación principal"><a href="./index.html">Inicio</a><a href="./misiones.html">Misiones</a><a href="./youtube.html">YouTube</a><a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a><a href="./sorpresa.html">Sorpresa</a><a href="./leaderboard.html">Leaderboard</a><a href="./perfil.html">Mi Perfil</a><a href="./insignias.html">Insignias</a><a href="./proyecto.html">Proyecto</a></nav></header>
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Cine gamer</p>
+        <h1>Películas</h1>
+        <p class="hero__description">Una selección de películas y videos temáticos para celebrar a El Niño: aventura, gaming, épica y momentos inolvidables.</p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#peliculasGrid">Ver colección</a>
+          <a class="button button--ghost" href="./index.html">Volver al inicio</a>
+        </div>
+      </section>
+
+      <section id="peliculasGrid" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Colección</p>
+          <h2>Películas temáticas</h2>
+          <p>Aquí aparecerán las películas y videos que elijas compartir. Pueden ser trailers, clips especiales, recuerdos en video o cualquier contenido cinematográfico relacionado.</p>
+        </div>
+        <div class="cards-grid" id="peliculasContainer">
+          <!-- Los videos se insertarán aquí dinámicamente o manualmente -->
+          <article class="placeholder-card">
+            <h3>Próximamente</h3>
+            <p>Esta sección está preparada para recibir videos. Cuando me pases los enlaces o archivos, los integraré aquí con miniaturas, títulos y descripciones.</p>
+          </article>
         </div>
       </section>
     </main>
 
     <div class="floating-buttons">
       <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app">📲</button>
-      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">??</button>
-      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">?</button>
+      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">🎵</button>
+      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">⬆️</button>
     </div>
 
     <footer class="site-footer">
@@ -49,30 +67,20 @@
         </a>
         <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
       </div>
-
       <div class="site-footer__grid">
         <div>
           <h3>Explorar</h3>
           <a href="./misiones.html">Misiones</a>
           <a href="./youtube.html">YouTube</a>
+          <a href="./peliculas.html">Películas</a>
           <a href="./recuerdos.html">Recuerdos</a>
           <a href="./sorpresa.html">Sorpresa</a>
-          <a href="./regalo-digital.html">Regalo digital</a>
-          <a href="./rincon-gamer.html">Rincón gamer</a>
-        </div>
-        <div>
-          <h3>Campaña</h3>
-          <a href="./ceremonia-digital.html">Ceremonia digital</a>
-          <a href="./recompensas.html">Recompensas</a>
-          <a href="./premio-sorpresa.html">Premio sorpresa</a>
-          <a href="./final-epico.html">Final épico</a>
         </div>
         <div>
           <h3>Proyecto</h3>
           <a href="./proyecto.html">Visión general</a>
           <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
           <a href="./proyecto.html#api">APIs futuras</a>
-          <a class="footer-download" href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip" download title="Descargar el proyecto con dedicatoria para El Niño">Descargar proyecto para El Niño</a>
         </div>
         <div>
           <h3>Legal</h3>
@@ -81,7 +89,6 @@
           <a href="./terminos.html">Términos</a>
         </div>
       </div>
-
       <div class="site-footer__bottom">
         <span class="site-footer__copyright">© 2026 El Niño. Todos los recuerdos reservados.<br><a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">Ver proyecto en GitHub</a></span>
         <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
@@ -99,17 +106,5 @@
       window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
     });
   </script>
-  </div>
-  <script type="module" src="./src/js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
