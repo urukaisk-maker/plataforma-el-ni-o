@@ -15,7 +15,7 @@ export function renderMovies(container) {
 
   container.innerHTML = movies.map((movie) => `
     <article class="movie-card" data-movie-id="${movie.id}">
-      <button type="button" class="movie-card__link" aria-label="Ver ${movie.title}" onclick="window.open('${movie.embed}', 'pelicula_${movie.id}', 'width=1200,height=675,noopener,noreferrer')">
+      <button type="button" class="movie-card__link" aria-label="Ver ${movie.title}" onclick="window.openMovieModal('${movie.embed}', '${movie.title}')">
         <div class="movie-card__thumb">
           <img src="${movie.thumbnail}" alt="Miniatura de ${movie.title}" loading="lazy" width="480" height="360">
           <span class="movie-card__play">▶</span>

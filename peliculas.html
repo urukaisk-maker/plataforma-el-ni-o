@@ -35,11 +35,26 @@
         <div class="section-heading">
           <p class="eyebrow">Colección</p>
           <h2>Películas temáticas</h2>
-          <p>Colección de videos temáticos seleccionados. Haz clic en cualquier tarjeta para ver el video en YouTube.</p>
+          <p>Colección de videos temáticos seleccionados. Haz clic en cualquier tarjeta para reproducir el video en el reproductor integrado.</p>
         </div>
         <div class="cards-grid" id="peliculasContainer"></div>
       </section>
     </main>
+
+    <div class="modal" id="movieModal" aria-hidden="true" role="dialog" aria-labelledby="movieModalTitle">
+      <div class="modal__overlay" id="closeMovieOverlay"></div>
+      <div class="modal__dialog" style="width: min(960px, 95%);">
+        <div class="modal__header">
+          <h2 id="movieModalTitle">Reproduciendo video</h2>
+          <button class="modal__close" type="button" id="closeMovieButton" aria-label="Cerrar">×</button>
+        </div>
+        <div class="modal__body" style="padding: 0;">
+          <div class="video-embed" id="moviePlayerContainer" style="position: relative; padding-top: 56.25%; border-radius: 0; margin: 0;">
+            <iframe id="moviePlayer" src="" title="Reproductor de película" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="floating-buttons">
       <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app">📲</button>
@@ -91,6 +106,25 @@
   <script type="module">
     import { renderMovies } from "./src/js/ui/movies-view.js";
     renderMovies(document.getElementById("peliculasContainer"));
+
+    const movieModal = document.getElementById("movieModal");
+    const moviePlayer = document.getElementById("moviePlayer");
+    const closeMovieOverlay = document.getElementById("closeMovieOverlay");
+    const closeMovieButton = document.getElementById("closeMovieButton");
+
+    window.openMovieModal = function(embedUrl, title) {
+      moviePlayer.src = embedUrl + "?autoplay=1";
+      document.getElementById("movieModalTitle").textContent = title || "Reproduciendo video";
+      movieModal.setAttribute("aria-hidden", "false");
+    };
+
+    function closeMovieModal() {
+      movieModal.setAttribute("aria-hidden", "true");
+      moviePlayer.src = "";
+    }
+
+    closeMovieOverlay.addEventListener("click", closeMovieModal);
+    closeMovieButton.addEventListener("click", closeMovieModal);
 
     document.getElementById('scrollToTop').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
