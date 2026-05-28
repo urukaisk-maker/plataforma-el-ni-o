@@ -48,6 +48,7 @@ body {
   transform: translate(-50%, -50%);
   border: none;
   pointer-events: none;
+  object-fit: cover;
 }
 
 .video-background__overlay {
