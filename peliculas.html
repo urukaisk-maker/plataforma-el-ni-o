@@ -62,6 +62,7 @@
       <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">⬆️</button>
     </div>
 
+ 
     <footer class="site-footer">
       <div class="site-footer__video-bg">
         <iframe src="https://www.youtube.com/embed/pjnwYRwUA08?autoplay=1&mute=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="Video de fondo gamer" allow="autoplay; encrypted-media" loading="lazy"></iframe>
@@ -73,20 +74,31 @@
         </a>
         <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
       </div>
+
       <div class="site-footer__grid">
         <div>
           <h3>Explorar</h3>
           <a href="./misiones.html">Misiones</a>
           <a href="./youtube.html">YouTube</a>
-          <a href="./peliculas.html">Películas</a>
-          <a href="./recuerdos.html">Recuerdos</a>
+          <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
           <a href="./sorpresa.html">Sorpresa</a>
+          <a href="./regalo-digital.html">Regalo digital</a>
+          <a href="./rincon-gamer.html">Rincón gamer</a>
+        </div>
+        <div>
+          <h3>Campaña</h3>
+          <a href="./ceremonia-digital.html">Ceremonia digital</a>
+          <a href="./recompensas.html">Recompensas</a>
+          <a href="./premio-sorpresa.html">Premio sorpresa</a>
+          <a href="./final-epico.html">Final épico</a>
+          
         </div>
         <div>
           <h3>Proyecto</h3>
           <a href="./proyecto.html">Visión general</a>
           <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
           <a href="./proyecto.html#api">APIs futuras</a>
+          <a class="footer-download" href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip" download title="Descargar el proyecto con dedicatoria para El Niño">Descargar proyecto para El Niño</a>
         </div>
         <div>
           <h3>Legal</h3>
@@ -95,12 +107,24 @@
           <a href="./terminos.html">Términos</a>
         </div>
       </div>
+
       <div class="site-footer__bottom">
         <span class="site-footer__copyright">© 2026 El Niño. Todos los recuerdos reservados.<br><a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">Ver proyecto en GitHub</a></span>
         <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
       </div>
     </footer>
   </div>
+
+  <script type="module" src="./src/js/app.js"></script>
+  <script>
+    document.getElementById('scrollToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('openMusicApp').addEventListener('click', () => {
+      window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+    });
+  </script>
 
   <script type="module" src="./src/js/app.js"></script>
   <script type="module">

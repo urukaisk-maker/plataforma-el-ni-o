@@ -4902,40 +4902,47 @@ h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
-  background: rgba(0, 0, 0, 0.7);
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.75);
   border: 2px solid var(--primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--primary);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  text-shadow: 0 0 8px rgba(0, 245, 255, 0.6);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .movie-card:hover .movie-card__play {
-  background: rgba(0, 245, 255, 0.9);
+  background: rgba(0, 245, 255, 0.95);
   color: var(--bg);
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.15);
 }
 
 .movie-card__info {
-  padding: 16px;
+  padding: 18px 20px;
+  background: linear-gradient(180deg, rgba(18,20,42,0.4) 0%, var(--panel) 100%);
 }
 
 .movie-card__title {
   font-family: "Orbitron", sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0 0 8px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0 0 10px;
   color: var(--text);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movie-card__desc {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--muted);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
 }
