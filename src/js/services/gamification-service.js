@@ -75,13 +75,13 @@ export function getCurrentPlayer() {
     const player = data.players.find(p => p.id === playerId);
     
     if (!player) {
-      return INITIAL_PLAYER_STATE;
+      return JSON.parse(JSON.stringify(INITIAL_PLAYER_STATE));
     }
-    
+
     return player;
   } catch (error) {
     console.error("Error al obtener jugador actual:", error);
-    return INITIAL_PLAYER_STATE;
+    return JSON.parse(JSON.stringify(INITIAL_PLAYER_STATE));
   }
 }
 
@@ -113,18 +113,12 @@ export function addXP(amount) {
   // Verificar si subió de nivel
   if (newLevel.level > oldLevel.level) {
     player.level = newLevel.level;
-    return {
-      xpGained: amount,
-      levelUp: true,
-      newLevel: newLevel,
-      oldLevel: oldLevel
-    };
   }
-  
+
   saveCurrentPlayer(player);
   return {
     xpGained: amount,
-    levelUp: false,
+    levelUp: newLevel.level > oldLevel.level,
     newLevel: newLevel,
     oldLevel: oldLevel
   };
@@ -137,12 +131,18 @@ export function completeMission() {
   
   // Añadir XP por completar misión
   const xpResult = addXP(50);
-  
+
   // Verificar insignias
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   saveCurrentPlayer(player);
-  
+
   return {
     ...xpResult,
     newBadges
@@ -155,8 +155,14 @@ export function unlockMemory() {
   player.unlockedMemories += 1;
   
   const xpResult = addXP(25);
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   saveCurrentPlayer(player);
   
   return {
@@ -171,11 +177,17 @@ export function watchVideo() {
   player.videosWatched += 1;
   
   const xpResult = addXP(10);
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   // Actualizar misión diaria si existe
   updateDailyMissionProgress("daily_watch_video", 1);
-  
+
   saveCurrentPlayer(player);
   
   return {
@@ -190,11 +202,17 @@ export function playMusic() {
   player.musicPlays += 1;
   
   const xpResult = addXP(5);
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   // Actualizar misión diaria si existe
   updateDailyMissionProgress("daily_music", 1);
-  
+
   saveCurrentPlayer(player);
   
   return {
@@ -211,8 +229,14 @@ export function completeEarlyMission() {
     player.earlyMissions += 1;
     
     const xpResult = addXP(20); // Bonus XP
-    const newBadges = checkForNewBadges(player);
-    
+    const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+    if (levelUpInfo && !xpResult.levelUp) {
+      xpResult.levelUp = true;
+      xpResult.oldLevel = levelUpInfo.oldLevel;
+      xpResult.newLevel = levelUpInfo.newLevel;
+    }
+
     saveCurrentPlayer(player);
     
     return {
@@ -231,8 +255,14 @@ export function unlockSurpriseEarly() {
   player.surpriseUnlockedEarly = true;
   
   const xpResult = addXP(100);
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   saveCurrentPlayer(player);
   
   return {
@@ -245,17 +275,24 @@ export function unlockSurpriseEarly() {
 function checkForNewBadges(player) {
   const unlockedBadges = checkUnlockedBadges(player);
   const newBadges = [];
-  
+  let levelUpInfo = null;
+
   unlockedBadges.forEach(badge => {
     if (!player.badges.includes(badge.id)) {
       player.badges.push(badge.id);
       newBadges.push(badge);
       // Añadir XP de la insignia
       player.xp += badge.xpReward;
+      const oldLevel = getLevelFromXP(player.xp - badge.xpReward);
+      const newLevel = getLevelFromXP(player.xp);
+      if (newLevel.level > oldLevel.level) {
+        player.level = newLevel.level;
+        levelUpInfo = { oldLevel, newLevel };
+      }
     }
   });
-  
-  return newBadges;
+
+  return { newBadges, levelUpInfo };
 }
 
 // Iniciar sesión diario
@@ -298,8 +335,14 @@ export function dailyLogin() {
   updateDailyMissionProgress("daily_login", 1);
   
   const xpResult = addXP(10);
-  const newBadges = checkForNewBadges(player);
-  
+  const { newBadges, levelUpInfo } = checkForNewBadges(player);
+
+  if (levelUpInfo && !xpResult.levelUp) {
+    xpResult.levelUp = true;
+    xpResult.oldLevel = levelUpInfo.oldLevel;
+    xpResult.newLevel = levelUpInfo.newLevel;
+  }
+
   saveCurrentPlayer(player);
   
   return {
@@ -320,16 +363,16 @@ export function updateDailyMissionProgress(missionId, progress) {
     // Verificar si la misión está completada
     if (mission.progress >= 1) {
       mission.completed = true;
-      player.xp += mission.xpReward;
-      
+      addXP(mission.xpReward);
+
       // Verificar si completó todas las misiones diarias
       const allCompleted = player.dailyMissions.every(m => m.completed);
       if (allCompleted) {
         player.perfectDays += 1;
-        player.xp += 50; // Bonus por día perfecto
+        addXP(50); // Bonus por día perfecto
       }
     }
-    
+
     saveCurrentPlayer(player);
   }
 }
@@ -345,9 +388,9 @@ export function updateWeeklyMissionProgress(missionId, progress) {
     // Verificar si la misión está completada
     if (mission.progress >= mission.target) {
       mission.completed = true;
-      player.xp += mission.xpReward;
+      addXP(mission.xpReward);
     }
-    
+
     saveCurrentPlayer(player);
   }
 }
