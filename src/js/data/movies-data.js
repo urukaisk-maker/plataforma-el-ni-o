@@ -33,6 +33,5 @@ export const movies = [
   createMovie("wB2Iubu8IVc", "Película de orcos 21"),
   createMovie("eKJnD83yC_k", "Película de orcos 22"),
   createMovie("ADQQ4zx3Qbg", "Película de orcos 23"),
-  createMovie("qxbzZD9O_oI", "Película de orcos 24"),
-  createMovie("Ff_Xk6G-OWM", "Película de orcos 25")
+  createMovie("Ff_Xk6G-OWM", "Película de orcos 24")
 ];

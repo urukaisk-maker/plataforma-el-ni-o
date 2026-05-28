@@ -4867,8 +4867,16 @@ h2 {
 
 .movie-card__link {
   display: block;
+  width: 100%;
   text-decoration: none;
   color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
 }
 
 .movie-card__thumb {

@@ -13,9 +13,9 @@ export function renderMovies(container) {
     return;
   }
 
-  container.innerHTML = movies.map((movie, index) => `
+  container.innerHTML = movies.map((movie) => `
     <article class="movie-card" data-movie-id="${movie.id}">
-      <a href="${movie.url}" target="_blank" rel="noopener noreferrer" class="movie-card__link" aria-label="Ver ${movie.title}">
+      <button type="button" class="movie-card__link" aria-label="Ver ${movie.title}" onclick="window.open('${movie.embed}', 'pelicula_${movie.id}', 'width=1200,height=675,noopener,noreferrer')">
         <div class="movie-card__thumb">
           <img src="${movie.thumbnail}" alt="Miniatura de ${movie.title}" loading="lazy" width="480" height="360">
           <span class="movie-card__play">▶</span>
@@ -24,7 +24,7 @@ export function renderMovies(container) {
           <h3 class="movie-card__title">${movie.title}</h3>
           ${movie.description ? `<p class="movie-card__desc">${movie.description}</p>` : ""}
         </div>
-      </a>
+      </button>
     </article>
   `).join("");
 }
