@@ -1185,6 +1185,27 @@ p {
   color: var(--primary);
 }
 
+.site-footer__grid .footer-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  padding: 11px 13px;
+  border: 1px solid rgba(255, 228, 92, 0.46);
+  border-radius: 16px;
+  color: #071018;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  box-shadow: 0 0 22px rgba(255, 228, 92, 0.18);
+  font-weight: 900;
+  text-align: center;
+}
+
+.site-footer__grid .footer-download:hover {
+  color: #071018;
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.28), 0 0 42px rgba(255, 228, 92, 0.22);
+  transform: translateY(-2px);
+}
+
 .site-footer__bottom {
   display: flex;
   flex-wrap: wrap;
