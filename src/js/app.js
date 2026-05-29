@@ -1,7 +1,11 @@
 import { renderMissions } from './ui/missions-view.js';
 import { renderMemories } from './ui/memories-view.js';
 import { renderYoutubeResults } from './ui/youtube-view.js';
-import { unlockSurpriseEarly } from './services/gamification-service.js';
+import {
+  dailyLogin,
+  playMusic,
+  unlockSurpriseEarly,
+} from './services/gamification-service.js';
 import {
   showLevelUpNotification,
   showBadgeUnlockedNotification,

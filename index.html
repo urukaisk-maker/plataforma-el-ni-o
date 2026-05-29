@@ -115,6 +115,17 @@
           </div>
         </section>
 
+        <section id="dailyMissions" class="section content-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Desafíos diarios</p>
+            <h2>🔥 Racha actual: <span id="streakCount">0</span> días</h2>
+          </div>
+          <div class="daily-missions-grid" id="dailyMissionsList">
+            <p>Cargando misiones...</p>
+          </div>
+          <button class="button button--primary" id="claimDailyBtn" type="button" style="margin-top: 16px;">✅ Reclamar recompensa diaria</button>
+        </section>
+
         <section id="misiones" class="section">
           <div class="section-heading">
             <p class="eyebrow">Campaña principal</p>
@@ -368,6 +379,46 @@
 
       document.getElementById('openMusicApp').addEventListener('click', () => {
         window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+      });
+    </script>
+    <script type="module">
+      import { dailyLogin, getPlayerStats } from './src/js/services/gamification-service.js';
+      import { playSuccessSound } from './src/js/utils/audio-feedback.js';
+
+      const streakEl = document.getElementById('streakCount');
+      const listEl = document.getElementById('dailyMissionsList');
+      const claimBtn = document.getElementById('claimDailyBtn');
+
+      function renderDaily() {
+        const stats = getPlayerStats();
+        streakEl.textContent = stats.dailyStreak;
+
+        if (!stats.dailyMissions || stats.dailyMissions.length === 0) {
+          listEl.innerHTML = '<p>No hay misiones activas hoy.</p>';
+          return;
+        }
+
+        listEl.innerHTML = stats.dailyMissions.map(m => `
+          <div class="daily-mission-card" style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:8px;">
+            <span style="font-size:1.5rem;">${m.completed ? '✅' : '⬜'}</span>
+            <div style="flex:1;">
+              <strong style="color:${m.completed ? 'var(--muted)' : 'var(--text)'};text-decoration:${m.completed ? 'line-through' : 'none'};">${m.title || m.id}</strong>
+              <p style="margin:4px 0 0;font-size:0.85rem;color:var(--muted);">${m.description || ''} — +${m.xpReward || 0} XP</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      renderDaily();
+
+      claimBtn?.addEventListener('click', () => {
+        const result = dailyLogin();
+        playSuccessSound();
+        streakEl.textContent = result.dailyStreak;
+        renderDaily();
+        claimBtn.textContent = '✅ Reclamado';
+        claimBtn.disabled = true;
+        claimBtn.style.opacity = '0.6';
       });
     </script>
   </body>
