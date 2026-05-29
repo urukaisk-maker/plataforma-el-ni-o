@@ -103,6 +103,7 @@
             <li>Recibe likes y comentarios</li>
             <li>Organiza por etiquetas</li>
           </ul>
+          <a href="#" class="button button--primary" id="openUploadFromLink" style="margin-top:16px;display:inline-block;">Subir una foto</a>
         </article>
         <article class="content-panel">
           <p class="eyebrow">Interacción</p>
@@ -113,6 +114,10 @@
             <li>Reacciona con emojis</li>
             <li>Ve las fotos más recientes primero</li>
           </ul>
+          <div class="share-buttons" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+            <button class="button button--primary" id="shareGalleryBtn" type="button">Compartir galería</button>
+            <button class="button button--ghost" id="copyGalleryLinkBtn" type="button">Copiar enlace</button>
+          </div>
         </article>
       </section>
     </main>
@@ -232,6 +237,35 @@
     uploadBtn?.addEventListener('click', () => {
       uploadModal.setAttribute('aria-hidden', 'false');
       uploadModal.style.display = 'grid';
+    });
+
+    document.getElementById('openUploadFromLink')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      uploadModal.setAttribute('aria-hidden', 'false');
+      uploadModal.style.display = 'grid';
+    });
+
+    // Botones de compartir
+    document.getElementById('shareGalleryBtn')?.addEventListener('click', async () => {
+      const shareData = {
+        title: 'Galería Familiar — El Niño',
+        text: 'Mira las fotos de la familia Urukais en la plataforma El Niño.',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        try { await navigator.share(shareData); } catch (err) { /* usuario canceló */ }
+      } else {
+        alert('Tu navegador no soporta compartir nativo. Usa el botón "Copiar enlace".');
+      }
+    });
+
+    document.getElementById('copyGalleryLinkBtn')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('Enlace copiado al portapapeles: ' + window.location.href);
+      } catch (err) {
+        alert('No se pudo copiar el enlace automáticamente. Copia manualmente: ' + window.location.href);
+      }
     });
 
     const closeModal = () => {
