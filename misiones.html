@@ -58,7 +58,8 @@
       <section class="section content-panel">
         <p class="eyebrow">Video de misión</p>
         <h2>Apoyo visual para la campaña</h2>
-        <p>Un video temático para que El Niño vea cómo se vive una misión gamer y se inspire antes de comenzar.</p>
+        <p id="missionText">Un video temático para que El Niño vea cómo se vive una misión gamer y se inspire antes de comenzar.</p>
+        <button class="tts-button" type="button" id="ttsMission" aria-label="Leer en voz alta">🔊 Escuchar</button>
         <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
           <iframe src="https://www.youtube.com/embed/30l3ZermUEs" title="Video de misión gamer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
         </div>
@@ -133,6 +134,34 @@
     document.getElementById('openMusicApp').addEventListener('click', () => {
       window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
     });
+  </script>
+  <script type="module">
+    import { speak, stopSpeaking, isSpeaking } from './src/js/utils/speech.js';
+    import { playClickSound } from './src/js/utils/audio-feedback.js';
+
+    const ttsBtn = document.getElementById('ttsMission');
+    const missionText = document.getElementById('missionText');
+
+    if (ttsBtn && missionText) {
+      ttsBtn.addEventListener('click', () => {
+        playClickSound();
+        if (isSpeaking()) {
+          stopSpeaking();
+          ttsBtn.classList.remove('tts-button--speaking');
+          ttsBtn.textContent = '🔊 Escuchar';
+        } else {
+          const ok = speak(missionText.textContent, { rate: 0.85 });
+          if (ok) {
+            ttsBtn.classList.add('tts-button--speaking');
+            ttsBtn.textContent = '⏹️ Detener';
+            setTimeout(() => {
+              ttsBtn.classList.remove('tts-button--speaking');
+              ttsBtn.textContent = '🔊 Escuchar';
+            }, 5000);
+          }
+        }
+      });
+    }
   </script>
   </div>
 </body>

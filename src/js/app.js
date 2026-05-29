@@ -1,31 +1,27 @@
 import { renderMissions } from './ui/missions-view.js';
 import { renderMemories } from './ui/memories-view.js';
 import { renderYoutubeResults } from './ui/youtube-view.js';
-import {
-  dailyLogin,
-  completeMission,
-  unlockMemory,
-  watchVideo,
-  playMusic,
-  unlockSurpriseEarly,
-} from './services/gamification-service.js';
+import { unlockSurpriseEarly } from './services/gamification-service.js';
 import {
   showLevelUpNotification,
   showBadgeUnlockedNotification,
   showXPGainedNotification,
 } from './ui/gamification-view.js';
+import {
+  isOnline,
+  registerNetworkListeners,
+  toggleOfflineScreen,
+  processOfflineQueue,
+} from './utils/offline-handler.js';
+import { enableAudio, playClickSound } from './utils/audio-feedback.js';
 
 // Registrar Service Worker para PWA
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('./sw.js')
-      .then(registration => {
-        console.log('Service Worker registrado con éxito:', registration.scope);
-      })
-      .catch(error => {
-        console.log('Error al registrar Service Worker:', error);
-      });
+      .then(() => {})
+      .catch(() => {});
   });
 }
 
@@ -62,29 +58,22 @@ function closeInstallModal() {
   }
 }
 
-// Depuración inicial
-console.log('[PWA] standalone:', isStandalone());
-
 // Ocultar botón si ya estamos en modo app
 if (isStandalone()) {
   hideInstallButton();
-  console.log('[PWA] Botón oculto: app ya instalada');
 } else {
   showInstallButton();
-  console.log('[PWA] Botón visible: app no instalada');
 }
 
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
   showInstallButton();
-  console.log('[PWA] beforeinstallprompt detectado');
 });
 
 window.addEventListener('appinstalled', () => {
   deferredPrompt = null;
   hideInstallButton();
-  console.log('PWA instalada');
 });
 
 function setupInstallListeners() {
@@ -93,7 +82,6 @@ function setupInstallListeners() {
 
   installPWAButton.addEventListener('click', async e => {
     e.preventDefault();
-    console.log('[PWA] Botón clickeado. deferredPrompt:', !!deferredPrompt);
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
@@ -102,7 +90,6 @@ function setupInstallListeners() {
       }
       deferredPrompt = null;
     } else {
-      console.log('[PWA] Abriendo modal de instalación');
       openInstallModal();
     }
   });
@@ -413,3 +400,48 @@ adminUnlockAction?.addEventListener('click', () => {
     if (adminMessage) adminMessage.textContent = 'Clave incorrecta.';
   }
 });
+
+// ==================== OFFLINE HANDLING ====================
+
+if (!isOnline()) {
+  toggleOfflineScreen(true);
+}
+
+registerNetworkListeners(
+  () => {
+    toggleOfflineScreen(false);
+    processOfflineQueue(() => {});
+  },
+  () => {
+    toggleOfflineScreen(true);
+  }
+);
+
+// ==================== AUDIO FEEDBACK (táctil) ====================
+
+document.addEventListener('click', () => enableAudio(), { once: true });
+document.addEventListener('touchstart', () => enableAudio(), { once: true });
+
+// Sonido en botones principales
+document.querySelectorAll('.button, .floating-button, .nav-toggle').forEach(btn => {
+  btn.addEventListener('click', () => playClickSound());
+});
+
+// ==================== KID MODE TOGGLE ====================
+
+function initKidMode() {
+  const isKidMode = localStorage.getItem('elnino_kid_mode') === '1';
+  if (isKidMode) {
+    document.body.classList.add('kid-mode');
+  }
+
+  const kidToggle = document.getElementById('kidModeToggle');
+  if (kidToggle) {
+    kidToggle.addEventListener('click', () => {
+      const active = document.body.classList.toggle('kid-mode');
+      localStorage.setItem('elnino_kid_mode', active ? '1' : '0');
+    });
+  }
+}
+
+initKidMode();
