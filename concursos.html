@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concursos y Olimpiadas | El Niño</title>
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="page-header">
+        <h1>Concursos y Olimpiadas</h1>
+        <p>Compite, aprende y gana premios digitales.</p>
+      </header>
+
+      <main class="content">
+        <section class="section">
+          <h2>Concursos activos</h2>
+          <div id="activeContests"></div>
+        </section>
+
+        <section class="section">
+          <h2>Tus resultados</h2>
+          <div id="myResults"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer__bottom">
+          <span>Desarrollado por Urukais Klick</span>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module">
+      import { getActiveContests, getParticipation, getContestResult } from './src/js/services/contest-engine.js';
+
+      const contests = getActiveContests();
+      const container = document.getElementById('activeContests');
+
+      if (contests.length === 0) {
+        container.innerHTML = '<p>No hay concursos activos en este momento. Vuelve pronto!</p>';
+      } else {
+        container.innerHTML = contests.map(c => {
+          const participation = getParticipation(c.id);
+          const completed = participation?.completed;
+          return `
+            <div class="contest-card">
+              <div class="contest-card__header">
+                <span class="contest-card__badge">${c.subject}</span>
+                <span class="contest-card__difficulty">${c.difficulty}</span>
+              </div>
+              <h3>${c.title}</h3>
+              <p>${c.description}</p>
+              <div class="contest-card__meta">
+                <span>⏱️ ${Math.floor(c.timeLimit / 60)} min</span>
+                <span>🏆 ${c.xpReward} XP</span>
+                <span>📅 Hasta ${new Date(c.endDate).toLocaleDateString('es-ES')}</span>
+              </div>
+              ${completed
+                ? `<button class="button button--secondary" onclick="showResult('${c.id}')">Ver resultado</button>`
+                : `<a href="./concurso.html?id=${c.id}" class="button button--primary">Participar</a>`
+              }
+            </div>
+          `;
+        }).join('');
+      }
+
+      window.showResult = (contestId) => {
+        const result = getContestResult(contestId);
+        if (result) {
+          alert(`Puntuacion: ${result.score}/${result.total}\nTiempo: ${Math.floor(result.timeMs / 1000)}s\nXP ganada: ${result.xpEarned}`);
+        }
+      };
+    </script>
+  </body>
+</html>

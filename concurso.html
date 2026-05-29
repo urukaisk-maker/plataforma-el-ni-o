@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concurso | El Niño</title>
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="page-header">
+        <h1 id="contestTitle">Concurso</h1>
+        <p id="contestDescription"></p>
+        <div class="contest-timer" id="timerDisplay">--:--</div>
+      </header>
+
+      <main class="content">
+        <div id="contestPanel">
+          <div class="contest-question" id="questionContainer"></div>
+        </div>
+
+        <div id="resultPanel" style="display:none;">
+          <div class="contest-result" id="resultContent"></div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module">
+      import { getContest, startContest, answerQuestion, getCurrentQuestion, getContestResult } from './src/js/services/contest-engine.js';
+      import { getRanking } from './src/js/services/contest-engine.js';
+      import { playClickSound } from './src/js/utils/audio-feedback.js';
+      import { playSuccessSound } from './src/js/utils/audio-feedback.js';
+
+      const params = new URLSearchParams(window.location.search);
+      const contestId = params.get('id');
+      const contest = getContest(contestId);
+
+      if (!contest) {
+        document.body.innerHTML = '<div style="padding:40px;text-align:center;"><h1>Concurso no encontrado</h1><a href="./concursos.html">Volver a concursos</a></div>';
+        throw new Error('Contest not found');
+      }
+
+      document.getElementById('contestTitle').textContent = contest.title;
+      document.getElementById('contestDescription').textContent = contest.description;
+
+      const participation = startContest(contestId);
+      if (participation.completed) {
+        showResult();
+      } else {
+        renderQuestion();
+        startTimer();
+      }
+
+      function startTimer() {
+        let remaining = contest.timeLimit;
+        const display = document.getElementById('timerDisplay');
+        const interval = setInterval(() => {
+          remaining--;
+          const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+          const s = String(remaining % 60).padStart(2, '0');
+          display.textContent = `${m}:${s}`;
+          if (remaining <= 0) {
+            clearInterval(interval);
+            forceFinish();
+          }
+        }, 1000);
+      }
+
+      function renderQuestion() {
+        const q = getCurrentQuestion(contestId);
+        if (!q) {
+          showResult();
+          return;
+        }
+        const container = document.getElementById('questionContainer');
+        container.innerHTML = `
+          <h3>${q.question}</h3>
+          <div class="contest-options">
+            ${q.options.map((opt, i) => `
+              <button class="contest-option" data-index="${i}">${opt}</button>
+            `).join('')}
+          </div>
+        `;
+
+        container.querySelectorAll('.contest-option').forEach(btn => {
+          btn.addEventListener('click', () => {
+            playClickSound();
+            const idx = parseInt(btn.dataset.index, 10);
+            answerQuestion(contestId, idx);
+            renderQuestion();
+          });
+        });
+      }
+
+      function showResult() {
+        const result = getContestResult(contestId);
+        document.getElementById('contestPanel').style.display = 'none';
+        document.getElementById('resultPanel').style.display = 'block';
+
+        const ranking = getRanking(contestId, 10);
+        const passed = result && result.score >= contest.minScore;
+
+        document.getElementById('resultContent').innerHTML = `
+          <div class="contest-result__badge">${passed ? '🏆' : '⭐'}</div>
+          <h2>${passed ? '¡Felicidades!' : 'Buen intento'}</h2>
+          <p>Puntuacion: <strong>${result ? result.score : 0}/${contest.questions.length}</strong></p>
+          <p>Tiempo: ${result ? Math.floor(result.timeMs / 1000) : 0}s</p>
+          ${passed ? `<p class="contest-result__xp">+${contest.xpReward} XP</p>` : ''}
+          <div class="contest-ranking">
+            <h3>Ranking Top 10</h3>
+            <ol>
+              ${ranking.map((r, i) => `<li>#${i + 1} — ${r.score} pts</li>`).join('')}
+            </ol>
+          </div>
+          <a href="./concursos.html" class="button button--primary">Volver a concursos</a>
+        `;
+
+        if (passed) playSuccessSound();
+      }
+
+      function forceFinish() {
+        const q = getCurrentQuestion(contestId);
+        while (q) {
+          answerQuestion(contestId, -1);
+        }
+        showResult();
+      }
+    </script>
+  </body>
+</html>
