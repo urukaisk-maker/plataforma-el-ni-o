@@ -33,6 +33,7 @@ const STATIC_ASSETS = [
   './cookies.html',
   './privacidad.html',
   './terminos.html',
+  './404.html',
   './src/styles/main.css',
   './src/js/app.js',
   './favicon.svg',
