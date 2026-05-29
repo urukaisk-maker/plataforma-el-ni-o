@@ -20,8 +20,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#00f5ff" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="El Niño" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <meta name="format-detection" content="telephone=no" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -84,6 +87,7 @@
               <button class="button button--ghost music-control" id="musicButton" type="button">
                 Escuchar canción
               </button>
+              <button class="button button--ghost" id="shareAppBtn" type="button" style="display:none;">🔗 Compartir</button>
             </div>
           </div>
 
@@ -426,6 +430,19 @@
         claimBtn.disabled = true;
         claimBtn.style.opacity = '0.6';
       });
+
+      // Botón compartir app (Web Share API)
+      const shareBtn = document.getElementById('shareAppBtn');
+      if (shareBtn && navigator.share) {
+        shareBtn.style.display = '';
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: 'El Niño | Plataforma Gamer',
+            text: 'Descubre esta plataforma gamer creada para celebrar un cumpleaños especial. Misiones, recuerdos, fotos y sorpresas digitales.',
+            url: window.location.origin,
+          }).catch(() => {});
+        });
+      }
     </script>
   </body>
 </html>

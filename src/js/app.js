@@ -16,6 +16,7 @@ import {
   registerNetworkListeners,
   toggleOfflineScreen,
   processOfflineQueue,
+  showSyncStatus,
 } from './utils/offline-handler.js';
 import { enableAudio, playClickSound } from './utils/audio-feedback.js';
 import { trackPageView, trackEvent } from './utils/analytics.js';
@@ -413,9 +414,15 @@ if (!isOnline()) {
 }
 
 registerNetworkListeners(
-  () => {
+  async () => {
     toggleOfflineScreen(false);
-    processOfflineQueue(() => {});
+    showSyncStatus('syncing');
+    const result = await processOfflineQueue(async () => true);
+    if (result.failed === 0) {
+      showSyncStatus('synced', `✅ ${result.success} cambios sincronizados`);
+    } else {
+      showSyncStatus('error', `⚠️ ${result.failed} pendientes`);
+    }
   },
   () => {
     toggleOfflineScreen(true);

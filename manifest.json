@@ -30,5 +30,38 @@
   ],
   "categories": ["entertainment", "games", "social"],
   "lang": "es",
-  "dir": "ltr"
+  "dir": "ltr",
+  "share_target": {
+    "action": "./galeria.html",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Misiones",
+      "short_name": "Misiones",
+      "description": "Ver misiones activas",
+      "url": "./misiones.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Galería",
+      "short_name": "Galería",
+      "description": "Ver fotos de la familia",
+      "url": "./galeria.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mi Perfil",
+      "short_name": "Perfil",
+      "description": "Ver progreso y logros",
+      "url": "./perfil.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192" }]
+    }
+  ]
 }

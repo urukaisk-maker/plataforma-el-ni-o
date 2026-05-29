@@ -66,23 +66,93 @@ export function clearOfflineQueue() {
   }
 }
 
+const MAX_RETRIES = 3;
+
 /**
- * Procesa la cola offline (ejecutar cuando vuelve la conexión).
- * @param {function} processor - Función que recibe cada acción
+ * Procesa la cola offline con retry automático.
+ * @param {function} processor - Función async que recibe cada acción, devuelve true si éxito
+ * @returns {Promise<{success:number,failed:number}>}
  */
-export function processOfflineQueue(processor) {
+export async function processOfflineQueue(processor) {
   const queue = getOfflineQueue();
-  if (queue.length === 0) return;
+  if (queue.length === 0) return { success: 0, failed: 0 };
 
-  queue.forEach(item => {
+  const failed = [];
+  let successCount = 0;
+
+  for (const item of queue) {
+    const retries = item.retries || 0;
     try {
-      processor(item);
+      const ok = await processor(item);
+      if (ok) {
+        successCount++;
+      } else {
+        throw new Error('Processor returned false');
+      }
     } catch {
-      // Ignorar errores individuales
+      if (retries < MAX_RETRIES) {
+        failed.push({ ...item, retries: retries + 1 });
+      }
     }
-  });
+  }
 
-  clearOfflineQueue();
+  // Guardar los que fallaron para reintentar después
+  if (failed.length > 0) {
+    try {
+      localStorage.setItem(OFFLINE_KEY, JSON.stringify(failed));
+    } catch {
+      // Silencioso
+    }
+  } else {
+    clearOfflineQueue();
+  }
+
+  return { success: successCount, failed: failed.length };
+}
+
+/**
+ * Resolución de conflictos: última escritura gana (timestamp).
+ * @param {object} local
+ * @param {object} remote
+ * @returns {object} el ganador
+ */
+export function resolveConflict(local, remote) {
+  const localTime = local.timestamp || 0;
+  const remoteTime = remote.timestamp || 0;
+  return localTime >= remoteTime ? local : remote;
+}
+
+/**
+ * Muestra un indicador de estado de sincronización.
+ * @param {string} status - 'syncing' | 'synced' | 'error'
+ * @param {string} message
+ */
+export function showSyncStatus(status, message = '') {
+  let indicator = document.getElementById('syncIndicator');
+  if (!indicator) {
+    indicator = document.createElement('div');
+    indicator.id = 'syncIndicator';
+    indicator.style.cssText = 'position:fixed;bottom:80px;right:16px;z-index:9998;padding:8px 14px;border-radius:12px;font-size:0.8rem;font-weight:600;transition:all 0.3s ease;opacity:0;transform:translateY(10px);';
+    document.body.appendChild(indicator);
+  }
+
+  const styles = {
+    syncing: 'background:rgba(0,245,255,0.2);color:var(--primary);border:1px solid rgba(0,245,255,0.3);',
+    synced: 'background:rgba(124,255,107,0.2);color:var(--success);border:1px solid rgba(124,255,107,0.3);',
+    error: 'background:rgba(255,49,90,0.2);color:var(--danger);border:1px solid rgba(255,49,90,0.3);',
+  };
+
+  indicator.style.cssText += styles[status] || styles.syncing;
+  indicator.textContent = message || { syncing: '📡 Sincronizando...', synced: '✅ Sincronizado', error: '❌ Error de sync' }[status];
+  indicator.style.opacity = '1';
+  indicator.style.transform = 'translateY(0)';
+
+  if (status !== 'syncing') {
+    setTimeout(() => {
+      indicator.style.opacity = '0';
+      indicator.style.transform = 'translateY(10px)';
+    }, 3000);
+  }
 }
 
 /**
