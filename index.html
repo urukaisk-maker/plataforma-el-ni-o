@@ -381,6 +381,9 @@
       </footer>
     </div>
 
+    <button class="tutor-fab" id="tutorFab" type="button" title="Tutor IA" aria-label="Abrir tutor IA">🤖</button>
+    <div id="tutorContainer" style="display:none;"></div>
+
     <script type="module" src="./src/js/app.js"></script>
     <script>
       document.getElementById('scrollToTop').addEventListener('click', () => {
@@ -443,6 +446,23 @@
           }).catch(() => {});
         });
       }
+
+      // Tutor IA
+      import { renderTutorModal } from './src/js/ui/tutor-ai-view.js';
+      const tutorFab = document.getElementById('tutorFab');
+      const tutorContainer = document.getElementById('tutorContainer');
+      let tutorOpen = false;
+
+      tutorFab?.addEventListener('click', () => {
+        tutorOpen = !tutorOpen;
+        if (tutorOpen) {
+          tutorContainer.style.display = 'block';
+          renderTutorModal(tutorContainer);
+        } else {
+          tutorContainer.style.display = 'none';
+          tutorContainer.innerHTML = '';
+        }
+      });
     </script>
   </body>
 </html>
