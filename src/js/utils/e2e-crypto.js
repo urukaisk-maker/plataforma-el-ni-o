@@ -26,7 +26,7 @@ export async function exportKey(key) {
  * Importa una clave desde raw base64.
  */
 export async function importKey(base64Key) {
-  const raw = base64ToArrayBuffer(base64Key);
+  const raw = new Uint8Array(base64ToArrayBuffer(base64Key));
   return crypto.subtle.importKey('raw', raw, ALGO, true, ['encrypt', 'decrypt']);
 }
 
@@ -51,7 +51,7 @@ export async function encryptMessage(text, key) {
  * @param {CryptoKey} key
  */
 export async function decryptMessage(base64Payload, key) {
-  const combined = base64ToArrayBuffer(base64Payload);
+  const combined = new Uint8Array(base64ToArrayBuffer(base64Payload));
   const iv = combined.slice(0, 12);
   const ciphertext = combined.slice(12);
   const decrypted = await crypto.subtle.decrypt({ name: ALGO.name, iv }, key, ciphertext);

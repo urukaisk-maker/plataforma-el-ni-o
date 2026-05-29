@@ -3,6 +3,7 @@ export default {
   testEnvironment: 'jsdom',
   roots: ['<rootDir>/src/js'],
   testMatch: ['**/__tests__/**/*.test.js'],
+  setupFiles: ['<rootDir>/src/js/__tests__/setup.js'],
   collectCoverageFrom: ['src/js/utils/*.js', 'src/js/services/*.js'],
   coverageThreshold: {
     global: {

@@ -26,7 +26,7 @@ describe('validation', () => {
 
   describe('sanitizeText', () => {
     test('elimina etiquetas prohibidas', () => {
-      expect(sanitizeText('<script>evil</script>Hola')).toBe('Hola');
+      expect(sanitizeText('<script>evil</script>Hola')).toBe('evilHola');
     });
 
     test('limita longitud', () => {

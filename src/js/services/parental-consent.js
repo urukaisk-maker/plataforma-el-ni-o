@@ -73,11 +73,11 @@ export function revokeConsent() {
  * Indica si la cuenta tiene consentimiento valido.
  */
 export function hasValidConsent() {
-  const s = getConsentStatus();
-  if (!s) return false;
   // Si es mayor de edad, no se requiere consentimiento
   const savedAge = localStorage.getItem('elnino_user_age');
   if (savedAge && parseInt(savedAge, 10) >= MIN_AGE) return true;
+  const s = getConsentStatus();
+  if (!s) return false;
   return s.approved === true && s.verified === true;
 }
 
