@@ -6474,3 +6474,138 @@ body.kid-mode .main-nav a {
   color: var(--primary);
   font-weight: 600;
 }
+
+/* ==================== PRIVACY PANEL ==================== */
+
+.privacy-panel {
+  max-width: 720px;
+  margin: 24px auto;
+}
+
+.privacy-intro {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.privacy-group {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.privacy-group h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.privacy-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.privacy-item:last-child {
+  border-bottom: none;
+}
+
+.privacy-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.privacy-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.privacy-toggle:last-child {
+  border-bottom: none;
+}
+
+.privacy-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.privacy-toggle__track {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.privacy-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--text);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.privacy-toggle input:checked + .privacy-toggle__track {
+  background: var(--primary);
+}
+
+.privacy-toggle input:checked + .privacy-toggle__track .privacy-toggle__thumb {
+  transform: translateX(20px);
+  background: #080914;
+}
+
+.privacy-toggle__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.privacy-toggle__info strong {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.privacy-toggle__info span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.privacy-select {
+  margin-left: 12px;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+}
+
+.privacy-actions .button {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.privacy-actions .button--danger {
+  background: var(--danger);
+}
+
+.privacy-warning {
+  font-size: 0.8rem;
+  color: var(--danger);
+  text-align: center;
+  margin-top: 8px;
+}

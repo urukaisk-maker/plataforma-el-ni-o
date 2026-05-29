@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Privacidad | El Nino</title>
+  <link rel="stylesheet" href="./src/styles/main.css" />
+  <link rel="icon" type="image/png" href="./favicon-32x32.png" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="./index.html">
+        <span class="brand__icon">EN</span>
+        <span class="brand__text">El Nino</span>
+      </a>
+      <nav class="main-nav">
+        <a href="./index.html">Inicio</a>
+        <a href="./perfil.html">Perfil</a>
+        <a href="./panel-privacidad.html" class="active">Privacidad</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container" id="privacyContainer"></div>
+    </main>
+
+    <footer class="site-footer">
+      <p>El Nino &copy; 2026</p>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { renderPrivacyPanel } from './src/js/ui/privacy-panel.js';
+    renderPrivacyPanel(document.getElementById('privacyContainer'));
+  </script>
+</body>
+</html>
