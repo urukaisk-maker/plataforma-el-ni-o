@@ -20,6 +20,14 @@ import {
 } from './utils/offline-handler.js';
 import { enableAudio, playClickSound } from './utils/audio-feedback.js';
 import { trackPageView, trackEvent } from './utils/analytics.js';
+import { startOnboarding, hasCompletedOnboarding, getOnboardingData } from './utils/onboarding.js';
+import { getMyReferralCode, shareReferralCode } from './services/referral-service.js';
+import {
+  areNotificationsSupported,
+  requestNotificationPermission,
+  scheduleSmartNotifications,
+  sendWelcomeNotification,
+} from './utils/push-notifications.js';
 
 // Registrar Service Worker para PWA
 if ('serviceWorker' in navigator) {
@@ -466,5 +474,37 @@ trackPageView();
 document.querySelectorAll('.main-nav a, .button[href]').forEach(link => {
   link.addEventListener('click', () => {
     trackEvent('navigation', 'click', link.getAttribute('href') || '');
+  });
+});
+
+// ==================== ONBOARDING ====================
+
+if (!hasCompletedOnboarding()) {
+  setTimeout(() => {
+    startOnboarding(data => {
+      const onboardingData = getOnboardingData();
+      if (onboardingData.mascot) {
+        sendWelcomeNotification(onboardingData.mascot);
+      }
+      // Solicitar notificaciones tras onboarding
+      if (areNotificationsSupported()) {
+        requestNotificationPermission().then(granted => {
+          if (granted) scheduleSmartNotifications();
+        });
+      }
+    });
+  }, 1500);
+}
+
+// ==================== REFERRAL SYSTEM ====================
+
+// Exponer funciones de referidos para uso en páginas
+window.shareReferralCode = shareReferralCode;
+window.getMyReferralCode = getMyReferralCode;
+
+// Botón de referido en perfil (si existe)
+document.getElementById('shareReferralBtn')?.addEventListener('click', () => {
+  shareReferralCode().then(ok => {
+    if (ok) alert(`¡Código ${getMyReferralCode()} copiado/compartido!`);
   });
 });

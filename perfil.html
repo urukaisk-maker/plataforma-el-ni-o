@@ -92,6 +92,19 @@
           </article>
         </section>
 
+        <section class="section content-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Invita a tus amigos</p>
+            <h2>Programa de referidos</h2>
+            <p>Comparte tu código y gana <strong style="color:var(--primary);">100 XP</strong> por cada amigo que se una.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
+            <div style="background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.3);padding:12px 20px;border-radius:12px;font-family:'Orbitron',sans-serif;font-weight:700;color:var(--primary);letter-spacing:1px;" id="myReferralCodeDisplay">NINO-XXXXX</div>
+            <button class="button button--primary" id="shareReferralBtn" type="button">🔗 Compartir código</button>
+          </div>
+          <div id="referralStatus" style="margin-top:12px;font-size:0.9rem;color:var(--muted);"></div>
+        </section>
+
         <section class="section">
           <div class="section-heading">
             <p class="eyebrow">Insignias recientes</p>
@@ -215,6 +228,14 @@
 
       // Iniciar sesión diario y cargar perfil
       dailyLogin();
+
+      // Mostrar código de referido
+      import { getMyReferralCode, getReferralStatus } from './src/js/services/referral-service.js';
+      document.getElementById('myReferralCodeDisplay').textContent = getMyReferralCode();
+      const refStatus = getReferralStatus();
+      if (refStatus.invitedCount > 0) {
+        document.getElementById('referralStatus').textContent = `Has invitado a ${refStatus.invitedCount} amigos. ¡Sigue así!`;
+      }
 
       // Renderizar componentes
       renderPlayerProfile(document.getElementById('playerProfileContainer'));

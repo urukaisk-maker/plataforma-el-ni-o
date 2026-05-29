@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>El Niño | Plataforma Gamer Educativa para Colegios y Familias</title>
+    <meta name="description" content="Plataforma gamer personalizada para celebraciones, gamificación educativa y engagement familiar. Ideal para colegios, familias y eventos infantiles." />
+    <meta property="og:title" content="El Niño | Plataforma Gamer Educativa" />
+    <meta property="og:description" content="Gamificación, misiones, recuerdos y sorpresas digitales para colegios y familias." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/landing.html" />
+    <meta property="og:image" content="https://silly-boba-dc057e.netlify.app/icon-512.png" />
+    <meta name="theme-color" content="#00f5ff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <style>
+      .landing-hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 48px 24px;
+      }
+      .landing-hero h1 {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        margin-bottom: 20px;
+      }
+      .landing-hero p {
+        max-width: 640px;
+        margin: 0 auto 32px;
+        font-size: 1.15rem;
+        color: var(--muted);
+      }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .feature-card {
+        padding: 32px 24px;
+        text-align: center;
+      }
+      .feature-card__icon {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .pricing-table {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .pricing-card {
+        padding: 32px 24px;
+        text-align: center;
+        position: relative;
+      }
+      .pricing-card--highlight {
+        border-color: var(--primary);
+        box-shadow: 0 0 40px rgba(0, 245, 255, 0.15);
+      }
+      .pricing-card__price {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--primary);
+        font-family: 'Orbitron', sans-serif;
+      }
+      .testimonial {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 32px;
+      }
+      .cta-section {
+        text-align: center;
+        padding: 64px 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header" style="position:relative;">
+        <a class="brand" href="./landing.html" aria-label="Ir al inicio">
+          <span class="brand__icon">EN</span>
+          <span class="brand__text">El Niño</span>
+        </a>
+        <nav class="main-nav" id="mainNav" aria-label="Navegación principal" style="position:static;opacity:1;pointer-events:auto;transform:none;background:none;box-shadow:none;padding:0;">
+          <a href="#features">Funciones</a>
+          <a href="#pricing">Precios</a>
+          <a href="#testimonials">Casos</a>
+          <a href="./index.html" class="button button--primary" style="padding:8px 18px;min-height:auto;font-size:0.85rem;">Probar demo</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="landing-hero">
+          <div>
+            <p class="eyebrow">Gamificación educativa</p>
+            <h1>Convierte cualquier celebración en una <span>aventura digital</span></h1>
+            <p>Plataforma personalizable para colegios, familias y eventos infantiles. Misiones gamificadas, recuerdos digitales, galerías fotográficas y recompensas que motivan.</p>
+            <div class="hero__actions" style="justify-content:center;">
+              <a class="button button--primary" href="./index.html">Probar demo gratuita</a>
+              <a class="button button--ghost" href="#pricing">Ver precios</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="features" class="section">
+          <div class="section-heading" style="text-align:center;">
+            <p class="eyebrow">Funciones</p>
+            <h2>¿Qué incluye El Niño?</h2>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">🎯</span>
+              <h3>Misiones Gamificadas</h3>
+              <p>Crea retos personalizados con XP, niveles e insignias. Motiva a los niños a completar tareas educativas.</p>
+            </article>
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">📸</span>
+              <h3>Galería y Recuerdos</h3>
+              <p>Sube fotos, añade comentarios y reacciones. Un álbum digital privado para la familia o clase.</p>
+            </article>
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">🔥</span>
+              <h3>Rachas Diarias</h3>
+              <p>Sistema de rachas y desafíos diarios que fomenta la constancia y el hábito de aprendizaje.</p>
+            </article>
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">🗣️</span>
+              <h3>Lectura en Voz Alta</h3>
+              <p>Web Speech API integrada para niños con dificultades de lectura o que prefieren escuchar.</p>
+            </article>
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">📱</span>
+              <h3>PWA y App Nativa</h3>
+              <p>Funciona offline, instalable en móvil. Futura app React Native para iOS y Android.</p>
+            </article>
+            <article class="feature-card content-panel">
+              <span class="feature-card__icon">🔒</span>
+              <h3>Privacidad Infantil</h3>
+              <p>Sin publicidad, sin rastreadores. Datos locales por defecto. Consentimiento parental integrado.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="pricing" class="section">
+          <div class="section-heading" style="text-align:center;">
+            <p class="eyebrow">Precios</p>
+            <h2>Planes para colegios y familias</h2>
+          </div>
+          <div class="pricing-table">
+            <article class="pricing-card content-panel">
+              <h3>Familia</h3>
+              <div class="pricing-card__price">Gratis</div>
+              <p style="color:var(--muted);margin-bottom:20px;">Para uso personal y familiar</p>
+              <ul style="text-align:left;color:var(--muted);margin-bottom:24px;">
+                <li>1 perfil de niño</li>
+                <li>Misiones ilimitadas</li>
+                <li>Galería familiar</li>
+                <li>Sincronización manual (JSON)</li>
+              </ul>
+              <a href="./index.html" class="button button--ghost" style="width:100%;">Empezar gratis</a>
+            </article>
+            <article class="pricing-card content-panel pricing-card--highlight">
+              <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#080914;padding:4px 14px;border-radius:999px;font-size:0.75rem;font-weight:800;">RECOMENDADO</div>
+              <h3>Colegio</h3>
+              <div class="pricing-card__price">49€<span style="font-size:1rem;color:var(--muted);">/mes</span></div>
+              <p style="color:var(--muted);margin-bottom:20px;">Hasta 30 alumnos por clase</p>
+              <ul style="text-align:left;color:var(--muted);margin-bottom:24px;">
+                <li>Hasta 5 clases</li>
+                <li>Panel de profesor</li>
+                <li>Leaderboard por clase</li>
+                <li>Importación CSV de alumnos</li>
+                <li>Soporte por email</li>
+              </ul>
+              <a href="mailto:urukais@click.es?subject=Interesado%20en%20plan%20Colegio" class="button button--primary" style="width:100%;">Contactar</a>
+            </article>
+            <article class="pricing-card content-panel">
+              <h3>Institución</h3>
+              <div class="pricing-card__price">199€<span style="font-size:1rem;color:var(--muted);">/mes</span></div>
+              <p style="color:var(--muted);margin-bottom:20px;">Colegios completos y distritos</p>
+              <ul style="text-align:left;color:var(--muted);margin-bottom:24px;">
+                <li>Alumnos ilimitados</li>
+                <li>Integración Google Classroom</li>
+                <li>SSO / Clever</li>
+                <li>API pública</li>
+                <li>Soporte prioritario</li>
+              </ul>
+              <a href="mailto:urukais@click.es?subject=Interesado%20en%20plan%20Institucion" class="button button--ghost" style="width:100%;">Contactar</a>
+            </article>
+          </div>
+        </section>
+
+        <section id="testimonials" class="section">
+          <div class="section-heading" style="text-align:center;">
+            <p class="eyebrow">Casos de éxito</p>
+            <h2>Lo que dicen familias y docentes</h2>
+          </div>
+          <div class="testimonial content-panel">
+            <p style="font-size:1.1rem;line-height:1.8;font-style:italic;">"Mi hijo nunca había estado tan motivado para hacer tareas. El sistema de misiones y rachas funcionó mejor que cualquier recompensa material."</p>
+            <p style="margin-top:16px;color:var(--primary);font-weight:700;">— María P., madre de 2 hijos</p>
+          </div>
+          <div class="testimonial content-panel">
+            <p style="font-size:1.1rem;line-height:1.8;font-style:italic;">"Implementamos El Niño en 3 aulas de primaria. El engagement subió un 40% y los niños colaboran entre ellos para completar misiones grupales."</p>
+            <p style="margin-top:16px;color:var(--primary);font-weight:700;">— Prof. García, CEIP Reus</p>
+          </div>
+        </section>
+
+        <section class="cta-section">
+          <p class="eyebrow">Empezar ahora</p>
+          <h2 style="margin-bottom:16px;">¿Listo para gamificar tu aula o celebración?</h2>
+          <p style="color:var(--muted);max-width:500px;margin:0 auto 32px;">La demo es gratuita y no requiere registro. Prueba todas las funciones y decide después.</p>
+          <div class="hero__actions" style="justify-content:center;">
+            <a class="button button--primary" href="./index.html">Probar demo gratuita</a>
+            <a class="button button--ghost" href="mailto:urukais@click.es">Contactar ventas</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__bottom" style="justify-content:center;flex-wrap:wrap;gap:12px;">
+          <span>© 2026 El Niño — Manuel Casimiro Carrasco, Desarrollador Web</span>
+          <span>Reus, Tarragona (España)</span>
+          <span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">silly-boba-dc057e.netlify.app</a></span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

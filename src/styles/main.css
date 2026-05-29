@@ -5627,6 +5627,136 @@ body.kid-mode .main-nav a {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* ==================== ONBOARDING ==================== */
+
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 9, 20, 0.92);
+  backdrop-filter: blur(16px);
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.onboarding-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.onboarding-progress {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.onboarding-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.onboarding-step__emoji {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: bounce 1.5s infinite;
+}
+
+.onboarding-step__title {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--text);
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+}
+
+.onboarding-step__desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.onboarding-skip {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.onboarding-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.onboarding-avatar-btn {
+  font-size: 2.5rem;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.onboarding-avatar-btn:hover,
+.onboarding-avatar-btn.selected {
+  border-color: var(--primary);
+  background: rgba(0, 245, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.onboarding-mascot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.onboarding-mascot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.onboarding-mascot-btn:hover,
+.onboarding-mascot-btn.selected {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.05);
+}
+
 /* ==================== ANIMATIONS ==================== */
 
 @keyframes pulse {
@@ -5636,5 +5766,15 @@ body.kid-mode .main-nav a {
   }
   50% {
     opacity: 0.6;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
   }
 }

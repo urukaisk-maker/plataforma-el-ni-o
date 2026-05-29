@@ -146,8 +146,19 @@ self.addEventListener('sync', event => {
 // Función para sincronizar datos (placeholder para futura implementación)
 async function syncData() {
   // Aquí se implementaría la sincronización con la nube
-  console.log('Sincronizando datos con la nube...');
 }
+
+// Escuchar mensajes desde la página para notificaciones locales
+self.addEventListener('message', event => {
+  if (event.data?.type === 'SHOW_NOTIFICATION') {
+    const { title, options } = event.data;
+    self.registration.showNotification(title, {
+      ...options,
+      icon: options.icon || './icon-192.png',
+      badge: options.badge || './icon-192.png',
+    });
+  }
+});
 
 // Manejo de notificaciones push (placeholder para futura implementación)
 self.addEventListener('push', event => {
