@@ -30,11 +30,9 @@ export async function shareContent(options) {
 
 // Fallback para compartir en navegadores antiguos
 function shareFallback(options) {
-  const { title, text, url } = options;
+  const { text, url } = options;
   const shareUrl = url || APP_URL;
   const shareText = encodeURIComponent(text || '¡Mira esta plataforma gamer increíble!');
-  const shareTitle = encodeURIComponent(title || APP_NAME);
-
   // Abrir ventana de compartir genérica
   const shareWindow = window.open(
     `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`,

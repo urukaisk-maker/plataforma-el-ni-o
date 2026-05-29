@@ -14,10 +14,6 @@ function setVideoState(videoId, data) {
   localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
-function getYoutubeApiCache() {
-  return JSON.parse(localStorage.getItem(youtubeApiCacheKey) ?? 'null');
-}
-
 function setYoutubeApiCache(data) {
   localStorage.setItem(youtubeApiCacheKey, JSON.stringify(data));
 }
@@ -113,36 +109,6 @@ function enrichPlaylists(playlists) {
 
     return { ...playlist, videos, tags };
   });
-}
-
-function mapApiVideos(items) {
-  return items
-    .map((item, index) => {
-      const videoId = item.id?.videoId;
-      const snippet = item.snippet ?? {};
-      const durationMinutes = 10 + index * 3;
-
-      return {
-        id: videoId,
-        title: snippet.title ?? `Video de YouTube ${index + 1}`,
-        channel: snippet.channelTitle ?? 'YouTube',
-        url: `https://www.youtube.com/watch?v=${videoId}`,
-        thumbnail:
-          snippet.thumbnails?.high?.url ??
-          snippet.thumbnails?.medium?.url ??
-          snippet.thumbnails?.default?.url ??
-          `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-        tags: ['#youtube', '#api', '#gamer'],
-        durationMinutes,
-        durationType: getDurationType(durationMinutes),
-        views: 1000000 + index * 150000,
-        likes: 45000 + index * 2500,
-        ratio: 'API',
-        language: 'Español',
-        publishedAt: snippet.publishedAt ?? new Date().toISOString(),
-      };
-    })
-    .filter(video => video.id);
 }
 
 async function getYoutubePlaylists() {

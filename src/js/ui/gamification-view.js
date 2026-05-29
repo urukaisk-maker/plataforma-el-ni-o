@@ -1,6 +1,6 @@
 // Vista de gamificación - Componentes UI para mostrar niveles, XP y progreso
 import { getPlayerStats, getLeaderboard } from '../services/gamification-service.js';
-import { LEVELS, BADGES } from '../data/gamification.js';
+import { LEVELS } from '../data/gamification.js';
 
 // Renderizar barra de XP del jugador
 export function renderXPBar(container) {
