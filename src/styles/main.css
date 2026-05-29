@@ -166,6 +166,15 @@ a {
   box-shadow: 0 0 24px rgba(0, 245, 255, 0.55);
 }
 
+.brand__tagline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(255, 228, 92, 0.45);
+}
+
 .main-nav {
   position: absolute;
   top: calc(100% + 10px);
