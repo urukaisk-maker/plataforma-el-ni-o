@@ -6,7 +6,19 @@ import {
   addCommentReaction,
   removeCommentReaction,
   getAvailableReactions,
-  getCurrentUser
+  getCurrentUser,
+  toggleLike,
+  hasUserLiked,
+  getLikesCount,
+  getMessages,
+  sendMessage,
+  addMessageReaction,
+  markAsRead,
+  getPhotos,
+  togglePhotoLike,
+  getPhotoComments,
+  addPhotoComment,
+  uploadPhoto as uploadPhotoService
 } from "../services/social-service.js";
 
 // ==================== COMENTARIOS ====================
@@ -141,8 +153,6 @@ function renderCommentItem(comment, reactions, currentUser) {
 
 // ==================== LIKES ====================
 
-import { toggleLike, hasUserLiked, getLikesCount } from "../services/social-service.js";
-
 // Renderizar botón de like
 export function renderLikeButton(container, targetType, targetId) {
   if (!container) return;
@@ -189,8 +199,6 @@ export function renderLikesSection(container, targetType, targetId) {
 }
 
 // ==================== CHAT ====================
-
-import { getMessages, sendMessage, addMessageReaction, markAsRead } from "../services/social-service.js";
 
 // Renderizar chat
 export function renderChat(container) {
@@ -318,8 +326,6 @@ function renderChatMessage(message, currentUser) {
 }
 
 // ==================== GALERÍA DE FOTOS ====================
-
-import { getPhotos, togglePhotoLike, getPhotoComments, addPhotoComment, uploadPhoto as uploadPhotoService } from "../services/social-service.js";
 
 // Renderizar galería de fotos
 export function renderGallery(container) {

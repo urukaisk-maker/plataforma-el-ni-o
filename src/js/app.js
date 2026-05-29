@@ -195,7 +195,7 @@ const birthdayDate = new Date("2026-06-24T00:00:00");
 
 // si este navegador ya fue marcado como propietario, desbloquea
 const isOwner = localStorage.getItem("elnino_owner") === "1";
-if (isOwner) {
+if (isOwner && unlockButton && surpriseButton) {
   showUnlockButton();
   unlockSurpriseButton();
 }
@@ -332,11 +332,17 @@ if (navToggle && siteHeader) {
   });
 }
 
-renderMissions(missionsList);
-renderYoutubeResults(youtubeResults, youtubeStatus);
-renderMemories(memoriesList, {
-  limit: Number(memoriesList?.dataset.memoryLimit) || undefined
-});
+if (missionsList) {
+  renderMissions(missionsList);
+}
+if (youtubeResults) {
+  renderYoutubeResults(youtubeResults, youtubeStatus);
+}
+if (memoriesList) {
+  renderMemories(memoriesList, {
+    limit: Number(memoriesList?.dataset.memoryLimit) || undefined
+  });
+}
 
 // Integración del sistema de gamificación
 // Iniciar sesión diario al cargar la página
