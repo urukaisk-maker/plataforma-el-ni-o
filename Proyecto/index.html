@@ -878,7 +878,7 @@
       <div><span class="logo-text">EL NIÑO</span><span class="logo-sub">gaming platform</span></div>
     </div>
     <div class="nav-links">
-      <button class="nlink" onclick="goto('Vídeos')">Vídeos</button>
+      <button class="nlink" onclick="goto('videos')">Videos</button>
       <button class="nlink" onclick="goto('memorias')">Memorias</button>
       <button class="nlink" onclick="goto('misiones')">Misiones</button>
       <button class="nlink" onclick="goto('ranking')">Ranking</button>
@@ -934,18 +934,18 @@
       </p>
       <div class="hacts">
         <button class="btnp">Entrar ahora</button>
-        <button class="btng" onclick="goto('Vídeos')">Ver Vídeos</button>
+        <button class="btng" onclick="goto('videos')">Ver videos</button>
       </div>
     </div>
     <div class="hvis">
       <div class="stc"><div class="sti">🌪️</div></div>
       <div class="stt tl"><span class="nn">48K</span><span class="ll">Online ahora</span></div>
       <div class="stt br2"><span class="nn">$25K</span><span class="ll">Premio torneo</span></div>
-      <div class="stt tr2"><span class="nn">57</span><span class="ll">Vídeos</span></div>
+      <div class="stt tr2"><span class="nn">57</span><span class="ll">Videos</span></div>
     </div>
   </div>
 
-  <div id="Vídeos">
+  <div id="videos">
     <div class="shdr">
       <div class="stitle">📺 El Niño TV</div>
       <div class="slabel">// Haz clic en una lista para reproducir</div>
@@ -1239,7 +1239,7 @@
 
   const PL = RP.map((p, pi) => {
     const tags = getTags(p.title);
-    const Vídeos = p.vids.map((id, vi) => {
+    const videos = p.vids.map((id, vi) => {
       const dm = 6 + ((pi + vi) % 9) * 5;
       const views = 850000 + (pi + 1) * 420000 + vi * 175000;
       return {
@@ -1255,7 +1255,7 @@
         publishedAt: new Date(2026, Math.max(0, 5 - pi), Math.max(1, 24 - vi * 2)).toISOString(),
       };
     });
-    return { ...p, tags, Vídeos };
+    return { ...p, tags, videos };
   });
 
   const S = { vst: {}, apl: null, ci: 0, am: -1, ams: -1 };
@@ -1285,22 +1285,22 @@
   }
   function playVid(idx) {
     if (!S.apl) return;
-    S.ci = (idx + S.apl.Vídeos.length) % S.apl.Vídeos.length;
-    const v = S.apl.Vídeos[S.ci];
+    S.ci = (idx + S.apl.videos.length) % S.apl.videos.length;
+    const v = S.apl.videos[S.ci];
     document.getElementById('ytf').src =
       `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
     document.getElementById('pt').textContent =
       `${S.apl.title.split(':').slice(1).join(':').trim() || S.apl.title} — Video ${S.ci + 1}`;
     document.getElementById('pch').textContent = `El Niño TV · ${v.tags.join(' ')}`;
     document.getElementById('pln').textContent = S.apl.title.split(':')[0];
-    const ctr = `Video ${S.ci + 1} de ${S.apl.Vídeos.length}`;
+    const ctr = `Video ${S.ci + 1} de ${S.apl.videos.length}`;
     document.getElementById('pctr').textContent = ctr;
     document.getElementById('pctrb').textContent = ctr;
     const vs = S.vst[v.id] || {};
     document.getElementById('scb').checked = !!vs.seen;
     document.getElementById('rsel').value = vs.rating || '';
     const ll = document.getElementById('pllist');
-    ll.innerHTML = S.apl.Vídeos
+    ll.innerHTML = S.apl.videos
       .map((vv, i) => {
         const vs2 = S.vst[vv.id] || {};
         return `<div class="plitem ${i === S.ci ? 'on' : ''}" onclick="playVid(${i})"><div class="plthumb"><img src="${vv.thumbnail}" loading="lazy" onerror="this.style.opacity=0"></div><div class="plinfo"><div class="plname">Video ${i + 1}</div><div class="plmeta">${fmtD(vv.dm)}${vs2.seen ? ' · ✓' : ''}${vs2.rating ? ' · ' + vs2.rating + '★' : ''}</div></div></div>`;
@@ -1321,14 +1321,14 @@
     playVid(S.ci + d);
   }
   function toggleSeen() {
-    const v = S.apl?.Vídeos[S.ci];
+    const v = S.apl?.videos[S.ci];
     if (!v) return;
     S.vst[v.id] = { ...(S.vst[v.id] || {}), seen: document.getElementById('scb').checked };
     saveSt();
     playVid(S.ci);
   }
   function saveRating() {
-    const v = S.apl?.Vídeos[S.ci];
+    const v = S.apl?.videos[S.ci];
     if (!v) return;
     S.vst[v.id] = { ...(S.vst[v.id] || {}), rating: document.getElementById('rsel').value };
     saveSt();
@@ -1340,14 +1340,14 @@
     const so = document.getElementById('sosel')?.value || 'recent';
     let res = PL.map(p => ({
       ...p,
-      Vídeos: p.Vídeos.filter(v => {
+      videos: p.videos.filter(v => {
         const t = norm(`${p.title} ${p.desc} ${v.title} ${v.channel} ${v.tags.join(' ')}`);
         return (!sr || t.includes(sr)) && (du === 'all' || v.durationType === du);
       }),
-    })).filter(p => p.Vídeos.length);
+    })).filter(p => p.videos.length);
     return res.map(p => ({
       ...p,
-      Vídeos: [...p.Vídeos].sort((a, b) => {
+      videos: [...p.videos].sort((a, b) => {
         if (so === 'views') return b.views - a.views;
         if (so === 'longest') return b.dm - a.dm;
         if (so === 'oldest') return new Date(a.publishedAt) - new Date(b.publishedAt);
@@ -1366,15 +1366,15 @@
       st.textContent = '';
       return;
     }
-    const tv = fpl.reduce((s, p) => s + p.Vídeos.length, 0);
-    st.textContent = `${fpl.length} listas · ${tv} Vídeos`;
+    const tv = fpl.reduce((s, p) => s + p.videos.length, 0);
+    st.textContent = `${fpl.length} listas · ${tv} videos`;
     g.innerHTML = fpl
       .map((p, i) => {
-        const m = p.Vídeos[0];
-        const tm2 = p.Vídeos.reduce((s, v) => s + v.dm, 0);
-        const av = p.Vídeos.reduce((s, v) => s + v.views, 0) / p.Vídeos.length;
+        const m = p.videos[0];
+        const tm2 = p.videos.reduce((s, v) => s + v.dm, 0);
+        const av = p.videos.reduce((s, v) => s + v.views, 0) / p.videos.length;
         const isOn = S.apl?.title === p.title;
-        return `<div class="pcard ${isOn ? 'on' : ''}" onclick="openPlayer(${i})"><div class="pcthumb"><img src="${m.thumbnail}" loading="lazy" onerror="this.style.opacity=0.3" alt=""><div class="pcplay"><div class="pcplaybtn"><i class="ti ti-player-play" style="font-size:14px;color:#0A0A0C" aria-hidden="true"></i></div></div></div><div class="pcbody"><div class="pcgenre">${p.title.split(':')[0]}</div><div class="pctitle">${p.title.split(':').slice(1).join(':').trim() || p.title}</div><div class="pcdesc">${p.desc}</div><div class="pctags">${p.tags.map(t => `<span class="vtag">${t}</span>`).join('')}</div><div class="pcstats">${p.Vídeos.length} Vídeos · ${fmtD(tm2)} · ${fmtV(av)} media</div></div></div>`;
+        return `<div class="pcard ${isOn ? 'on' : ''}" onclick="openPlayer(${i})"><div class="pcthumb"><img src="${m.thumbnail}" loading="lazy" onerror="this.style.opacity=0.3" alt=""><div class="pcplay"><div class="pcplaybtn"><i class="ti ti-player-play" style="font-size:14px;color:#0A0A0C" aria-hidden="true"></i></div></div></div><div class="pcbody"><div class="pcgenre">${p.title.split(':')[0]}</div><div class="pctitle">${p.title.split(':').slice(1).join(':').trim() || p.title}</div><div class="pcdesc">${p.desc}</div><div class="pctags">${p.tags.map(t => `<span class="vtag">${t}</span>`).join('')}</div><div class="pcstats">${p.videos.length} videos · ${fmtD(tm2)} · ${fmtV(av)} media</div></div></div>`;
       })
       .join('');
   }

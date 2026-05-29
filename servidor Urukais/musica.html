@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -1408,7 +1408,7 @@ img[loading="lazy"] {
     <section class="search-container">
         <div class="search-header">
             <h2>Buscar Música</h2>
-            <p>Explora millones de Canciónes y artistas en Urukais Music</p>
+            <p>Explora millones de canciones y artistas en Urukais Music</p>
         </div>
         <form class="search-form" id="searchForm">
             <div class="search-input-group">
@@ -1416,13 +1416,13 @@ img[loading="lazy"] {
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Buscar Canciónes, artistas, álbumes..." 
+                    placeholder="Buscar canciones, artistas, álbumes..." 
                     required
                     autocomplete="off"
                 >
             </div>
             <button type="submit">
-                🎵 Buscar Canciónes
+                🎵 Buscar Canciones
             </button>
             <button type="button" id="searchByArtist" class="btn-secondary">
                 👤 Buscar Artista
@@ -1450,7 +1450,7 @@ img[loading="lazy"] {
                 <div class="empty-state">
                     <div class="empty-state-icon">🎵</div>
                     <h3>Busca tu música favorita conmigo.🐸</h3>
-                    <p>Usa la barra de búsqueda para encontrar Canciónes y artistas de todo el mundo</p>
+                    <p>Usa la barra de búsqueda para encontrar canciones y artistas de todo el mundo</p>
                 </div>
             </div>
         </section>
@@ -1668,7 +1668,7 @@ img[loading="lazy"] {
         }
 
         // ==================== API FUNCTIONS ====================
-        async function searchVídeos(query, maxResults = MAX_RESULTS) {
+        async function searchVideos(query, maxResults = MAX_RESULTS) {
             try {
                 showLoader(true);
                 
@@ -1690,11 +1690,11 @@ img[loading="lazy"] {
 
                 // Get video details
                 const videoIds = data.items.map(item => item.id.videoId).join(',');
-                const detailsUrl = `${API_BASE_URL}/Vídeos?part=contentDetails,statistics&id=${videoIds}&key=${API_KEY}`;
+                const detailsUrl = `${API_BASE_URL}/videos?part=contentDetails,statistics&id=${videoIds}&key=${API_KEY}`;
                 const detailsResponse = await fetch(detailsUrl);
                 const detailsData = await detailsResponse.json();
                 
-                const Vídeos = data.items.map((item, index) => {
+                const videos = data.items.map((item, index) => {
                     const details = detailsData.items[index];
                     return {
                         id: item.id.videoId,
@@ -1706,11 +1706,11 @@ img[loading="lazy"] {
                     };
                 });
                 
-                showMessage(`Se encontraron ${Vídeos.length} resultados`, 'success');
-                return Vídeos;
+                showMessage(`Se encontraron ${videos.length} resultados`, 'success');
+                return videos;
                 
             } catch (error) {
-                console.error('Error al buscar Vídeos:', error);
+                console.error('Error al buscar videos:', error);
                 showMessage('Error al realizar la búsqueda. Verifica tu conexión.', 'error');
                 return [];
             } finally {
@@ -1918,7 +1918,7 @@ img[loading="lazy"] {
         }
 
         // ==================== CATALOG FUNCTIONS ====================
-        function displayCatalog(Vídeos, searchQuery = '') {
+        function displayCatalog(videos, searchQuery = '') {
             const catalogGrid = document.getElementById('catalogGrid');
             const catalogTitle = document.getElementById('catalogTitle');
             const catalogStats = document.getElementById('catalogStats');
@@ -1927,13 +1927,13 @@ img[loading="lazy"] {
                 catalogTitle.textContent = `Resultados para: "${searchQuery}"`;
             }
             
-            catalogStats.textContent = Vídeos.length > 0 ? 
-                `${Vídeos.length} Vídeos encontrados` : 
+            catalogStats.textContent = videos.length > 0 ? 
+                `${videos.length} videos encontrados` : 
                 'Sin resultados';
             
             catalogGrid.innerHTML = '';
             
-            if (Vídeos.length === 0) {
+            if (videos.length === 0) {
                 catalogGrid.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">🔍</div>
@@ -1944,7 +1944,7 @@ img[loading="lazy"] {
                 return;
             }
             
-            Vídeos.forEach((video, index) => {
+            videos.forEach((video, index) => {
                 const card = document.createElement('div');
                 card.className = 'video-card';
                 card.innerHTML = `
@@ -2153,7 +2153,7 @@ img[loading="lazy"] {
             playlists.push({
                 id: Date.now().toString(),
                 name: name.trim(),
-                Vídeos: [],
+                videos: [],
                 createdAt: new Date().toISOString()
             });
             
@@ -2187,12 +2187,12 @@ img[loading="lazy"] {
                 return;
             }
             
-            if (playlist.Vídeos.some(v => v.id === video.id)) {
+            if (playlist.videos.some(v => v.id === video.id)) {
                 showMessage('El video ya está en la playlist', 'warning');
                 return;
             }
             
-            playlist.Vídeos.push(video);
+            playlist.videos.push(video);
             savePlaylists(playlists);
             displayPlaylists();
             showMessage(`✓ Añadido a "${playlist.name}"`, 'success');
@@ -2204,7 +2204,7 @@ img[loading="lazy"] {
             
             if (!playlist) return;
             
-            playlist.Vídeos = playlist.Vídeos.filter(v => v.id !== videoId);
+            playlist.videos = playlist.videos.filter(v => v.id !== videoId);
             savePlaylists(playlists);
             displayPlaylists();
             viewPlaylist(playlistId);
@@ -2233,7 +2233,7 @@ img[loading="lazy"] {
                 item.innerHTML = `
                     <div class="item-info" onclick="viewPlaylist('${playlist.id}')">
                         <div class="item-title">${escapeHtml(playlist.name)}</div>
-                        <div class="item-count">${playlist.Vídeos.length} ${playlist.Vídeos.length === 1 ? 'canción' : 'Canciónes'}</div>
+                        <div class="item-count">${playlist.videos.length} ${playlist.videos.length === 1 ? 'canción' : 'canciones'}</div>
                     </div>
                     <div class="item-actions">
                         <button class="btn-icon" onclick="viewPlaylist('${playlist.id}')" title="Ver">👁️</button>
@@ -2253,12 +2253,12 @@ img[loading="lazy"] {
             document.getElementById('playlistModalTitle').textContent = `📁 ${playlist.name}`;
             const content = document.getElementById('playlistContent');
             
-            if (playlist.Vídeos.length === 0) {
+            if (playlist.videos.length === 0) {
                 content.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📂</div>
                         <p>Esta playlist está vacía</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Añade Canciónes desde los resultados de búsqueda</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Añade canciones desde los resultados de búsqueda</p>
                     </div>
                 `;
             } else {
@@ -2268,7 +2268,7 @@ img[loading="lazy"] {
                             ▶️ Reproducir Playlist
                         </button>
                     </div>
-                    ${playlist.Vídeos.map((video, index) => `
+                    ${playlist.videos.map((video, index) => `
                         <div class="favorite-item" style="margin-bottom: 10px;">
                             <div class="item-info" onclick='playVideoFromPlaylist("${playlist.id}", ${index})'>
                                 <div class="item-title">${escapeHtml(video.title)}</div>
@@ -2291,8 +2291,8 @@ img[loading="lazy"] {
         function playVideoFromPlaylist(playlistId, index) {
             const playlists = getPlaylists();
             const playlist = playlists.find(pl => pl.id === playlistId);
-            if (playlist && playlist.Vídeos[index]) {
-                playVideo(playlist.Vídeos[index], playlist.Vídeos, index);
+            if (playlist && playlist.videos[index]) {
+                playVideo(playlist.videos[index], playlist.videos, index);
                 closeModal('viewPlaylistModal');
             }
         }
@@ -2300,8 +2300,8 @@ img[loading="lazy"] {
         function playPlaylist(playlistId) {
             const playlists = getPlaylists();
             const playlist = playlists.find(pl => pl.id === playlistId);
-            if (playlist && playlist.Vídeos.length > 0) {
-                playVideo(playlist.Vídeos[0], playlist.Vídeos, 0);
+            if (playlist && playlist.videos.length > 0) {
+                playVideo(playlist.videos[0], playlist.videos, 0);
                 closeModal('viewPlaylistModal');
             } else {
                 showMessage('La playlist está vacía', 'warning');
@@ -2328,7 +2328,7 @@ img[loading="lazy"] {
                     <div class="empty-state">
                         <div class="empty-state-icon">📁</div>
                         <h3>No tienes playlists</h3>
-                        <p>Crea una playlist primero para añadir Canciónes</p>
+                        <p>Crea una playlist primero para añadir canciones</p>
                         <button onclick="closeModal('addToPlaylistModal'); openModal('createPlaylistModal');" style="margin-top: 1rem;">
                             ➕ Crear Playlist
                         </button>
@@ -2340,7 +2340,7 @@ img[loading="lazy"] {
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <div style="font-weight: 600;">${escapeHtml(playlist.name)}</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary);">${playlist.Vídeos.length} Canciónes</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">${playlist.videos.length} canciones</div>
                             </div>
                             <span style="font-size: 1.5rem;">➕</span>
                         </div>
@@ -2417,9 +2417,9 @@ img[loading="lazy"] {
                 e.preventDefault();
                 const query = document.getElementById('searchInput').value.trim();
                 if (query) {
-                    const Vídeos = await searchVídeos(query + ' official music video');
-                    lastSearchResults = Vídeos;
-                    displayCatalog(Vídeos, query);
+                    const videos = await searchVideos(query + ' official music video');
+                    lastSearchResults = videos;
+                    displayCatalog(videos, query);
                 }
             });
 
@@ -2427,9 +2427,9 @@ img[loading="lazy"] {
             document.getElementById('searchByArtist').addEventListener('click', async () => {
                 const query = document.getElementById('searchInput').value.trim();
                 if (query) {
-                    const Vídeos = await searchVídeos(query + ' music channel');
-                    lastSearchResults = Vídeos;
-                    displayCatalog(Vídeos, query + ' (Artista)');
+                    const videos = await searchVideos(query + ' music channel');
+                    lastSearchResults = videos;
+                    displayCatalog(videos, query + ' (Artista)');
                 } else {
                     showMessage('Ingresa un nombre de artista', 'warning');
                 }
