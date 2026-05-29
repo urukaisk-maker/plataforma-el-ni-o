@@ -18,6 +18,7 @@ import {
   processOfflineQueue,
 } from './utils/offline-handler.js';
 import { enableAudio, playClickSound } from './utils/audio-feedback.js';
+import { trackPageView, trackEvent } from './utils/analytics.js';
 
 // Registrar Service Worker para PWA
 if ('serviceWorker' in navigator) {
@@ -449,3 +450,14 @@ function initKidMode() {
 }
 
 initKidMode();
+
+// ==================== ANALYTICS ====================
+
+trackPageView();
+
+// Rastrear clicks en navegación
+document.querySelectorAll('.main-nav a, .button[href]').forEach(link => {
+  link.addEventListener('click', () => {
+    trackEvent('navigation', 'click', link.getAttribute('href') || '');
+  });
+});
