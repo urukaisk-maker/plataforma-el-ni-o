@@ -102,6 +102,22 @@
             <button class="button button--ghost" id="resetBtn">Restablecer valores</button>
           </div>
         </section>
+
+        <section class="section content-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Copia de seguridad</p>
+            <h2>Transferir progreso entre dispositivos</h2>
+            <p>Exporta todos tus datos (progreso, fotos, chat, personalización) a un archivo JSON. Luego impórtalo en otro dispositivo para continuar donde lo dejaste.</p>
+          </div>
+          <div class="data-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+            <button class="button button--primary" id="backupAllBtn" type="button">💾 Descargar copia completa</button>
+            <label class="button button--ghost" style="cursor:pointer;position:relative;overflow:hidden;">
+              📁 Restaurar desde archivo
+              <input type="file" id="restoreAllInput" accept=".json" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
+            </label>
+          </div>
+          <p id="backupStatus" style="margin-top:12px;font-size:0.9rem;color:var(--muted);"></p>
+        </section>
       </main>
 
       <div class="floating-buttons">
@@ -283,6 +299,31 @@
           renderAvatarEditor(document.getElementById('avatarEditorContainer'));
           renderThemeSelector(document.getElementById('themeSelectorContainer'));
         }
+      });
+
+      // Backup completo
+      import { downloadBackup, importAllData, readBackupFile } from './src/js/utils/data-portability.js';
+
+      document.getElementById('backupAllBtn')?.addEventListener('click', () => {
+        downloadBackup();
+        document.getElementById('backupStatus').textContent = '✅ Copia descargada correctamente';
+      });
+
+      document.getElementById('restoreAllInput')?.addEventListener('change', async e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const payload = await readBackupFile(file);
+          if (confirm('Esto reemplazará todos los datos actuales. ¿Continuar?')) {
+            const result = importAllData(payload);
+            document.getElementById('backupStatus').textContent = result.success
+              ? `✅ Datos restaurados: ${result.imported} claves importadas`
+              : `⚠️ Restaurado con ${result.errors} errores`;
+          }
+        } catch (err) {
+          document.getElementById('backupStatus').textContent = '❌ Error: ' + err.message;
+        }
+        e.target.value = '';
       });
     </script>
     <script>
