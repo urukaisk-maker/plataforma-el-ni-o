@@ -22,35 +22,59 @@
 <body>
   <div class="video-background">
     
-    <iframe class="video-background__video" src="https://www.youtube.com/embed/pjnwYRwUA08?mute=1&autoplay=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0" title="Video de fondo gamer" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+    <iframe class="video-background__video" src="https://www.youtube.com/embed/jfKfPfyJRdk?mute=1&autoplay=1&loop=1&playlist=jfKfPfyJRdk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0" title="Video de fondo cookies" allow="autoplay; encrypted-media" loading="lazy"></iframe>
     <div class="video-background__overlay"></div>
   </div>  <div class="app-shell">
     <header class="site-header"><a class="brand" href="./index.html"><span class="brand__icon">EN</span><span class="brand__text">El Niño</span></a><button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú"><span></span><span></span><span></span></button><nav class="main-nav" id="mainNav" aria-label="Navegación principal"><a href="./index.html">Inicio</a><a href="./misiones.html">Misiones</a><a href="./youtube.html">YouTube</a><a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a><a href="./sorpresa.html">Sorpresa</a><a href="./proyecto.html">Proyecto</a></nav></header>
     <main>
-      <section class="page-hero"><p class="eyebrow">Información legal</p><h1>Política de Cookies</h1><p class="hero__description">Esta página explica cómo puede utilizar cookies la plataforma El Niño y qué opciones tiene el usuario.</p></section>
-      <section class="section content-panel legal-page">
-        <h2>1. Qué son las cookies</h2>
-        <p>Las cookies son pequeños archivos que un sitio web puede guardar en el navegador para recordar información técnica, preferencias o mejorar la experiencia de navegación.</p>
-        <h2>2. Uso actual de cookies</h2>
-        <p>En esta versión inicial, El Niño funciona como una plataforma familiar estática y no instala cookies propias para seguimiento publicitario ni analítica avanzada.</p>
-        <h2>3. Cookies funcionales</h2>
-        <p>Si la plataforma añade controles personalizados, estilos guardados o alguna preferencia de usuario en el futuro, esas funciones podrían requerir cookies o almacenamiento local del navegador.</p>
-        <h2>4. Cookies de terceros</h2>
-        <p>La sección de YouTube puede cargar contenido externo. Al reproducir videos, YouTube o Google podrían utilizar sus propias cookies o tecnologías similares según sus políticas.</p>
-        <h2>5. Control del usuario</h2>
-        <p>El usuario puede bloquear, eliminar o configurar cookies desde las opciones de privacidad de su navegador y debe revisar siempre la configuración de su navegador si desea mayor privacidad.</p>
-        <h2>6. Menores y consentimiento</h2>
-        <p>Esta plataforma es una experiencia familiar. Si la utiliza un menor, se recomienda supervisión adulta y no compartir información personal en el sitio.</p>
-        <h2>7. Cambios en esta política</h2>
-        <p>Si en el futuro se añaden analíticas, login, publicidad o servicios adicionales, esta política deberá actualizarse y comunicarse al usuario.</p>
-        <p><strong>Última actualización:</strong> 2026</p>
+      <section class="page-hero">
+        <p class="eyebrow">Marco normativo UE — ePrivacy Directive</p>
+        <h1>Política de Cookies</h1>
+        <p class="hero__description">Documento técnico que describe el uso de tecnologías de almacenamiento local, HTTP cookies, sessionStorage y mecanismos de persistencia en la plataforma web progresiva (PWA) El Niño.</p>
       </section>
-          <section class="section content-panel">
-        <p class="eyebrow">Video temático</p>
-        <h2>Video sobre el cumpleaños gamer</h2>
-        <p>Disfruta un video inspirado en la temática de El Niño: misiones, sorpresas y celebración gamer.</p>
+
+      <section class="section content-panel legal-page">
+        <h2>1. Definición técnica y tipología</h2>
+        <p>En el contexto de esta plataforma, entendemos por <em>cookie</em> cualquier mecanismo de almacenamiento de datos en el dispositivo del usuario, incluyendo pero no limitado a: cookies HTTP (RFC 6265), objetos <code>localStorage</code> y <code>sessionStorage</code> (Web Storage API, W3C), IndexedDB y Service Worker Cache API. Estas tecnologías permiten la persistencia de estado sin necesidad de backend activo.</p>
+
+        <h2>2. Cookies propias (first-party)</h2>
+        <p>El dominio <code>silly-boba-dc057e.netlify.app</code> y sus subrecursos implementan almacenamiento local exclusivamente con finalidad funcional:</p>
+        <ul>
+          <li><strong>Preferencias de personalización (avatar, tema):</strong> clave <code>elnino_customization</code> — almacena configuración de UI sin datos personales identificativos.</li>
+          <li><strong>Progreso de gamificación:</strong> clave <code>elnino_player</code> — nivel, XP, insignias y rachas de inicio de sesión. Datos anonimizados localmente.</li>
+          <li><strong>Datos sociales (chat, galería, comentarios):</strong> claves <code>elnino_social_comments</code>, <code>elnino_social_likes</code>, <code>elnino_social_messages</code>, <code>elnino_social_photos</code>.</li>
+          <li><strong>Estado de sorpresa desbloqueada:</strong> clave <code>elnino_owner</code> — flag booleano sin vinculación a identidad real.</li>
+        </ul>
+
+        <h2>3. Cookies de terceros (third-party)</h2>
+        <p>Los iframes embebidos de YouTube (API de reproducción de video) y el reproductor de música pueden establecer cookies gestionadas por Google LLC y terceros proveedores de CDN. Estas quedan sujetas a las políticas de <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener noreferrer">Google Cookies</a>. No se integran analíticas tipo Google Analytics ni píxeles de seguimiento (Meta Pixel, etc.).</p>
+
+        <h2>4. Duración y caducidad</h2>
+        <p>El almacenamiento <code>localStorage</code> no posee caducidad nativa; persiste hasta que el usuario limpie datos del navegador. El <code>sessionStorage</code> se elimina al cerrar la pestaña. El Service Worker mantiene versiones de caché estáticas (<code>elnino-static-v2</code>) y dinámicas (<code>elnino-dynamic-v2</code>) que se purgan en cada activación de nuevo SW.</p>
+
+        <h2>5. Control y eliminación por el usuario</h2>
+        <p>El usuario puede revocar el almacenamiento mediante:</p>
+        <ul>
+          <li>DevTools del navegador → Application → Local Storage / Cookies → Eliminación manual por clave.</li>
+          <li>Configuración del navegador → Privacidad y seguridad → Borrar datos de navegación → Cookies y datos de sitios.</li>
+          <li>Desinstalación de la PWA (si fue instalada), lo que elimina el scope del Service Worker y su caché asociada.</li>
+        </ul>
+
+        <h2>6. Consentimiento y menores</h2>
+        <p>Al no existir formularios de registro ni recogida de datos personales sensibles, no se requiere banner de cookies bajo el criterio de exención por almacenamiento estrictamente funcional (art. 5.3 Directiva 2002/58/CE, modificada por 2009/136/CE). No obstante, se recomienda supervisión parental para usuarios menores de 16 años.</p>
+
+        <h2>7. Cambios y versionado</h2>
+        <p>Esta política se versiona de forma independiente al código fuente. Cualquier modificación sustancial que implique nueva recogida de datos activará un banner informativo y requerirá consentimiento explícito previo.</p>
+        <p><strong>Versión 1.1 — Última actualización:</strong> mayo 2026</p>
+      </section>
+
+      <section class="section content-panel">
+        <p class="eyebrow">Créditos</p>
+        <h2>Sobre esta plataforma</h2>
+        <p>Plataforma web progresiva (PWA) desarrollada íntegramente por <strong>Manuel Casimiro Carrasco</strong>, Desarrollador Web con sede en <strong>Reus, Tarragona (España)</strong>. Arquitectura basada en HTML5 semántico, CSS3 con variables custom properties, JavaScript ES modules y Service Worker para funcionamiento offline.</p>
+        <p>Proyecto concebido, diseñado y programado como experiencia digital interactiva con dedicatoria especial a <strong>El Niño</strong>. Todos los derechos reservados.</p>
         <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
-          <iframe src="https://www.youtube.com/embed/T9IKTEBymuM" title="Video sobre cumpleaños gamer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+          <iframe src="https://www.youtube.com/embed/T9IKTEBymuM" title="Behind the code — desarrollo web" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
         </div>
       </section>
     </main>
