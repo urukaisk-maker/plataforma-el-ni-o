@@ -508,3 +508,29 @@ document.getElementById('shareReferralBtn')?.addEventListener('click', () => {
     if (ok) alert(`¡Código ${getMyReferralCode()} copiado/compartido!`);
   });
 });
+
+// ==================== AUTO-HIDE FLOATING BUTTONS ====================
+
+(function() {
+  const container = document.querySelector('.floating-buttons');
+  if (!container) return;
+
+  let hideTimer;
+  const HIDE_DELAY = 5000;
+
+  function showButtons() {
+    container.classList.remove('floating-buttons--hidden');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      container.classList.add('floating-buttons--hidden');
+    }, HIDE_DELAY);
+  }
+
+  window.addEventListener('scroll', showButtons, { passive: true });
+  document.addEventListener('mousemove', showButtons);
+  document.addEventListener('click', showButtons);
+
+  hideTimer = setTimeout(() => {
+    container.classList.add('floating-buttons--hidden');
+  }, HIDE_DELAY);
+})();
