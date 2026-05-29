@@ -319,7 +319,7 @@ function renderChatMessage(message, currentUser) {
 
 // ==================== GALERÍA DE FOTOS ====================
 
-import { getPhotos, togglePhotoLike, getPhotoComments, addPhotoComment } from "../services/social-service.js";
+import { getPhotos, togglePhotoLike, getPhotoComments, addPhotoComment, uploadPhoto as uploadPhotoService } from "../services/social-service.js";
 
 // Renderizar galería de fotos
 export function renderGallery(container) {
@@ -456,6 +456,10 @@ function renderPhotoComments(container, photoId) {
       handleSend();
     }
   });
+}
+
+export function uploadPhoto(url, caption, tags) {
+  return uploadPhotoService(url, caption, tags);
 }
 
 // ==================== WIDGET DE CHAT FLOTANTE ====================
