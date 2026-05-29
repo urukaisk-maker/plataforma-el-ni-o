@@ -418,6 +418,40 @@
           });
         });
       })();
+
+      // Cerrar modales y menu al hacer scroll
+      (function() {
+        const siteHeader = document.querySelector('.site-header');
+        const navToggle = document.getElementById('navToggle');
+        const modals = [
+          document.getElementById('birthdayModal'),
+          document.getElementById('adminModal'),
+          document.getElementById('installModal'),
+        ];
+        const tutorContainer = document.getElementById('tutorContainer');
+
+        function closeAllOnScroll() {
+          // Cerrar menu movil
+          if (siteHeader?.classList.contains('nav-open')) {
+            siteHeader.classList.remove('nav-open');
+            navToggle?.setAttribute('aria-expanded', 'false');
+          }
+          // Cerrar modales
+          modals.forEach(modal => {
+            if (modal && modal.style.display !== 'none') {
+              modal.style.display = 'none';
+              modal.setAttribute('aria-hidden', 'true');
+            }
+          });
+          // Cerrar tutor IA
+          if (tutorContainer && tutorContainer.style.display === 'block') {
+            tutorContainer.style.display = 'none';
+            tutorContainer.innerHTML = '';
+          }
+        }
+
+        window.addEventListener('scroll', closeAllOnScroll, { passive: true });
+      })();
     </script>
     <script type="module">
       import { dailyLogin, getPlayerStats } from './src/js/services/gamification-service.js';
