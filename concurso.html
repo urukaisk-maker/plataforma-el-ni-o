@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concurso | El Niño</title>
+    <title>Concurso | El NiÃ±o</title>
     <link rel="stylesheet" href="./src/styles/main.css" />
     <link rel="icon" type="image/png" href="./favicon.png" />
   </head>
@@ -102,15 +102,15 @@
         const passed = result && result.score >= contest.minScore;
 
         document.getElementById('resultContent').innerHTML = `
-          <div class="contest-result__badge">${passed ? '🏆' : '⭐'}</div>
-          <h2>${passed ? '¡Felicidades!' : 'Buen intento'}</h2>
+          <div class="contest-result__badge">${passed ? 'ð' : 'â­'}</div>
+          <h2>${passed ? 'Â¡Felicidades!' : 'Buen intento'}</h2>
           <p>Puntuacion: <strong>${result ? result.score : 0}/${contest.questions.length}</strong></p>
           <p>Tiempo: ${result ? Math.floor(result.timeMs / 1000) : 0}s</p>
           ${passed ? `<p class="contest-result__xp">+${contest.xpReward} XP</p>` : ''}
           <div class="contest-ranking">
             <h3>Ranking Top 10</h3>
             <ol>
-              ${ranking.map((r, i) => `<li>#${i + 1} — ${r.score} pts</li>`).join('')}
+              ${ranking.map((r, i) => `<li>#${i + 1} â ${r.score} pts</li>`).join('')}
             </ol>
           </div>
           <a href="./concursos.html" class="button button--primary">Volver a concursos</a>

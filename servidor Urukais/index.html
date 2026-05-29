@@ -709,7 +709,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="app-title">
-                <span>📝</span> Blog Manager
+                <span>ð</span> Blog Manager
             </div>
             <div class="connection-status">
                 <div class="status-dot" id="statusDot"></div>
@@ -722,19 +722,19 @@
         </div>
 
         <div class="categories-section">
-            <div class="section-title">Categorías</div>
+            <div class="section-title">CategorÃ­as</div>
             <ul class="category-list" id="categoryList">
-                <!-- Las categorías se cargarán dinámicamente -->
+                <!-- Las categorÃ­as se cargarÃ¡n dinÃ¡micamente -->
             </ul>
             <button class="new-category-btn" id="newCategoryBtn">
-                <span>+</span> Nueva categoría
+                <span>+</span> Nueva categorÃ­a
             </button>
         </div>
     </div>
 
     <!-- Mobile Menu Button -->
     <button class="mobile-menu-btn" id="mobileMenuBtn">
-        ☰
+        â°
     </button>
 
     <!-- Main Content -->
@@ -747,11 +747,11 @@
         </div>
 
         <div class="posts-grid" id="postsGrid">
-            <!-- Los posts se cargarán dinámicamente -->
+            <!-- Los posts se cargarÃ¡n dinÃ¡micamente -->
         </div>
 
         <div class="empty-state" id="emptyState">
-            <div class="empty-state-icon">📝</div>
+            <div class="empty-state-icon">ð</div>
             <h3>No hay posts</h3>
             <p>Crea tu primer post para comenzar</p>
         </div>
@@ -766,14 +766,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label" for="postTitle">Título</label>
-                    <input type="text" class="form-input" id="postTitle" placeholder="Título del post">
+                    <label class="form-label" for="postTitle">TÃ­tulo</label>
+                    <input type="text" class="form-input" id="postTitle" placeholder="TÃ­tulo del post">
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="postCategory">Categoría</label>
+                    <label class="form-label" for="postCategory">CategorÃ­a</label>
                     <select class="form-select" id="postCategory">
-                        <!-- Las categorías se cargarán dinámicamente -->
+                        <!-- Las categorÃ­as se cargarÃ¡n dinÃ¡micamente -->
                     </select>
                 </div>
 
@@ -784,7 +784,7 @@
                             <div class="editor-header">
                                 <span class="editor-title">Markdown</span>
                                 <button class="image-upload-btn" id="imageUploadBtn">
-                                    <span>📷</span> Insertar imagen
+                                    <span>ð·</span> Insertar imagen
                                 </button>
                             </div>
                             <textarea class="editor-textarea" id="postContent" placeholder="Escribe tu contenido en markdown..."></textarea>
@@ -813,13 +813,13 @@
     <div class="modal" id="categoryModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="categoryModalTitle">Nueva categoría</h2>
+                <h2 class="modal-title" id="categoryModalTitle">Nueva categorÃ­a</h2>
                 <button class="modal-close" id="categoryModalClose">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label class="form-label" for="categoryName">Nombre</label>
-                    <input type="text" class="form-input" id="categoryName" placeholder="Nombre de la categoría">
+                    <input type="text" class="form-input" id="categoryName" placeholder="Nombre de la categorÃ­a">
                 </div>
             </div>
             <div class="modal-footer">
@@ -836,7 +836,7 @@
     <input type="file" id="imageInput" accept="image/*" style="display: none;">
 
     <script>
-        // Configuración inicial
+        // ConfiguraciÃ³n inicial
         const APP_NAME = 'BlogManager';
         const DB_VERSION = 1;
         const STORES = {
@@ -845,7 +845,7 @@
             SYNC_QUEUE: 'sync_queue'
         };
 
-        // Inicialización de la aplicación
+        // InicializaciÃ³n de la aplicaciÃ³n
         document.addEventListener('DOMContentLoaded', async () => {
             // Registrar Service Worker
             if ('serviceWorker' in navigator) {
@@ -867,7 +867,7 @@
             // Configurar event listeners
             setupEventListeners();
             
-            // Configurar detección de conectividad
+            // Configurar detecciÃ³n de conectividad
             setupConnectivityDetection();
             
             // Configurar preview de markdown en tiempo real
@@ -901,13 +901,13 @@
                             postsStore.createIndex('createdAt', 'createdAt', { unique: false });
                         }
 
-                        // Crear store para categorías
+                        // Crear store para categorÃ­as
                         if (!db.objectStoreNames.contains(STORES.CATEGORIES)) {
                             const categoriesStore = db.createObjectStore(STORES.CATEGORIES, { keyPath: 'id', autoIncrement: true });
                             categoriesStore.createIndex('name', 'name', { unique: true });
                         }
 
-                        // Crear store para cola de sincronización
+                        // Crear store para cola de sincronizaciÃ³n
                         if (!db.objectStoreNames.contains(STORES.SYNC_QUEUE)) {
                             db.createObjectStore(STORES.SYNC_QUEUE, { keyPath: 'id', autoIncrement: true });
                         }
@@ -995,7 +995,7 @@
                 
                 const id = await this.dbManager.add(STORES.POSTS, post);
                 
-                // Agregar a la cola de sincronización
+                // Agregar a la cola de sincronizaciÃ³n
                 await this.addToSyncQueue('CREATE', { ...post, id });
                 
                 return id;
@@ -1014,7 +1014,7 @@
 
                 await this.dbManager.put(STORES.POSTS, updatedPost);
                 
-                // Agregar a la cola de sincronización
+                // Agregar a la cola de sincronizaciÃ³n
                 await this.addToSyncQueue('UPDATE', updatedPost);
                 
                 return updatedPost;
@@ -1026,7 +1026,7 @@
 
                 await this.dbManager.delete(STORES.POSTS, id);
                 
-                // Agregar a la cola de sincronización
+                // Agregar a la cola de sincronizaciÃ³n
                 await this.addToSyncQueue('DELETE', { id });
                 
                 return true;
@@ -1069,7 +1069,7 @@
                 
                 for (const item of syncItems) {
                     try {
-                        // Aquí iría la lógica para sincronizar con el servidor
+                        // AquÃ­ irÃ­a la lÃ³gica para sincronizar con el servidor
                         // Por ahora, simplemente marcamos como sincronizado
                         if (item.action === 'CREATE' || item.action === 'UPDATE') {
                             const post = await this.getPost(item.data.id);
@@ -1079,19 +1079,19 @@
                             }
                         }
                         
-                        // Eliminar de la cola después de procesar
+                        // Eliminar de la cola despuÃ©s de procesar
                         await this.dbManager.delete(STORES.SYNC_QUEUE, item.id);
                     } catch (error) {
-                        console.error('Error procesando item de sincronización:', error);
+                        console.error('Error procesando item de sincronizaciÃ³n:', error);
                     }
                 }
                 
-                // Actualizar la UI para reflejar el estado de sincronización
+                // Actualizar la UI para reflejar el estado de sincronizaciÃ³n
                 updateSyncStatus();
             }
         }
 
-        // Clase para gestionar categorías
+        // Clase para gestionar categorÃ­as
         class CategoryManager {
             constructor(dbManager) {
                 this.dbManager = dbManager;
@@ -1111,13 +1111,13 @@
             }
 
             async deleteCategory(id) {
-                // Verificar si hay posts usando esta categoría
+                // Verificar si hay posts usando esta categorÃ­a
                 const postManager = new PostManager(this.dbManager);
                 const allPosts = await postManager.getAllPosts();
                 const postsWithCategory = allPosts.filter(post => post.category === id);
 
                 if (postsWithCategory.length > 0) {
-                    throw new Error('No se puede eliminar la categoría porque hay posts que la usan');
+                    throw new Error('No se puede eliminar la categorÃ­a porque hay posts que la usan');
                 }
 
                 return await this.dbManager.delete(STORES.CATEGORIES, id);
@@ -1139,7 +1139,7 @@
             categoryManager = new CategoryManager(dbManager);
         }
 
-        // Cargar categorías
+        // Cargar categorÃ­as
         async function loadCategories() {
             const categories = await categoryManager.getAllCategories();
             categoriesCache = categories;
@@ -1148,9 +1148,9 @@
             
             // Limpiar listas
             categoryList.innerHTML = '';
-            postCategorySelect.innerHTML = '<option value="">Seleccionar categoría</option>';
+            postCategorySelect.innerHTML = '<option value="">Seleccionar categorÃ­a</option>';
             
-            // Agregar categoría "Todas"
+            // Agregar categorÃ­a "Todas"
             const allItem = document.createElement('li');
             allItem.className = `category-item ${currentCategory === 'all' ? 'active' : ''}`;
             allItem.dataset.category = 'all';
@@ -1160,9 +1160,9 @@
             `;
             categoryList.appendChild(allItem);
             
-            // Agregar categorías
+            // Agregar categorÃ­as
             categories.forEach(category => {
-                // Para la lista de categorías
+                // Para la lista de categorÃ­as
                 const listItem = document.createElement('li');
                 listItem.className = `category-item ${currentCategory === category.id ? 'active' : ''}`;
                 listItem.dataset.category = category.id;
@@ -1198,26 +1198,26 @@
             const postsGrid = document.getElementById('postsGrid');
             const emptyState = document.getElementById('emptyState');
             
-            // Mostrar/ocultar estado vacío
+            // Mostrar/ocultar estado vacÃ­o
             if (posts.length === 0) {
                 postsGrid.classList.add('hidden');
                 emptyState.classList.remove('hidden');
                 
                 if (searchQuery) {
                     emptyState.innerHTML = `
-                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-icon">ð</div>
                         <h3>No se encontraron posts</h3>
-                        <p>Intenta con otros términos de búsqueda</p>
+                        <p>Intenta con otros tÃ©rminos de bÃºsqueda</p>
                     `;
                 } else if (currentCategory !== 'all') {
                     emptyState.innerHTML = `
-                        <div class="empty-state-icon">📁</div>
-                        <h3>No hay posts en esta categoría</h3>
+                        <div class="empty-state-icon">ð</div>
+                        <h3>No hay posts en esta categorÃ­a</h3>
                         <p>Crea un nuevo post para comenzar</p>
                     `;
                 } else {
                     emptyState.innerHTML = `
-                        <div class="empty-state-icon">📝</div>
+                        <div class="empty-state-icon">ð</div>
                         <h3>No hay posts</h3>
                         <p>Crea tu primer post para comenzar</p>
                     `;
@@ -1246,7 +1246,7 @@
                         ? post.content.substring(0, 150) + '...' 
                         : post.content;
                     
-                    const catName = (categoriesCache.find(c => c.id === post.category) || {}).name || 'Sin categoría';
+                    const catName = (categoriesCache.find(c => c.id === post.category) || {}).name || 'Sin categorÃ­a';
                     postCard.innerHTML = `
                         <h3 class="post-title">${post.title}</h3>
                         <p class="post-excerpt">${excerpt}</p>
@@ -1260,14 +1260,14 @@
                 });
             }
             
-            // Actualizar título de página
+            // Actualizar tÃ­tulo de pÃ¡gina
             updatePageTitle(searchQuery);
             
-            // Actualizar contadores de categorías
+            // Actualizar contadores de categorÃ­as
             await updateCategoryCounts();
         }
 
-        // Actualizar contadores de categorías
+        // Actualizar contadores de categorÃ­as
         async function updateCategoryCounts() {
             const allPosts = await postManager.getAllPosts();
             const allCount = document.getElementById('allCount');
@@ -1283,7 +1283,7 @@
             });
         }
 
-        // Actualizar título de página
+        // Actualizar tÃ­tulo de pÃ¡gina
         function updatePageTitle(searchQuery) {
             const pageTitle = document.getElementById('pageTitle');
             
@@ -1292,9 +1292,9 @@
             } else if (currentCategory === 'all') {
                 pageTitle.textContent = 'Todos los posts';
             } else {
-                // Obtener nombre de la categoría actual
+                // Obtener nombre de la categorÃ­a actual
                 const categoryItems = document.querySelectorAll('.category-item');
-                let categoryName = 'Categoría';
+                let categoryName = 'CategorÃ­a';
                 
                 categoryItems.forEach(item => {
                     if (item.dataset.category === currentCategory) {
@@ -1308,12 +1308,12 @@
 
         // Configurar event listeners
         function setupEventListeners() {
-            // Botón nuevo post
+            // BotÃ³n nuevo post
             document.getElementById('newPostBtn').addEventListener('click', () => {
                 openPostModal();
             });
 
-            // Botón nueva categoría
+            // BotÃ³n nueva categorÃ­a
             document.getElementById('newCategoryBtn').addEventListener('click', () => {
                 openCategoryModal();
             });
@@ -1335,16 +1335,16 @@
                 if (currentPostId) exportToPDF(currentPostId);
             });
 
-            // Guardar categoría
+            // Guardar categorÃ­a
             document.getElementById('categorySaveBtn').addEventListener('click', saveCategory);
 
-            // Búsqueda
+            // BÃºsqueda
             document.getElementById('searchInput').addEventListener('input', (e) => {
                 const query = e.target.value;
                 loadPosts(query);
             });
 
-            // Categorías
+            // CategorÃ­as
             document.getElementById('categoryList').addEventListener('click', (e) => {
                 const categoryItem = e.target.closest('.category-item');
                 if (categoryItem) {
@@ -1362,18 +1362,18 @@
                 }
             });
 
-            // Carga de imágenes
+            // Carga de imÃ¡genes
             document.getElementById('imageUploadBtn').addEventListener('click', () => {
                 document.getElementById('imageInput').click();
             });
 
             document.getElementById('imageInput').addEventListener('change', handleImageUpload);
 
-            // Menú móvil
+            // MenÃº mÃ³vil
             document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
         }
 
-        // Configurar detección de conectividad
+        // Configurar detecciÃ³n de conectividad
         function setupConnectivityDetection() {
             window.addEventListener('online', () => {
                 updateConnectionStatus(true);
@@ -1388,7 +1388,7 @@
             updateConnectionStatus(navigator.onLine);
         }
 
-        // Actualizar estado de conexión
+        // Actualizar estado de conexiÃ³n
         function updateConnectionStatus(online) {
             const statusDot = document.getElementById('statusDot');
             const statusText = document.getElementById('statusText');
@@ -1398,13 +1398,13 @@
                 statusText.textContent = 'Conectado';
             } else {
                 statusDot.className = 'status-dot offline';
-                statusText.textContent = 'Sin conexión';
+                statusText.textContent = 'Sin conexiÃ³n';
             }
         }
 
-        // Actualizar estado de sincronización
+        // Actualizar estado de sincronizaciÃ³n
         function updateSyncStatus() {
-            // Esta función actualizaría la UI para mostrar el estado de sincronización
+            // Esta funciÃ³n actualizarÃ­a la UI para mostrar el estado de sincronizaciÃ³n
             // Por ahora, es un placeholder para futuras implementaciones
         }
 
@@ -1433,7 +1433,7 @@
             document.getElementById('postPreview').innerHTML = '';
             
             if (postId) {
-                // Modo edición
+                // Modo ediciÃ³n
                 currentPostId = postId;
                 modalTitle.textContent = 'Editar post';
                 deleteBtn.style.display = 'block';
@@ -1451,7 +1451,7 @@
                     document.getElementById('postPreview').innerHTML = html;
                 }
             } else {
-                // Modo creación
+                // Modo creaciÃ³n
                 currentPostId = null;
                 modalTitle.textContent = 'Nuevo post';
                 deleteBtn.style.display = 'none';
@@ -1466,14 +1466,14 @@
             document.getElementById('postModal').classList.remove('active');
         }
 
-        // Abrir modal de categoría
+        // Abrir modal de categorÃ­a
         function openCategoryModal() {
             document.getElementById('categoryModal').classList.add('active');
             document.getElementById('categoryName').value = '';
-            document.getElementById('categoryModalTitle').textContent = 'Nueva categoría';
+            document.getElementById('categoryModalTitle').textContent = 'Nueva categorÃ­a';
         }
 
-        // Cerrar modal de categoría
+        // Cerrar modal de categorÃ­a
         function closeCategoryModal() {
             document.getElementById('categoryModal').classList.remove('active');
         }
@@ -1487,12 +1487,12 @@
             
             // Validaciones
             if (!title) {
-                showToast('El título es obligatorio', 'error');
+                showToast('El tÃ­tulo es obligatorio', 'error');
                 return;
             }
             
             if (!categoryId && categoryId !== 0) {
-                showToast('Selecciona una categoría', 'error');
+                showToast('Selecciona una categorÃ­a', 'error');
                 return;
             }
             
@@ -1524,7 +1524,7 @@
         async function deletePost() {
             if (!currentPostId) return;
             
-            if (confirm('¿Estás seguro de que quieres eliminar este post?')) {
+            if (confirm('Â¿EstÃ¡s seguro de que quieres eliminar este post?')) {
                 try {
                     await postManager.deletePost(currentPostId);
                     showToast('Post eliminado correctamente', 'success');
@@ -1537,27 +1537,27 @@
             }
         }
 
-        // Guardar categoría
+        // Guardar categorÃ­a
         async function saveCategory() {
             const name = document.getElementById('categoryName').value.trim();
             
             if (!name) {
-                showToast('El nombre de la categoría es obligatorio', 'error');
+                showToast('El nombre de la categorÃ­a es obligatorio', 'error');
                 return;
             }
             
             try {
                 await categoryManager.createCategory(name);
-                showToast('Categoría creada correctamente', 'success');
+                showToast('CategorÃ­a creada correctamente', 'success');
                 closeCategoryModal();
                 await loadCategories();
             } catch (error) {
-                console.error('Error creando categoría:', error);
-                showToast('Error al crear la categoría', 'error');
+                console.error('Error creando categorÃ­a:', error);
+                showToast('Error al crear la categorÃ­a', 'error');
             }
         }
 
-        // Seleccionar categoría
+        // Seleccionar categorÃ­a
         function selectCategory(category) {
             currentCategory = category;
             
@@ -1571,11 +1571,11 @@
                 }
             });
             
-            // Cargar posts de la categoría
+            // Cargar posts de la categorÃ­a
             loadPosts();
         }
 
-        // Manejar carga de imágenes
+        // Manejar carga de imÃ¡genes
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -1586,7 +1586,7 @@
                 return;
             }
             
-            // Validar tamaño (2MB máximo)
+            // Validar tamaÃ±o (2MB mÃ¡ximo)
             if (file.size > 2 * 1024 * 1024) {
                 showToast('La imagen no debe superar los 2MB', 'error');
                 return;
@@ -1606,7 +1606,7 @@
                 // Crear referencia markdown
                 const markdownImage = `\n![${file.name}](${base64Image})\n`;
                 
-                // Insertar en la posición del cursor
+                // Insertar en la posiciÃ³n del cursor
                 postContent.value = textBefore + markdownImage + textAfter;
                 
                 // Actualizar preview
@@ -1626,7 +1626,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Alternar menú móvil
+        // Alternar menÃº mÃ³vil
         function toggleMobileMenu() {
             document.querySelector('.sidebar').classList.toggle('active');
         }
@@ -1638,10 +1638,10 @@
             toast.className = `toast toast-${type}`;
             
             const icons = {
-                success: '✓',
-                error: '✕',
-                warning: '⚠',
-                info: 'ℹ'
+                success: 'â',
+                error: 'â',
+                warning: 'â ',
+                info: 'â¹'
             };
             
             toast.innerHTML = `
@@ -1656,7 +1656,7 @@
                 toast.classList.add('show');
             }, 10);
             
-            // Ocultar y eliminar después de 4 segundos
+            // Ocultar y eliminar despuÃ©s de 4 segundos
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => {
@@ -1691,18 +1691,18 @@
                 
                 doc.setFontSize(12);
                 doc.setTextColor(100);
-                doc.text(`Categoría: ${post.category}`, 20, 45);
+                doc.text(`CategorÃ­a: ${post.category}`, 20, 45);
                 doc.text(`Fecha: ${new Date(post.createdAt).toLocaleDateString('es-ES')}`, 20, 55);
                 
                 // Convertir markdown a HTML y luego a texto para PDF
-                // Nota: Esta es una implementación básica. Para una mejor conversión,
-                // se necesitaría una librería más avanzada o un plugin para jsPDF
+                // Nota: Esta es una implementaciÃ³n bÃ¡sica. Para una mejor conversiÃ³n,
+                // se necesitarÃ­a una librerÃ­a mÃ¡s avanzada o un plugin para jsPDF
                 const htmlContent = marked.parse(post.content);
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = htmlContent;
                 const textContent = tempDiv.textContent || tempDiv.innerText || '';
                 
-                // Dividir texto en líneas para el PDF
+                // Dividir texto en lÃ­neas para el PDF
                 const lines = doc.splitTextToSize(textContent, 170);
                 doc.setFontSize(10);
                 doc.setTextColor(0);
@@ -1711,7 +1711,7 @@
                 // Guardar PDF
                 doc.save(`${post.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`);
                 
-                // Restaurar botón
+                // Restaurar botÃ³n
                 saveBtn.textContent = originalText;
                 saveBtn.disabled = false;
                 
@@ -1720,7 +1720,7 @@
                 console.error('Error generando PDF:', error);
                 showToast('Error al generar el PDF', 'error');
                 
-                // Restaurar botón en caso de error
+                // Restaurar botÃ³n en caso de error
                 const saveBtn = document.getElementById('saveBtn');
                 saveBtn.textContent = 'Guardar';
                 saveBtn.disabled = false;

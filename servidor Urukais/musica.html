@@ -9,11 +9,11 @@
     <link rel="author" href="https://www.urukaiskick.com/">
     <meta name="author" content="Manuel Casimiro Carrasco (Urukais Klick)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aplicación web de música completa con reproductor, búsqueda, playlists y favoritos integrados con YouTube">
-    <meta name="keywords" content="música, reproductor, YouTube, playlists, favoritos, streaming">
+    <meta name="description" content="AplicaciÃ³n web de mÃºsica completa con reproductor, bÃºsqueda, playlists y favoritos integrados con YouTube">
+    <meta name="keywords" content="mÃºsica, reproductor, YouTube, playlists, favoritos, streaming">
     <meta name="author" content="MusicStream">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Urukais Klick Pro - Tu Reproductor de Música Online</title>
+    <title>Urukais Klick Pro - Tu Reproductor de MÃºsica Online</title>
     
     <style>
     /* ==================== CSS VARIABLES - GAMING PLATFORM THEME ==================== */
@@ -1390,15 +1390,15 @@ img[loading="lazy"] {
     <header>
         <div class="header-content">
             <div class="logo">
-                <span class="logo-icon">🎵</span>
-                <h1>El Niño Pro 🐸</h1>
+                <span class="logo-icon">ðµ</span>
+                <h1>El NiÃ±o Pro ð¸</h1>
             </div>
             <div class="header-actions">
                 <button class="btn-secondary" onclick="scrollToSection('favorites')">
-                    ❤️ Favoritos
+                    â¤ï¸ Favoritos
                 </button>
                 <button class="btn-secondary" onclick="scrollToSection('playlists')">
-                    📁 Playlists
+                    ð Playlists
                 </button>
             </div>
         </div>
@@ -1407,25 +1407,25 @@ img[loading="lazy"] {
     <!-- Search Section -->
     <section class="search-container">
         <div class="search-header">
-            <h2>Buscar Música</h2>
+            <h2>Buscar MÃºsica</h2>
             <p>Explora millones de canciones y artistas en Urukais Music</p>
         </div>
         <form class="search-form" id="searchForm">
             <div class="search-input-group">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon">ð</span>
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Buscar canciones, artistas, álbumes..." 
+                    placeholder="Buscar canciones, artistas, Ã¡lbumes..." 
                     required
                     autocomplete="off"
                 >
             </div>
             <button type="submit">
-                🎵 Buscar Canciones
+                ðµ Buscar Canciones
             </button>
             <button type="button" id="searchByArtist" class="btn-secondary">
-                👤 Buscar Artista
+                ð¤ Buscar Artista
             </button>
         </form>
     </section>
@@ -1433,7 +1433,7 @@ img[loading="lazy"] {
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="spinner"></div>
-        <p class="loader-text">Buscando música...🐸</p>
+        <p class="loader-text">Buscando mÃºsica...ð¸</p>
     </div>
 
     <!-- Main Container -->
@@ -1442,15 +1442,15 @@ img[loading="lazy"] {
         <section class="catalog">
             <div class="catalog-header">
                 <div>
-                    <h2 id="catalogTitle">Descubre Música</h2>
-                    <span class="catalog-stats" id="catalogStats">Realiza una búsqueda para comenzar</span>
+                    <h2 id="catalogTitle">Descubre MÃºsica</h2>
+                    <span class="catalog-stats" id="catalogStats">Realiza una bÃºsqueda para comenzar</span>
                 </div>
             </div>
             <div class="catalog-grid" id="catalogGrid">
                 <div class="empty-state">
-                    <div class="empty-state-icon">🎵</div>
-                    <h3>Busca tu música favorita conmigo.🐸</h3>
-                    <p>Usa la barra de búsqueda para encontrar canciones y artistas de todo el mundo</p>
+                    <div class="empty-state-icon">ðµ</div>
+                    <h3>Busca tu mÃºsica favorita conmigo.ð¸</h3>
+                    <p>Usa la barra de bÃºsqueda para encontrar canciones y artistas de todo el mundo</p>
                 </div>
             </div>
         </section>
@@ -1460,14 +1460,14 @@ img[loading="lazy"] {
             <!-- Favorites -->
             <div class="sidebar-section" id="favorites">
                 <div class="sidebar-header">
-                    <h3>❤️ Favoritos 🐸</h3>
+                    <h3>â¤ï¸ Favoritos ð¸</h3>
                     <button class="btn-icon" id="clearFavorites" title="Limpiar favoritos">
-                        🗑️
+                        ðï¸
                     </button>
                 </div>
                 <ul class="favorites-list" id="favoritesList">
                     <div class="empty-state">
-                        <div class="empty-state-icon" style="font-size: 3rem;">💔</div>
+                        <div class="empty-state-icon" style="font-size: 3rem;">ð</div>
                         <p>Sin favoritos</p>
                     </div>
                 </ul>
@@ -1476,14 +1476,14 @@ img[loading="lazy"] {
             <!-- Playlists -->
             <div class="sidebar-section" id="playlists">
                 <div class="sidebar-header">
-                    <h3>📁 Mis Playlists 🐸</h3>
+                    <h3>ð Mis Playlists ð¸</h3>
                     <button class="btn-icon" id="createPlaylist" title="Crear playlist">
-                        ➕
+                        â
                     </button>
                 </div>
                 <ul class="playlist-list" id="playlistList">
                     <div class="empty-state">
-                        <div class="empty-state-icon" style="font-size: 3rem;">📂</div>
+                        <div class="empty-state-icon" style="font-size: 3rem;">ð</div>
                         <p>Sin playlists</p>
                     </div>
                 </ul>
@@ -1498,17 +1498,17 @@ img[loading="lazy"] {
             <div class="current-song">
                 <img id="currentThumbnail" class="current-thumbnail" src="" alt="Thumbnail" style="display: none;">
                 <div class="current-info">
-                    <h4 id="currentTitle">No hay canción reproduciendo</h4>
-                    <p id="currentChannel">Selecciona una canción para comenzar</p>
+                    <h4 id="currentTitle">No hay canciÃ³n reproduciendo</h4>
+                    <p id="currentChannel">Selecciona una canciÃ³n para comenzar</p>
                 </div>
             </div>
 
             <!-- Controls -->
             <div class="player-controls">
                 <div class="controls-buttons">
-                    <button id="prevBtn" title="Anterior" disabled>⏮️</button>
-                    <button id="playPauseBtn" title="Reproducir/Pausar" disabled>▶️</button>
-                    <button id="nextBtn" title="Siguiente" disabled>⏭️</button>
+                    <button id="prevBtn" title="Anterior" disabled>â®ï¸</button>
+                    <button id="playPauseBtn" title="Reproducir/Pausar" disabled>â¶ï¸</button>
+                    <button id="nextBtn" title="Siguiente" disabled>â­ï¸</button>
                 </div>
                 <div class="progress-container">
                     <span class="time-display" id="currentTime">0:00</span>
@@ -1521,10 +1521,10 @@ img[loading="lazy"] {
 
             <!-- Extras -->
             <div class="player-extras">
-                <button id="favoriteBtn" class="btn-icon" title="Añadir a favoritos" disabled>🤍</button>
-                <button id="addToPlaylistBtn" class="btn-icon" title="Añadir a playlist" disabled>➕</button>
+                <button id="favoriteBtn" class="btn-icon" title="AÃ±adir a favoritos" disabled>ð¤</button>
+                <button id="addToPlaylistBtn" class="btn-icon" title="AÃ±adir a playlist" disabled>â</button>
                 <div class="volume-control">
-                    <span class="volume-icon" id="volumeIcon">🔊</span>
+                    <span class="volume-icon" id="volumeIcon">ð</span>
                     <input type="range" id="volumeControl" min="0" max="100" value="70">
                 </div>
             </div>
@@ -1540,21 +1540,21 @@ img[loading="lazy"] {
     <div class="modal" id="createPlaylistModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>📁 Crear Nueva Playlist</h3>
-                <button class="close-btn" id="closeCreateModal">✖</button>
+                <h3>ð Crear Nueva Playlist</h3>
+                <button class="close-btn" id="closeCreateModal">â</button>
             </div>
             <div class="modal-body">
                 <input 
                     type="text" 
                     id="playlistNameInput" 
-                    placeholder="Ej: Mis Favoritas 2025, Rock Clásico, Viaje..." 
+                    placeholder="Ej: Mis Favoritas 2025, Rock ClÃ¡sico, Viaje..." 
                     style="width: 100%;"
                     maxlength="50"
                 >
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" id="cancelCreatePlaylist">Cancelar</button>
-                <button id="confirmCreatePlaylist">✓ Crear Playlist</button>
+                <button id="confirmCreatePlaylist">â Crear Playlist</button>
             </div>
         </div>
     </div>
@@ -1563,8 +1563,8 @@ img[loading="lazy"] {
     <div class="modal" id="addToPlaylistModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Añadir a Playlist</h3>
-                <button class="close-btn" id="closeAddModal">✖</button>
+                <h3>â AÃ±adir a Playlist</h3>
+                <button class="close-btn" id="closeAddModal">â</button>
             </div>
             <div class="modal-body">
                 <div id="playlistSelection"></div>
@@ -1580,13 +1580,13 @@ img[loading="lazy"] {
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="playlistModalTitle">Playlist</h3>
-                <button class="close-btn" id="closeViewModal">✖</button>
+                <button class="close-btn" id="closeViewModal">â</button>
             </div>
             <div class="modal-body">
                 <div id="playlistContent"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-danger" id="deletePlaylist">🗑️ Eliminar Playlist</button>
+                <button class="btn-danger" id="deletePlaylist">ðï¸ Eliminar Playlist</button>
                 <button class="btn-secondary" id="closePlaylistView">Cerrar</button>
             </div>
         </div>
@@ -1634,18 +1634,18 @@ img[loading="lazy"] {
         function onPlayerReady(event) {
             playerReady = true;
             player.setVolume(70);
-            console.log('✓ YouTube Player Ready');
+            console.log('â YouTube Player Ready');
             showMessage('Reproductor listo', 'success');
         }
 
         function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
-                document.getElementById('playPauseBtn').textContent = '⏸️';
+                document.getElementById('playPauseBtn').textContent = 'â¸ï¸';
                 startProgressUpdate();
             } else if (event.data === YT.PlayerState.PAUSED) {
                 isPlaying = false;
-                document.getElementById('playPauseBtn').textContent = '▶️';
+                document.getElementById('playPauseBtn').textContent = 'â¶ï¸';
                 stopProgressUpdate();
             } else if (event.data === YT.PlayerState.ENDED) {
                 playNext();
@@ -1657,7 +1657,7 @@ img[loading="lazy"] {
         function onPlayerError(event) {
             console.error('Player Error:', event.data);
             const errorMessages = {
-                2: 'ID de video inválido',
+                2: 'ID de video invÃ¡lido',
                 5: 'Error del reproductor HTML5',
                 100: 'Video no encontrado',
                 101: 'El propietario no permite reproducir este video',
@@ -1683,7 +1683,7 @@ img[loading="lazy"] {
                 const data = await response.json();
                 
                 if (!data.items || data.items.length === 0) {
-                    showMessage('No se encontraron resultados para tu búsqueda', 'warning');
+                    showMessage('No se encontraron resultados para tu bÃºsqueda', 'warning');
                     displayCatalog([], query);
                     return [];
                 }
@@ -1711,7 +1711,7 @@ img[loading="lazy"] {
                 
             } catch (error) {
                 console.error('Error al buscar videos:', error);
-                showMessage('Error al realizar la búsqueda. Verifica tu conexión.', 'error');
+                showMessage('Error al realizar la bÃºsqueda. Verifica tu conexiÃ³n.', 'error');
                 return [];
             } finally {
                 showLoader(false);
@@ -1745,7 +1745,7 @@ img[loading="lazy"] {
         // ==================== PLAYER FUNCTIONS ====================
         function playVideo(video, queue = null, index = null) {
             if (!playerReady) {
-                showMessage('El reproductor aún no está listo. Espera un momento...', 'warning');
+                showMessage('El reproductor aÃºn no estÃ¡ listo. Espera un momento...', 'warning');
                 return;
             }
 
@@ -1791,7 +1791,7 @@ img[loading="lazy"] {
 
         function togglePlayPause() {
             if (!playerReady || !currentVideo) {
-                showMessage('No hay ninguna canción cargada', 'warning');
+                showMessage('No hay ninguna canciÃ³n cargada', 'warning');
                 return;
             }
             
@@ -1803,7 +1803,7 @@ img[loading="lazy"] {
                 }
             } catch (error) {
                 console.error('Error toggling play/pause:', error);
-                showMessage('Error al controlar la reproducción', 'error');
+                showMessage('Error al controlar la reproducciÃ³n', 'error');
             }
         }
 
@@ -1822,7 +1822,7 @@ img[loading="lazy"] {
                 currentIndex--;
                 playVideo(currentQueue[currentIndex], currentQueue, currentIndex);
             } else {
-                showMessage('Esta es la primera canción de la cola', 'warning');
+                showMessage('Esta es la primera canciÃ³n de la cola', 'warning');
             }
         }
 
@@ -1890,11 +1890,11 @@ img[loading="lazy"] {
         function updateVolumeIcon(volume) {
             const icon = document.getElementById('volumeIcon');
             if (volume === 0) {
-                icon.textContent = '🔇';
+                icon.textContent = 'ð';
             } else if (volume < 50) {
-                icon.textContent = '🔉';
+                icon.textContent = 'ð';
             } else {
-                icon.textContent = '🔊';
+                icon.textContent = 'ð';
             }
         }
 
@@ -1910,7 +1910,7 @@ img[loading="lazy"] {
                 } else {
                     player.mute();
                     isMuted = true;
-                    document.getElementById('volumeIcon').textContent = '🔇';
+                    document.getElementById('volumeIcon').textContent = 'ð';
                 }
             } catch (error) {
                 console.error('Error toggling mute:', error);
@@ -1936,9 +1936,9 @@ img[loading="lazy"] {
             if (videos.length === 0) {
                 catalogGrid.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-icon">ð</div>
                         <h3>No se encontraron resultados</h3>
-                        <p>Intenta con otra búsqueda o términos diferentes</p>
+                        <p>Intenta con otra bÃºsqueda o tÃ©rminos diferentes</p>
                     </div>
                 `;
                 return;
@@ -1951,23 +1951,23 @@ img[loading="lazy"] {
                     <div class="video-thumbnail">
                         <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" loading="lazy">
                         <div class="play-overlay">
-                            <div class="play-icon">▶️</div>
+                            <div class="play-icon">â¶ï¸</div>
                         </div>
                         <span class="video-duration">${video.duration}</span>
                         ${currentQueue.some(v => v.id === video.id) ? '<span class="queue-indicator">En cola</span>' : ''}
                     </div>
                     <div class="video-info">
                         <div class="video-title">${escapeHtml(video.title)}</div>
-                        <div class="video-channel">👤 ${escapeHtml(video.channel)}</div>
+                        <div class="video-channel">ð¤ ${escapeHtml(video.channel)}</div>
                         <div class="video-actions">
                             <button onclick='playVideoFromCatalog(${index})'>
-                                ▶️ Reproducir
+                                â¶ï¸ Reproducir
                             </button>
                             <button onclick='addToFavoritesFromCatalog(${index})' class="btn-secondary">
-                                ❤️
+                                â¤ï¸
                             </button>
                             <button onclick='openAddToPlaylistModalFromCatalog(${index})' class="btn-secondary">
-                                ➕
+                                â
                             </button>
                         </div>
                     </div>
@@ -2026,7 +2026,7 @@ img[loading="lazy"] {
             const favorites = getFavorites();
             
             if (favorites.some(fav => fav.id === video.id)) {
-                showMessage('Ya está en favoritos', 'warning');
+                showMessage('Ya estÃ¡ en favoritos', 'warning');
                 return;
             }
             
@@ -2034,7 +2034,7 @@ img[loading="lazy"] {
             saveFavorites(favorites);
             displayFavorites();
             updateFavoriteButton();
-            showMessage('✓ Añadido a favoritos', 'success');
+            showMessage('â AÃ±adido a favoritos', 'success');
         }
 
         function removeFromFavorites(videoId) {
@@ -2047,7 +2047,7 @@ img[loading="lazy"] {
         }
 
         function clearAllFavorites() {
-            if (confirm('¿Estás seguro de que quieres eliminar todos los favoritos?')) {
+            if (confirm('Â¿EstÃ¡s seguro de que quieres eliminar todos los favoritos?')) {
                 saveFavorites([]);
                 displayFavorites();
                 updateFavoriteButton();
@@ -2064,7 +2064,7 @@ img[loading="lazy"] {
             if (favorites.length === 0) {
                 favoritesList.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon" style="font-size: 3rem;">💔</div>
+                        <div class="empty-state-icon" style="font-size: 3rem;">ð</div>
                         <p>Sin favoritos</p>
                     </div>
                 `;
@@ -2080,8 +2080,8 @@ img[loading="lazy"] {
                         <div class="item-count">${escapeHtml(video.channel)}</div>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-icon" onclick='playVideoFromFavorites(${index})' title="Reproducir">▶️</button>
-                        <button class="btn-icon btn-danger" onclick="removeFromFavorites('${video.id}')" title="Eliminar">🗑️</button>
+                        <button class="btn-icon" onclick='playVideoFromFavorites(${index})' title="Reproducir">â¶ï¸</button>
+                        <button class="btn-icon btn-danger" onclick="removeFromFavorites('${video.id}')" title="Eliminar">ðï¸</button>
                     </div>
                 `;
                 favoritesList.appendChild(item);
@@ -2098,12 +2098,12 @@ img[loading="lazy"] {
             
             const favorites = getFavorites();
             const isFavorite = favorites.some(fav => fav.id === currentVideo.id);
-            document.getElementById('favoriteBtn').textContent = isFavorite ? '❤️' : '🤍';
+            document.getElementById('favoriteBtn').textContent = isFavorite ? 'â¤ï¸' : 'ð¤';
         }
 
         function toggleCurrentFavorite() {
             if (!currentVideo) {
-                showMessage('No hay ninguna canción reproduciendo', 'warning');
+                showMessage('No hay ninguna canciÃ³n reproduciendo', 'warning');
                 return;
             }
             
@@ -2159,7 +2159,7 @@ img[loading="lazy"] {
             
             savePlaylists(playlists);
             displayPlaylists();
-            showMessage(`✓ Playlist "${name}" creada`, 'success');
+            showMessage(`â Playlist "${name}" creada`, 'success');
             return true;
         }
 
@@ -2169,7 +2169,7 @@ img[loading="lazy"] {
             
             if (!playlist) return;
             
-            if (confirm(`¿Estás seguro de que quieres eliminar la playlist "${playlist.name}"?`)) {
+            if (confirm(`Â¿EstÃ¡s seguro de que quieres eliminar la playlist "${playlist.name}"?`)) {
                 const filtered = playlists.filter(pl => pl.id !== playlistId);
                 savePlaylists(filtered);
                 displayPlaylists();
@@ -2188,14 +2188,14 @@ img[loading="lazy"] {
             }
             
             if (playlist.videos.some(v => v.id === video.id)) {
-                showMessage('El video ya está en la playlist', 'warning');
+                showMessage('El video ya estÃ¡ en la playlist', 'warning');
                 return;
             }
             
             playlist.videos.push(video);
             savePlaylists(playlists);
             displayPlaylists();
-            showMessage(`✓ Añadido a "${playlist.name}"`, 'success');
+            showMessage(`â AÃ±adido a "${playlist.name}"`, 'success');
         }
 
         function removeVideoFromPlaylist(playlistId, videoId) {
@@ -2220,7 +2220,7 @@ img[loading="lazy"] {
             if (playlists.length === 0) {
                 playlistList.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon" style="font-size: 3rem;">📂</div>
+                        <div class="empty-state-icon" style="font-size: 3rem;">ð</div>
                         <p>Sin playlists</p>
                     </div>
                 `;
@@ -2233,11 +2233,11 @@ img[loading="lazy"] {
                 item.innerHTML = `
                     <div class="item-info" onclick="viewPlaylist('${playlist.id}')">
                         <div class="item-title">${escapeHtml(playlist.name)}</div>
-                        <div class="item-count">${playlist.videos.length} ${playlist.videos.length === 1 ? 'canción' : 'canciones'}</div>
+                        <div class="item-count">${playlist.videos.length} ${playlist.videos.length === 1 ? 'canciÃ³n' : 'canciones'}</div>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-icon" onclick="viewPlaylist('${playlist.id}')" title="Ver">👁️</button>
-                        <button class="btn-icon btn-danger" onclick="deletePlaylist('${playlist.id}')" title="Eliminar">🗑️</button>
+                        <button class="btn-icon" onclick="viewPlaylist('${playlist.id}')" title="Ver">ðï¸</button>
+                        <button class="btn-icon btn-danger" onclick="deletePlaylist('${playlist.id}')" title="Eliminar">ðï¸</button>
                     </div>
                 `;
                 playlistList.appendChild(item);
@@ -2250,33 +2250,33 @@ img[loading="lazy"] {
             
             if (!playlist) return;
             
-            document.getElementById('playlistModalTitle').textContent = `📁 ${playlist.name}`;
+            document.getElementById('playlistModalTitle').textContent = `ð ${playlist.name}`;
             const content = document.getElementById('playlistContent');
             
             if (playlist.videos.length === 0) {
                 content.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">📂</div>
-                        <p>Esta playlist está vacía</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Añade canciones desde los resultados de búsqueda</p>
+                        <div class="empty-state-icon">ð</div>
+                        <p>Esta playlist estÃ¡ vacÃ­a</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">AÃ±ade canciones desde los resultados de bÃºsqueda</p>
                     </div>
                 `;
             } else {
                 content.innerHTML = `
                     <div style="margin-bottom: 1rem;">
                         <button onclick='playPlaylist("${playlist.id}")' style="width: 100%;">
-                            ▶️ Reproducir Playlist
+                            â¶ï¸ Reproducir Playlist
                         </button>
                     </div>
                     ${playlist.videos.map((video, index) => `
                         <div class="favorite-item" style="margin-bottom: 10px;">
                             <div class="item-info" onclick='playVideoFromPlaylist("${playlist.id}", ${index})'>
                                 <div class="item-title">${escapeHtml(video.title)}</div>
-                                <div class="item-count">${escapeHtml(video.channel)} • ${video.duration}</div>
+                                <div class="item-count">${escapeHtml(video.channel)} â¢ ${video.duration}</div>
                             </div>
                             <div class="item-actions">
-                                <button class="btn-icon" onclick='playVideoFromPlaylist("${playlist.id}", ${index})' title="Reproducir">▶️</button>
-                                <button class="btn-icon btn-danger" onclick="removeVideoFromPlaylist('${playlist.id}', '${video.id}')" title="Eliminar">🗑️</button>
+                                <button class="btn-icon" onclick='playVideoFromPlaylist("${playlist.id}", ${index})' title="Reproducir">â¶ï¸</button>
+                                <button class="btn-icon btn-danger" onclick="removeVideoFromPlaylist('${playlist.id}', '${video.id}')" title="Eliminar">ðï¸</button>
                             </div>
                         </div>
                     `).join('')}
@@ -2304,7 +2304,7 @@ img[loading="lazy"] {
                 playVideo(playlist.videos[0], playlist.videos, 0);
                 closeModal('viewPlaylistModal');
             } else {
-                showMessage('La playlist está vacía', 'warning');
+                showMessage('La playlist estÃ¡ vacÃ­a', 'warning');
             }
         }
 
@@ -2326,11 +2326,11 @@ img[loading="lazy"] {
             if (playlists.length === 0) {
                 selection.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">📁</div>
+                        <div class="empty-state-icon">ð</div>
                         <h3>No tienes playlists</h3>
-                        <p>Crea una playlist primero para añadir canciones</p>
+                        <p>Crea una playlist primero para aÃ±adir canciones</p>
                         <button onclick="closeModal('addToPlaylistModal'); openModal('createPlaylistModal');" style="margin-top: 1rem;">
-                            ➕ Crear Playlist
+                            â Crear Playlist
                         </button>
                     </div>
                 `;
@@ -2342,7 +2342,7 @@ img[loading="lazy"] {
                                 <div style="font-weight: 600;">${escapeHtml(playlist.name)}</div>
                                 <div style="font-size: 0.8rem; color: var(--text-secondary);">${playlist.videos.length} canciones</div>
                             </div>
-                            <span style="font-size: 1.5rem;">➕</span>
+                            <span style="font-size: 1.5rem;">â</span>
                         </div>
                     </div>
                 `).join('');
@@ -2393,7 +2393,7 @@ img[loading="lazy"] {
             const messageEl = document.createElement('div');
             messageEl.className = `message ${type}`;
             
-            const icon = type === 'success' ? '✓' : type === 'error' ? '✖' : '⚠';
+            const icon = type === 'success' ? 'â' : type === 'error' ? 'â' : 'â ';
             messageEl.innerHTML = `<span style="font-size: 1.2rem;">${icon}</span> ${message}`;
             
             document.body.appendChild(messageEl);
@@ -2444,7 +2444,7 @@ img[loading="lazy"] {
                 if (currentVideo) {
                     openAddToPlaylistModal(currentVideo);
                 } else {
-                    showMessage('No hay ninguna canción reproduciendo', 'warning');
+                    showMessage('No hay ninguna canciÃ³n reproduciendo', 'warning');
                 }
             });
 
@@ -2527,7 +2527,7 @@ img[loading="lazy"] {
             displayFavorites();
             displayPlaylists();
             
-            console.log('✓ MusicStream Pro initialized');
+            console.log('â MusicStream Pro initialized');
         });
 
         // Prevent memory leaks

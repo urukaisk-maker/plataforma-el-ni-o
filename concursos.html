@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Concursos y Olimpiadas | El Niño</title>
+    <title>Concursos y Olimpiadas | El NiÃ±o</title>
     <link rel="stylesheet" href="./src/styles/main.css" />
     <link rel="icon" type="image/png" href="./favicon.png" />
   </head>
@@ -54,9 +54,9 @@
               <h3>${c.title}</h3>
               <p>${c.description}</p>
               <div class="contest-card__meta">
-                <span>⏱️ ${Math.floor(c.timeLimit / 60)} min</span>
-                <span>🏆 ${c.xpReward} XP</span>
-                <span>📅 Hasta ${new Date(c.endDate).toLocaleDateString('es-ES')}</span>
+                <span>â±ï¸ ${Math.floor(c.timeLimit / 60)} min</span>
+                <span>ð ${c.xpReward} XP</span>
+                <span>ð Hasta ${new Date(c.endDate).toLocaleDateString('es-ES')}</span>
               </div>
               ${completed
                 ? `<button class="button button--secondary" onclick="showResult('${c.id}')">Ver resultado</button>`

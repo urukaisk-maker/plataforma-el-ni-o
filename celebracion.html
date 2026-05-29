@@ -1,19 +1,19 @@
-﻿<!doctype html>
+ï»¿<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#00f5ff" />
     <link rel="manifest" href="./manifest.json" />
-    <title>Celebración | El Niño</title>
+    <title>CelebraciÃ³n | El NiÃ±o</title>
     <meta
       name="description"
-      content="Espectáculo de celebración con fuegos artificiales, partículas y mensajes de feliz cumpleaños para El Niño."
+      content="EspectÃ¡culo de celebraciÃ³n con fuegos artificiales, partÃ­culas y mensajes de feliz cumpleaÃ±os para El NiÃ±o."
     />
-    <meta property="og:title" content="Celebración | El Niño" />
+    <meta property="og:title" content="CelebraciÃ³n | El NiÃ±o" />
     <meta
       property="og:description"
-      content="Espectáculo de celebración con fuegos artificiales, partículas y mensajes de feliz cumpleaños para El Niño."
+      content="EspectÃ¡culo de celebraciÃ³n con fuegos artificiales, partÃ­culas y mensajes de feliz cumpleaÃ±os para El NiÃ±o."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/celebracion.html" />
@@ -321,13 +321,13 @@
       <div class="hud-stat">Fuegos artificiales<strong id="fireworkCount">0</strong></div>
     </div>
 
-    <button class="audio-toggle" id="audioToggle" title="Activar música">🔇</button>
+    <button class="audio-toggle" id="audioToggle" title="Activar mÃºsica">ð</button>
 
     <div class="celebration-stage" id="celebrationStage"></div>
 
     <div class="celebration-controls">
-      <button class="celebration-btn" id="moreFireworksBtn" type="button">Más fuegos</button>
-      <button class="celebration-btn secondary" id="moreConfettiBtn" type="button">Más confeti</button>
+      <button class="celebration-btn" id="moreFireworksBtn" type="button">MÃ¡s fuegos</button>
+      <button class="celebration-btn secondary" id="moreConfettiBtn" type="button">MÃ¡s confeti</button>
       <a class="celebration-btn secondary" href="./final-epico.html">Volver al final</a>
     </div>
 
@@ -336,7 +336,7 @@
     </audio>
 
     <script>
-      /* === PARTÍCULAS DE FONDO === */
+      /* === PARTÃCULAS DE FONDO === */
       const pCanvas = document.getElementById('particlesCanvas');
       const pCtx = pCanvas.getContext('2d');
       let pW, pH;
@@ -513,13 +513,13 @@
       /* === MENSAJES ANIMADOS === */
       const stage = document.getElementById('celebrationStage');
       const messages = [
-        { text: 'FELIZ CUMPLEAÑOS', cls: 'gold', duration: 3000 },
-        { text: 'EL NIÑO', cls: 'cyan', duration: 2500 },
-        { text: '¡PARTIDA GANADA!', cls: 'pink', duration: 2500 },
-        { text: 'NIVEL MÁXIMO DE FELICIDAD', cls: 'white', duration: 2500 },
-        { text: 'CAMPEÓN DEL DÍA', cls: 'gold', duration: 2500 },
-        { text: 'ESTE DÍA ES TUYO', cls: 'pink', duration: 3000 },
-        { text: '¡CELEBRA A LO GRANDE!', cls: 'gold', duration: 4000 },
+        { text: 'FELIZ CUMPLEAÃOS', cls: 'gold', duration: 3000 },
+        { text: 'EL NIÃO', cls: 'cyan', duration: 2500 },
+        { text: 'Â¡PARTIDA GANADA!', cls: 'pink', duration: 2500 },
+        { text: 'NIVEL MÃXIMO DE FELICIDAD', cls: 'white', duration: 2500 },
+        { text: 'CAMPEÃN DEL DÃA', cls: 'gold', duration: 2500 },
+        { text: 'ESTE DÃA ES TUYO', cls: 'pink', duration: 3000 },
+        { text: 'Â¡CELEBRA A LO GRANDE!', cls: 'gold', duration: 4000 },
       ];
 
       let msgIndex = 0;
@@ -547,7 +547,7 @@
         for (let i = 0; i < 40; i++) {
           const el = document.createElement('div');
           el.className = 'emoji-drop';
-          el.textContent = ['🎉', '🎊', '✨', '🎂', '🎮', '⭐', '🎁', '🕹️', '🏆', '❤️'][Math.floor(Math.random() * 10)];
+          el.textContent = ['ð', 'ð', 'â¨', 'ð', 'ð®', 'â­', 'ð', 'ð¹ï¸', 'ð', 'â¤ï¸'][Math.floor(Math.random() * 10)];
           el.style.left = Math.random() * 100 + 'vw';
           el.style.animationDuration = Math.random() * 3 + 2 + 's';
           el.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
@@ -575,12 +575,12 @@
       audioBtn.addEventListener('click', () => {
         if (audioPlaying) {
           audio.pause();
-          audioBtn.textContent = '🔇';
-          audioBtn.title = 'Activar música';
+          audioBtn.textContent = 'ð';
+          audioBtn.title = 'Activar mÃºsica';
         } else {
           audio.play().catch(() => {});
-          audioBtn.textContent = '🔊';
-          audioBtn.title = 'Pausar música';
+          audioBtn.textContent = 'ð';
+          audioBtn.title = 'Pausar mÃºsica';
         }
         audioPlaying = !audioPlaying;
       });
