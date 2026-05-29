@@ -113,17 +113,6 @@
   </div>
 
   <script type="module" src="./src/js/app.js"></script>
-  <script>
-    document.getElementById('scrollToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.getElementById('openMusicApp').addEventListener('click', () => {
-      window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
-    });
-  </script>
-
-  <script type="module" src="./src/js/app.js"></script>
   <script type="module">
     import { renderMovies } from "./src/js/ui/movies-view.js";
     renderMovies(document.getElementById("peliculasContainer"));
