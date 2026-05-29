@@ -1,0 +1,11 @@
+node_modules
+package-lock.json
+.husky
+servidor Urukais
+*.mp4
+*.jpeg
+*.png
+*.svg
+*.ico
+*.woff
+*.woff2
