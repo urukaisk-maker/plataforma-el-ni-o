@@ -6,6 +6,7 @@
 
 import { speak } from '../utils/speech.js';
 import { logActivity } from './activity-service.js';
+import { getCurrentLocale } from '../utils/i18n.js';
 
 const TUTOR_KEY = 'elnino_tutor_history';
 const TUTOR_ENABLED_KEY = 'elnino_tutor_enabled';
@@ -120,9 +121,9 @@ export async function askTutor(question, personalityId = 'drako') {
  * Lee la respuesta del tutor en voz alta.
  */
 export function speakTutorResponse(text, options = {}) {
-  // Extraer solo el texto después del nombre del personaje
   const cleanText = text.replace(/^[^:]+:\s*/, '');
-  speak(cleanText, { rate: 0.85, ...options });
+  const locale = getCurrentLocale();
+  speak(cleanText, { rate: 0.85, lang: locale, ...options });
 }
 
 /**

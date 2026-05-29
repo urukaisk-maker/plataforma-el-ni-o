@@ -53,6 +53,8 @@
           <span class="brand__text">El Niño</span>
         </a>
 
+        <div id="langSelectorContainer" style="margin-left:auto;margin-right:12px;"></div>
+
         <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
           <span></span>
           <span></span>
@@ -450,6 +452,10 @@
           }).catch(() => {});
         });
       }
+
+      // Selector de idioma
+      import { renderLanguageSelector } from './src/js/ui/language-selector.js';
+      renderLanguageSelector(document.getElementById('langSelectorContainer'));
 
       // Tutor IA
       import { renderTutorModal } from './src/js/ui/tutor-ai-view.js';

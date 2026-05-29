@@ -9,6 +9,7 @@ import {
   getPersonalities,
 } from '../services/tutor-ai-service.js';
 import { playClickSound } from '../utils/audio-feedback.js';
+import { t, getCurrentLocale } from '../utils/i18n.js';
 
 let currentPersonality = 'drako';
 
@@ -19,22 +20,22 @@ export function renderTutorModal(container) {
   const personalities = getPersonalities();
 
   container.innerHTML = `
-    <div class="tutor-modal" id="tutorModal" role="dialog" aria-modal="true" aria-label="Tutor IA">
+    <div class="tutor-modal" id="tutorModal" role="dialog" aria-modal="true" aria-label="${t('tutor.title')}">
       <div class="tutor-modal__header">
         <div class="tutor-modal__avatar">${personalities[currentPersonality].emoji}</div>
         <div>
           <strong class="tutor-modal__name">${personalities[currentPersonality].name}</strong>
-          <span class="tutor-modal__status">● En línea</span>
+          <span class="tutor-modal__status">● ${t('tutor.online')}</span>
         </div>
-        <button class="tutor-modal__close" id="closeTutorModal" aria-label="Cerrar tutor">✕</button>
+        <button class="tutor-modal__close" id="closeTutorModal" aria-label="${t('app.close')}">✕</button>
       </div>
       <div class="tutor-modal__chat" id="tutorChatArea">
         ${history.length === 0 ? renderWelcomeMessage(personalities[currentPersonality]) : history.map(m => renderMessage(m)).join('')}
       </div>
       <div class="tutor-modal__input-area">
-        <input type="text" class="tutor-modal__input" id="tutorInput" placeholder="Escribe tu pregunta..." autocomplete="off" />
-        <button class="tutor-modal__send" id="tutorSendBtn" aria-label="Enviar">➤</button>
-        <button class="tutor-modal__voice" id="tutorVoiceBtn" aria-label="Hablar">🎤</button>
+        <input type="text" class="tutor-modal__input" id="tutorInput" placeholder="${t('tutor.placeholder')}" autocomplete="off" />
+        <button class="tutor-modal__send" id="tutorSendBtn" aria-label="${t('tutor.send')}">➤</button>
+        <button class="tutor-modal__voice" id="tutorVoiceBtn" aria-label="${t('tutor.voice')}">🎤</button>
       </div>
       <div class="tutor-modal__personalities">
         ${Object.entries(personalities).map(([id, p]) => `
@@ -54,7 +55,7 @@ function renderWelcomeMessage(personality) {
     <div class="tutor-message tutor-message--assistant">
       <div class="tutor-message__avatar">${personality.emoji}</div>
       <div class="tutor-message__bubble">
-        <p>¡Hola! Soy <strong>${personality.name}</strong>, tu tutor personal. Puedo ayudarte con matemáticas, historia, ciencia o simplemente darte ánimos. ¿En qué te ayudo hoy?</p>
+        <p>${t('tutor.welcome', { name: personality.name })}</p>
       </div>
     </div>
   `;
@@ -91,14 +92,14 @@ function bindTutorEvents(container) {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
-      recognition.lang = 'es-ES';
+      recognition.lang = getCurrentLocale();
       recognition.onresult = e => {
         input.value = e.results[0][0].transcript;
         sendMessage();
       };
       recognition.start();
     } else {
-      alert('El reconocimiento de voz no está disponible en este navegador.');
+      alert('Voice recognition is not available in this browser.');
     }
   });
 
@@ -134,7 +135,7 @@ function bindTutorEvents(container) {
     chatArea.insertAdjacentHTML('beforeend', `
       <div class="tutor-message tutor-message--assistant" id="${typingId}">
         <div class="tutor-message__avatar">${getPersonalities()[currentPersonality]?.emoji}</div>
-        <div class="tutor-message__bubble"><p class="tutor-typing">Escribiendo<span>.</span><span>.</span><span>.</span></p></div>
+        <div class="tutor-message__bubble"><p class="tutor-typing">${t('tutor.typing')}<span>.</span><span>.</span><span>.</span></p></div>
       </div>
     `);
     chatArea.scrollTop = chatArea.scrollHeight;

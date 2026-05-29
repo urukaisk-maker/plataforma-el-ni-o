@@ -5762,7 +5762,7 @@ body.kid-mode .main-nav a {
 .tutor-modal {
   position: fixed;
   bottom: 90px;
-  right: 16px;
+  left: 16px;
   width: min(380px, calc(100vw - 32px));
   max-height: 70vh;
   background: var(--panel);
@@ -5926,7 +5926,7 @@ body.kid-mode .main-nav a {
 .tutor-fab {
   position: fixed;
   bottom: 90px;
-  right: 16px;
+  left: 16px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -6400,4 +6400,77 @@ body.kid-mode .main-nav a {
 .lesson-block__input:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+/* ==================== LANGUAGE SELECTOR ==================== */
+
+.lang-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-selector__trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-selector__trigger:hover {
+  border-color: var(--primary);
+}
+
+.lang-selector__flag {
+  font-size: 1.2rem;
+}
+
+.lang-selector__arrow {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.lang-selector__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 8px;
+  list-style: none;
+  margin: 0;
+  z-index: 9999;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.lang-selector__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text);
+  transition: background 0.15s ease;
+}
+
+.lang-selector__option:hover,
+.lang-selector__option.active {
+  background: rgba(0, 245, 255, 0.1);
+}
+
+.lang-selector__option.active {
+  color: var(--primary);
+  font-weight: 600;
 }
