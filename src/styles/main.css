@@ -1250,23 +1250,34 @@ p {
 }
 
 .site-footer__grid div {
-  display: grid;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-content: start;
 }
 
 .site-footer__grid h3 {
   color: var(--text);
   font-size: 1rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .site-footer__grid a,
 .site-footer__bottom {
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  transition: color 0.2s ease, transform 0.15s ease;
 }
 
 .site-footer__grid a:hover {
   color: var(--primary);
+  transform: translateX(4px);
 }
 
 .site-footer__grid .footer-download {
