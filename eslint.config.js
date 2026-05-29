@@ -3,6 +3,17 @@ import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
 import htmlPlugin from 'eslint-plugin-html';
 
+const baseRules = {
+  'no-unused-vars': ['warn', { args: 'none', caughtErrors: 'none' }],
+  'no-console': ['warn', { allow: ['warn', 'error'] }],
+  eqeqeq: ['error', 'always'],
+  curly: ['error', 'multi-line'],
+  'no-var': 'error',
+  'prefer-const': 'error',
+  'no-throw-literal': 'error',
+  'no-duplicate-imports': 'error',
+};
+
 export default [
   js.configs.recommended,
   prettierConfig,
@@ -39,19 +50,15 @@ export default [
         confetti: 'readonly',
       },
     },
-    plugins: {
-      html: htmlPlugin,
+    plugins: { html: htmlPlugin },
+    rules: baseRules,
+  },
+  {
+    files: ['**/__tests__/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.jest },
     },
-    rules: {
-      'no-unused-vars': ['warn', { args: 'none', caughtErrors: 'none' }],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
-      eqeqeq: ['error', 'always'],
-      curly: ['error', 'multi-line'],
-      'no-var': 'error',
-      'prefer-const': 'error',
-      'no-throw-literal': 'error',
-      'no-duplicate-imports': 'error',
-    },
+    rules: { ...baseRules, 'no-console': 'off' },
   },
   {
     ignores: [

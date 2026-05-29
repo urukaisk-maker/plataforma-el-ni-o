@@ -1,6 +1,5 @@
 // Servicio de gamificación - Gestión de puntos, XP y localStorage
 import {
-  LEVELS,
   BADGES,
   DAILY_MISSIONS,
   WEEKLY_MISSIONS,
@@ -8,9 +7,8 @@ import {
   getLevelFromXP,
   getXPToNextLevel,
   checkUnlockedBadges,
-  getActiveDailyMissions,
-  getActiveWeeklyMissions,
 } from '../data/gamification.js';
+import { getItem, setItem, removeItem } from '../utils/storage-adapter.js';
 
 const STORAGE_KEY = 'elnino_gamification';
 const CURRENT_PLAYER_KEY = 'elnino_current_player';
@@ -38,69 +36,65 @@ const INITIAL_PLAYER_STATE = {
   weeklyMissions: [],
 };
 
+function getDefaultGamificationData() {
+  return {
+    players: FAMILY_PLAYERS,
+    currentWeekStart: getWeekStart(new Date()).toISOString(),
+  };
+}
+
 // Obtener datos de gamificación del localStorage
 export function getGamificationData() {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (data) {
-      return JSON.parse(data);
-    }
-    return {
-      players: FAMILY_PLAYERS,
-      currentWeekStart: getWeekStart(new Date()).toISOString(),
-    };
-  } catch (error) {
-    console.error('Error al obtener datos de gamificación:', error);
-    return {
-      players: FAMILY_PLAYERS,
-      currentWeekStart: getWeekStart(new Date()).toISOString(),
-    };
-  }
+  return getItem(STORAGE_KEY, getDefaultGamificationData());
 }
 
 // Guardar datos de gamificación en localStorage
 export function saveGamificationData(data) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.error('Error al guardar datos de gamificación:', error);
-  }
+  setItem(STORAGE_KEY, data);
 }
 
 // Obtener jugador actual
 export function getCurrentPlayer() {
-  try {
-    const playerId = localStorage.getItem(CURRENT_PLAYER_KEY) || 'elnino';
-    const data = getGamificationData();
-    const player = data.players.find(p => p.id === playerId);
-
-    if (!player) {
-      return JSON.parse(JSON.stringify(INITIAL_PLAYER_STATE));
-    }
-
-    return player;
-  } catch (error) {
-    console.error('Error al obtener jugador actual:', error);
-    return JSON.parse(JSON.stringify(INITIAL_PLAYER_STATE));
-  }
+  const playerId = getItem(CURRENT_PLAYER_KEY, 'elnino');
+  const data = getGamificationData();
+  const player = data.players.find(p => p.id === playerId);
+  return player ? structuredClone(player) : structuredClone(INITIAL_PLAYER_STATE);
 }
 
 // Guardar estado del jugador actual
 export function saveCurrentPlayer(player) {
-  try {
-    const data = getGamificationData();
-    const playerIndex = data.players.findIndex(p => p.id === player.id);
+  const data = getGamificationData();
+  const playerIndex = data.players.findIndex(p => p.id === player.id);
 
-    if (playerIndex >= 0) {
-      data.players[playerIndex] = player;
-    } else {
-      data.players.push(player);
-    }
-
-    saveGamificationData(data);
-  } catch (error) {
-    console.error('Error al guardar jugador actual:', error);
+  if (playerIndex >= 0) {
+    data.players[playerIndex] = player;
+  } else {
+    data.players.push(player);
   }
+
+  saveGamificationData(data);
+}
+
+// Ejecuta una acción de gamificación con XP + badges + persistencia
+function executeAction(actionFn) {
+  const player = getCurrentPlayer();
+  actionFn(player);
+  const xpBefore = player.xp;
+  const levelBefore = getLevelFromXP(xpBefore).level;
+
+  const { newBadges } = checkForNewBadges(player);
+  const levelAfter = getLevelFromXP(player.xp).level;
+  const levelUp = levelAfter > levelBefore;
+
+  saveCurrentPlayer(player);
+
+  return {
+    xpGained: player.xp - xpBefore,
+    levelUp,
+    oldLevel: levelBefore,
+    newLevel: levelAfter,
+    newBadges,
+  };
 }
 
 // Añadir XP al jugador
@@ -126,173 +120,76 @@ export function addXP(amount) {
 
 // Completar misión
 export function completeMission() {
-  const player = getCurrentPlayer();
-  player.completedMissions += 1;
-
-  // Añadir XP por completar misión
-  const xpResult = addXP(50);
-
-  // Verificar insignias
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
-
-  saveCurrentPlayer(player);
-
-  return {
-    ...xpResult,
-    newBadges,
-  };
+  return executeAction(p => {
+    p.completedMissions += 1;
+    p.xp += 50;
+  });
 }
 
 // Desbloquear recuerdo
 export function unlockMemory() {
-  const player = getCurrentPlayer();
-  player.unlockedMemories += 1;
-
-  const xpResult = addXP(25);
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
-
-  saveCurrentPlayer(player);
-
-  return {
-    ...xpResult,
-    newBadges,
-  };
+  return executeAction(p => {
+    p.unlockedMemories += 1;
+    p.xp += 25;
+  });
 }
 
 // Ver video
 export function watchVideo() {
-  const player = getCurrentPlayer();
-  player.videosWatched += 1;
-
-  const xpResult = addXP(10);
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
-
-  // Actualizar misión diaria si existe
+  const result = executeAction(p => {
+    p.videosWatched += 1;
+    p.xp += 10;
+  });
   updateDailyMissionProgress('daily_watch_video', 1);
-
-  saveCurrentPlayer(player);
-
-  return {
-    ...xpResult,
-    newBadges,
-  };
+  return result;
 }
 
 // Reproducir música
 export function playMusic() {
-  const player = getCurrentPlayer();
-  player.musicPlays += 1;
-
-  const xpResult = addXP(5);
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
-
-  // Actualizar misión diaria si existe
+  const result = executeAction(p => {
+    p.musicPlays += 1;
+    p.xp += 5;
+  });
   updateDailyMissionProgress('daily_music', 1);
-
-  saveCurrentPlayer(player);
-
-  return {
-    ...xpResult,
-    newBadges,
-  };
+  return result;
 }
 
 // Completar misión temprano (antes de las 10 AM)
 export function completeEarlyMission() {
   const hour = new Date().getHours();
-  if (hour < 10) {
-    const player = getCurrentPlayer();
-    player.earlyMissions += 1;
+  if (hour >= 10) return { isEarly: false };
 
-    const xpResult = addXP(20); // Bonus XP
-    const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-    if (levelUpInfo && !xpResult.levelUp) {
-      xpResult.levelUp = true;
-      xpResult.oldLevel = levelUpInfo.oldLevel;
-      xpResult.newLevel = levelUpInfo.newLevel;
-    }
-
-    saveCurrentPlayer(player);
-
-    return {
-      ...xpResult,
-      newBadges,
-      isEarly: true,
-    };
-  }
-
-  return { isEarly: false };
+  const result = executeAction(p => {
+    p.earlyMissions += 1;
+    p.xp += 20; // Bonus XP
+  });
+  return { ...result, isEarly: true };
 }
 
 // Desbloquear sorpresa antes de tiempo
 export function unlockSurpriseEarly() {
-  const player = getCurrentPlayer();
-  player.surpriseUnlockedEarly = true;
-
-  const xpResult = addXP(100);
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
-
-  saveCurrentPlayer(player);
-
-  return {
-    ...xpResult,
-    newBadges,
-  };
+  return executeAction(p => {
+    p.surpriseUnlockedEarly = true;
+    p.xp += 100;
+  });
 }
 
-// Verificar nuevas insignias
+// Verificar nuevas insignias (no muta el jugador original)
 function checkForNewBadges(player) {
   const unlockedBadges = checkUnlockedBadges(player);
   const newBadges = [];
-  let levelUpInfo = null;
 
   unlockedBadges.forEach(badge => {
     if (!player.badges.includes(badge.id)) {
       player.badges.push(badge.id);
       newBadges.push(badge);
-      // Añadir XP de la insignia
       player.xp += badge.xpReward;
-      const oldLevel = getLevelFromXP(player.xp - badge.xpReward);
-      const newLevel = getLevelFromXP(player.xp);
-      if (newLevel.level > oldLevel.level) {
-        player.level = newLevel.level;
-        levelUpInfo = { oldLevel, newLevel };
-      }
     }
   });
 
-  return { newBadges, levelUpInfo };
+  player.level = getLevelFromXP(player.xp).level;
+
+  return { newBadges };
 }
 
 // Iniciar sesión diario
@@ -331,22 +228,20 @@ export function dailyLogin() {
     player.lastWeeklyReset = weekStart.toISOString();
   }
 
-  // Completar misión de login
+  player.xp += 10; // Login bonus
   updateDailyMissionProgress('daily_login', 1);
 
-  const xpResult = addXP(10);
-  const { newBadges, levelUpInfo } = checkForNewBadges(player);
-
-  if (levelUpInfo && !xpResult.levelUp) {
-    xpResult.levelUp = true;
-    xpResult.oldLevel = levelUpInfo.oldLevel;
-    xpResult.newLevel = levelUpInfo.newLevel;
-  }
+  const { newBadges } = checkForNewBadges(player);
+  const levelBefore = getLevelFromXP(player.xp - 10).level;
+  const levelAfter = getLevelFromXP(player.xp).level;
 
   saveCurrentPlayer(player);
 
   return {
-    ...xpResult,
+    xpGained: 10,
+    levelUp: levelAfter > levelBefore,
+    oldLevel: levelBefore,
+    newLevel: levelAfter,
     newBadges,
     dailyStreak: player.dailyStreak,
   };
@@ -430,16 +325,16 @@ export function getPlayerStats() {
 
 // Resetear datos (para testing)
 export function resetGamificationData() {
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(CURRENT_PLAYER_KEY);
+  removeItem(STORAGE_KEY);
+  removeItem(CURRENT_PLAYER_KEY);
 }
 
-// Función auxiliar para obtener el inicio de la semana
+// Función auxiliar para obtener el inicio de la semana (lunes)
 function getWeekStart(date) {
   const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  const weekStart = new Date(d.setDate(diff));
-  weekStart.setHours(0, 0, 0, 0);
-  return weekStart;
+  const day = d.getDay(); // 0=domingo, 1=lunes...
+  const diff = day === 0 ? -6 : 1 - day; // distancia al lunes
+  d.setDate(d.getDate() + diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
 }

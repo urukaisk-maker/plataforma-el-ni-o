@@ -1,8 +1,10 @@
 // Servicio social - Gestión de comentarios, likes, chat y galería con localStorage
 import { INITIAL_SOCIAL_STATE, REACTIONS, formatRelativeTime } from '../data/social.js';
+import { getItem, setItem, removeItem } from '../utils/storage-adapter.js';
+import { generateId } from '../utils/id.js';
+import { sanitizeText, sanitizeTags, isValidImageUrl } from '../utils/validation.js';
 
 const SOCIAL_STORAGE_KEY = 'elnino_social';
-const CURRENT_USER_KEY = 'elnino_current_user';
 
 // Usuario actual (por defecto El Niño)
 const CURRENT_USER = {
@@ -13,25 +15,12 @@ const CURRENT_USER = {
 
 // Obtener datos sociales del localStorage
 export function getSocialData() {
-  try {
-    const data = localStorage.getItem(SOCIAL_STORAGE_KEY);
-    if (data) {
-      return JSON.parse(data);
-    }
-    return INITIAL_SOCIAL_STATE;
-  } catch (error) {
-    console.error('Error al obtener datos sociales:', error);
-    return INITIAL_SOCIAL_STATE;
-  }
+  return getItem(SOCIAL_STORAGE_KEY, INITIAL_SOCIAL_STATE);
 }
 
 // Guardar datos sociales en localStorage
 export function saveSocialData(data) {
-  try {
-    localStorage.setItem(SOCIAL_STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.error('Error al guardar datos sociales:', error);
-  }
+  setItem(SOCIAL_STORAGE_KEY, data);
 }
 
 // ==================== COMENTARIOS ====================
@@ -39,14 +28,17 @@ export function saveSocialData(data) {
 // Añadir comentario
 export function addComment(targetType, targetId, content) {
   const data = getSocialData();
+  const cleanContent = sanitizeText(content, 2000);
+  if (!cleanContent) return null;
+
   const newComment = {
-    id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    id: generateId('comment'),
     targetType,
     targetId,
     authorId: CURRENT_USER.id,
     authorName: CURRENT_USER.name,
     authorAvatar: CURRENT_USER.avatar,
-    content,
+    content: cleanContent,
     timestamp: new Date().toISOString(),
     reactions: [],
   };
@@ -75,26 +67,22 @@ export function deleteComment(commentId) {
   return false;
 }
 
+function updateReaction(reactions, userId, reactionId) {
+  const idx = reactions.findIndex(r => r.userId === userId);
+  if (idx >= 0) {
+    reactions[idx].reactionId = reactionId;
+  } else {
+    reactions.push({ userId, reactionId });
+  }
+}
+
 // Añadir reacción a comentario
 export function addCommentReaction(commentId, reactionId) {
   const data = getSocialData();
   const comment = data.comments.find(c => c.id === commentId);
 
   if (comment) {
-    // Verificar si el usuario ya reaccionó
-    const existingReactionIndex = comment.reactions.findIndex(r => r.userId === CURRENT_USER.id);
-
-    if (existingReactionIndex >= 0) {
-      // Actualizar reacción existente
-      comment.reactions[existingReactionIndex].reactionId = reactionId;
-    } else {
-      // Añadir nueva reacción
-      comment.reactions.push({
-        userId: CURRENT_USER.id,
-        reactionId,
-      });
-    }
-
+    updateReaction(comment.reactions, CURRENT_USER.id, reactionId);
     saveSocialData(data);
     return true;
   }
@@ -200,12 +188,15 @@ export function getLikesCount(targetType, targetId) {
 // Enviar mensaje
 export function sendMessage(content) {
   const data = getSocialData();
+  const cleanContent = sanitizeText(content, 2000);
+  if (!cleanContent) return null;
+
   const newMessage = {
-    id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    id: generateId('msg'),
     authorId: CURRENT_USER.id,
     authorName: CURRENT_USER.name,
     authorAvatar: CURRENT_USER.avatar,
-    content,
+    content: cleanContent,
     timestamp: new Date().toISOString(),
     reactions: [],
   };
@@ -272,18 +263,22 @@ export function markAsRead() {
 // Subir foto
 export function uploadPhoto(url, caption, tags = []) {
   const data = getSocialData();
+  if (!isValidImageUrl(url)) return null;
+  const cleanCaption = sanitizeText(caption, 500);
+  const cleanTags = sanitizeTags(tags);
+
   const newPhoto = {
-    id: `photo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    id: generateId('photo'),
     uploaderId: CURRENT_USER.id,
     uploaderName: CURRENT_USER.name,
     uploaderAvatar: CURRENT_USER.avatar,
     url,
-    thumbnail: url, // En un sistema real, esto sería una versión miniatura
-    caption,
+    thumbnail: url,
+    caption: cleanCaption,
     timestamp: new Date().toISOString(),
     likes: [],
     comments: [],
-    tags,
+    tags: cleanTags,
   };
 
   data.photos.unshift(newPhoto);
@@ -379,14 +374,17 @@ export function addPhotoComment(photoId, content) {
   const photo = data.photos.find(p => p.id === photoId);
 
   if (photo) {
+    const cleanContent = sanitizeText(content, 2000);
+    if (!cleanContent) return null;
+
     const newComment = {
-      id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateId('comment'),
       targetType: 'photo',
       targetId: photoId,
       authorId: CURRENT_USER.id,
       authorName: CURRENT_USER.name,
       authorAvatar: CURRENT_USER.avatar,
-      content,
+      content: cleanContent,
       timestamp: new Date().toISOString(),
       reactions: [],
     };
@@ -434,5 +432,5 @@ export function getCurrentUser() {
 
 // Resetear datos sociales (para testing)
 export function resetSocialData() {
-  localStorage.removeItem(SOCIAL_STORAGE_KEY);
+  removeItem(SOCIAL_STORAGE_KEY);
 }

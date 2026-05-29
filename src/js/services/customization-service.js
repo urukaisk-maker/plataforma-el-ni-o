@@ -5,30 +5,18 @@ import {
   validateCustomMission,
   validateCustomCard,
 } from '../data/customization.js';
+import { getItem, setItem, removeItem } from '../utils/storage-adapter.js';
 
 const CUSTOMIZATION_STORAGE_KEY = 'elnino_customization';
 
 // Obtener datos de personalización del localStorage
 export function getCustomizationData() {
-  try {
-    const data = localStorage.getItem(CUSTOMIZATION_STORAGE_KEY);
-    if (data) {
-      return JSON.parse(data);
-    }
-    return INITIAL_CUSTOMIZATION;
-  } catch (error) {
-    console.error('Error al obtener datos de personalización:', error);
-    return INITIAL_CUSTOMIZATION;
-  }
+  return getItem(CUSTOMIZATION_STORAGE_KEY, INITIAL_CUSTOMIZATION);
 }
 
 // Guardar datos de personalización en localStorage
 export function saveCustomizationData(data) {
-  try {
-    localStorage.setItem(CUSTOMIZATION_STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.error('Error al guardar datos de personalización:', error);
-  }
+  setItem(CUSTOMIZATION_STORAGE_KEY, data);
 }
 
 // ==================== AVATAR ====================
@@ -94,7 +82,6 @@ export function applyThemeColors(themeId) {
   const data = getCustomizationData();
   const themeIdToUse = themeId || data.theme;
 
-  // Importar THEMES dinámicamente
   import('../data/customization.js').then(({ THEMES }) => {
     const theme = THEMES.find(t => t.id === themeIdToUse);
     if (theme) {
@@ -103,6 +90,8 @@ export function applyThemeColors(themeId) {
         root.style.setProperty(`--${key}`, value);
       });
     }
+  }).catch(() => {
+    // Fallback silencioso si el módulo no carga
   });
 }
 
@@ -256,8 +245,7 @@ export function deleteCustomCard(cardId) {
 
 // Resetear datos de personalización
 export function resetCustomization() {
-  localStorage.removeItem(CUSTOMIZATION_STORAGE_KEY);
-  // Aplicar tema por defecto
+  removeItem(CUSTOMIZATION_STORAGE_KEY);
   applyThemeColors('default');
 }
 
