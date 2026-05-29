@@ -406,7 +406,7 @@ export function renderGallery(container) {
 function renderPhotoCard(photo) {
   return `
     <div class="photo-card" data-photo-id="${photo.id}">
-      <div class="photo-card__image">
+      <div class="photo-card__image" style="cursor:pointer;" onclick="window.openLightbox && window.openLightbox('${photo.url}', '${photo.caption.replace(/'/g, '&#39;')}')">
         <img src="${photo.url}" alt="${photo.caption}" loading="lazy" />
       </div>
       <div class="photo-card__content">
@@ -571,3 +571,57 @@ export function renderFloatingChatWidget(container) {
     window.location.href = './chat.html';
   });
 }
+
+// ==================== LIGHTBOX ====================
+
+function createLightbox() {
+  if (document.getElementById('lightboxOverlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'lightboxOverlay';
+  overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-label', 'Vista ampliada');
+  overlay.innerHTML = `
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+      <img class="lightbox-img" src="" alt="" />
+      <p class="lightbox-caption"></p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay || e.target.closest('.lightbox-close')) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+}
+
+function openLightbox(url, caption) {
+  createLightbox();
+  const overlay = document.getElementById('lightboxOverlay');
+  const img = overlay.querySelector('.lightbox-img');
+  const cap = overlay.querySelector('.lightbox-caption');
+  img.src = url;
+  img.alt = caption;
+  cap.textContent = caption;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const overlay = document.getElementById('lightboxOverlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
