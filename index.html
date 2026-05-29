@@ -53,16 +53,14 @@
           <span class="brand__text">El Niño</span>
         </a>
 
-        <div id="langSelectorContainer" style="margin-left:auto;margin-right:12px;"></div>
-
-
         <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
           <a href="./index.html">Inicio</a>
           <a href="./misiones.html">Misiones</a>
           <a href="./cuentos.html">Cuentos</a>
           <a href="./concursos.html">Concursos</a>
           <a href="./youtube.html">YouTube</a>
-          <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+          <a href="./peliculas.html">Películas</a>
+          <a href="./recuerdos.html">Recuerdos</a>
           <a href="./sorpresa.html">Sorpresa</a>
           <a href="./leaderboard.html">Leaderboard</a>
           <a href="./perfil.html">Mi Perfil</a>
@@ -329,61 +327,40 @@
             <a href="./cuentos.html">Cuentos</a>
             <a href="./concursos.html">Concursos</a>
             <a href="./youtube.html">YouTube</a>
-            <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+            <a href="./peliculas.html">Películas</a>
+            <a href="./recuerdos.html">Recuerdos</a>
             <a href="./sorpresa.html">Sorpresa</a>
             <a href="./regalo-digital.html">Regalo digital</a>
             <a href="./rincon-gamer.html">Rincón gamer</a>
           </div>
           <div>
-            <h3>Campaña</h3>
-            <a href="./ceremonia-digital.html">Ceremonia digital</a>
-            <a href="./recompensas.html">Recompensas</a>
-            <a href="./premio-sorpresa.html">Premio sorpresa</a>
-            <a href="./final-epico.html">Final épico</a>
-          </div>
-          <div>
-            <h3>Proyecto</h3>
+            <h3>Legal & Proyecto</h3>
             <a href="./proyecto.html">Visión general</a>
-            <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
-            <a href="./proyecto.html#api">APIs futuras</a>
+            <a href="./panel-privacidad.html">Panel de privacidad</a>
+            <a href="./privacidad.html">Privacidad</a>
+            <a href="./terminos.html">Términos</a>
+            <a href="./cookies.html">Cookies</a>
             <a
               class="footer-download"
               href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip"
               download
               title="Descargar el proyecto con dedicatoria para El Niño"
-              >Descargar proyecto <br />El Niño</a
             >
+              Descargar proyecto El Niño
+            </a>
           </div>
           <div>
             <h3>Apoya el proyecto</h3>
             <a href="https://www.buymeacoffee.com/urukais" target="_blank" rel="noopener noreferrer">☕ Buy Me a Coffee</a>
             <a href="https://ko-fi.com/urukais" target="_blank" rel="noopener noreferrer">🎁 Ko-fi</a>
             <a href="./docs/ARQUITECTURA_BACKEND.md">📋 Arquitectura futura</a>
-          </div>
-          <div>
-            <h3>Legal</h3>
-            <a href="./cookies.html">Cookies</a>
-            <a href="./panel-privacidad.html">Panel de privacidad</a>
-            <a href="./privacidad.html">Privacidad</a>
-            <a href="./terminos.html">Términos</a>
+            <a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
           </div>
         </div>
 
         <div class="site-footer__bottom">
-          <span class="site-footer__copyright"
-            >© 2026 El Niño. Todos los recuerdos reservados.<br /><a
-              href="https://github.com/urukaisk-maker/plataforma-el-ni-o"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Ver proyecto en GitHub</a
-            ></span
-          >
-          <span>Modo gamer activado</span
-          ><span
-            ><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer"
-              >Desarrollado por Urukais Klick</a
-            ></span
-          >
+          <span class="site-footer__copyright">© 2026 El Niño. Todos los recuerdos reservados.</span>
+          <span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
         </div>
       </footer>
     </div>
@@ -488,10 +465,6 @@
           }).catch(() => {});
         });
       }
-
-      // Selector de idioma
-      import { renderLanguageSelector } from './src/js/ui/language-selector.js';
-      renderLanguageSelector(document.getElementById('langSelectorContainer'));
 
       // Tutor IA
       import { renderTutorModal } from './src/js/ui/tutor-ai-view.js';

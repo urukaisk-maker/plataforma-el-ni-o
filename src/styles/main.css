@@ -1244,9 +1244,9 @@ p {
 
 .site-footer__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 32px;
-  padding: 36px 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  padding: 40px 0;
 }
 
 .site-footer__grid div {
