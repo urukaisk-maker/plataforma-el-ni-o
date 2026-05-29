@@ -39,7 +39,7 @@
     <div class="video-background">
       <iframe
         class="video-background__video"
-        src="https://www.youtube.com/embed/pjnwYRwUA08?autoplay=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0"
+        src="https://www.youtube.com/embed/pjnwYRwUA08?autoplay=1&mute=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
         title="Video de fondo gamer"
         allow="autoplay; encrypted-media"
         loading="lazy"
@@ -55,11 +55,6 @@
 
         <div id="langSelectorContainer" style="margin-left:auto;margin-right:12px;"></div>
 
-        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
 
         <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
           <a href="./index.html">Inicio</a>
@@ -91,6 +86,9 @@
               <a class="button button--ghost" href="./youtube.html">Ver zona YouTube</a>
               <button class="button button--ghost music-control" id="musicButton" type="button">
                 Escuchar canción
+              </button>
+              <button class="button button--ghost volume-toggle" id="volumeToggle" type="button" title="Activar/ silenciar video" aria-label="Activar sonido del video de fondo" style="padding:0.5rem 0.75rem;font-size:1.2rem;">
+                🔇
               </button>
               <button class="button button--ghost" id="shareAppBtn" type="button" style="display:none;">🔗 Compartir</button>
             </div>
@@ -224,6 +222,7 @@
             </p>
             <div class="modal__countdown" id="countdownTimer" aria-live="polite">Cargando cuenta atrás...</div>
             <button class="button button--ghost music-control" type="button">Escuchar canción</button>
+            <button class="button button--ghost volume-toggle" type="button" title="Activar/ silenciar video" aria-label="Activar sonido del video de fondo" style="padding:0.5rem 0.75rem;font-size:1.2rem;">🔇</button>
             <a class="button button--primary" id="unlockButton" href="./regalo-digital.html" hidden
               >Entrar a la sorpresa</a
             >
@@ -401,6 +400,41 @@
       document.getElementById('openMusicApp').addEventListener('click', () => {
         window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
       });
+
+      // Control de volumen del video de fondo de YouTube
+      (function() {
+        const iframe = document.querySelector('.video-background__video');
+        const volumeBtns = document.querySelectorAll('.volume-toggle');
+        if (!iframe || !volumeBtns.length) return;
+        let isMuted = true;
+        function ytCommand(func, args) {
+          if (!iframe.contentWindow) return;
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func, args }),
+            '*'
+          );
+        }
+        volumeBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (isMuted) {
+              ytCommand('unMute');
+              volumeBtns.forEach(b => {
+                b.textContent = '🔊';
+                b.title = 'Silenciar video';
+                b.setAttribute('aria-label', 'Silenciar video de fondo');
+              });
+            } else {
+              ytCommand('mute');
+              volumeBtns.forEach(b => {
+                b.textContent = '🔇';
+                b.title = 'Activar sonido del video';
+                b.setAttribute('aria-label', 'Activar sonido del video de fondo');
+              });
+            }
+            isMuted = !isMuted;
+          });
+        });
+      })();
     </script>
     <script type="module">
       import { dailyLogin, getPlayerStats } from './src/js/services/gamification-service.js';
