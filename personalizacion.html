@@ -1,245 +1,298 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#00f5ff">
-  <link rel="manifest" href="./manifest.json">
-  <title>Personalización | El Niño</title>
-  <meta name="description" content="Personaliza tu avatar, tema y perfil gamer en la plataforma El Niño.">  <meta property="og:title" content="Personalización | El Niño">
-  <meta property="og:description" content="Personaliza tu avatar, tema y perfil gamer en la plataforma El Niño.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/personalizacion.html">
-  <meta property="og:image" content="https://silly-boba-dc057e.netlify.app/icon-512.png">
-  <meta property="og:locale" content="es_ES">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./src/styles/main.css">
-</head>
-<body>
-  <div class="video-background">
-    
-    <iframe class="video-background__video" src="https://www.youtube.com/embed/pjnwYRwUA08?mute=1&autoplay=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0" title="Video de fondo gamer" allow="autoplay; encrypted-media" loading="lazy"></iframe>
-    <div class="video-background__overlay"></div>
-  </div>
-  <div class="app-shell">
-    <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Ir al inicio">
-        <span class="brand__icon">EN</span>
-        <span class="brand__text">El Niño</span>
-      </a>
-
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
-        <a href="./index.html">Inicio</a>
-        <a href="./misiones.html">Misiones</a>
-        <a href="./youtube.html">YouTube</a>
-        <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
-        <a href="./sorpresa.html">Sorpresa</a>
-        <a href="./leaderboard.html">Leaderboard</a>
-        <a href="./perfil.html">Mi Perfil</a>
-        <a href="./insignias.html">Insignias</a>
-        <a href="./chat.html">Chat</a>
-        <a href="./galeria.html">Galería</a>
-        <a href="./personalizacion.html">Personalización</a>
-        <a href="./creador-misiones.html">Creador</a>
-        <a href="./tarjetas.html">Tarjetas</a>
-        <a href="./proyecto.html">Proyecto</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="page-hero">
-        <p class="eyebrow">Tu estilo único</p>
-        <h1>Personalización</h1>
-        <p class="hero__description">Crea tu avatar gamer, personaliza el tema de la plataforma y haz que tu perfil sea único. Express yourself!</p>
-        <div class="hero__actions">
-          <a class="button button--primary" href="./creador-misiones.html">Crear misiones</a>
-          <a class="button button--ghost" href="./tarjetas.html">Diseñar tarjetas</a>
-        </div>
-      </section>
-
-      <section class="section two-column">
-        <article class="content-panel">
-          <p class="eyebrow">Avatar</p>
-          <h2>Editor de Avatar</h2>
-          <div id="avatarEditorContainer"></div>
-        </article>
-        <article class="content-panel">
-          <p class="eyebrow">Tema</p>
-          <h2>Selector de Tema</h2>
-          <div id="themeSelectorContainer"></div>
-        </article>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Datos</p>
-          <h2>Exportar/Importar</h2>
-        </div>
-        <div class="data-actions">
-          <button class="button button--primary" id="exportBtn">Exportar personalización</button>
-          <button class="button button--ghost" id="importBtn">Importar personalización</button>
-          <button class="button button--ghost" id="resetBtn">Restablecer valores</button>
-        </div>
-      </section>
-    </main>
-
-    <div class="floating-buttons">
-      <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app">📲</button>
-      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">🎵</button>
-      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">⬆️</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#00f5ff" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>Personalización | El Niño</title>
+    <meta name="description" content="Personaliza tu avatar, tema y perfil gamer en la plataforma El Niño." />
+    <meta property="og:title" content="Personalización | El Niño" />
+    <meta property="og:description" content="Personaliza tu avatar, tema y perfil gamer en la plataforma El Niño." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/personalizacion.html" />
+    <meta property="og:image" content="https://silly-boba-dc057e.netlify.app/icon-512.png" />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+  </head>
+  <body>
+    <div class="video-background">
+      <iframe
+        class="video-background__video"
+        src="https://www.youtube.com/embed/pjnwYRwUA08?mute=1&autoplay=1&loop=1&playlist=pjnwYRwUA08&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=0"
+        title="Video de fondo gamer"
+        allow="autoplay; encrypted-media"
+        loading="lazy"
+      ></iframe>
+      <div class="video-background__overlay"></div>
     </div>
-
-    <!-- Modal para importar -->
-    <div class="modal" id="importModal" aria-hidden="true" role="dialog" aria-labelledby="importModalTitle">
-      <div class="modal__overlay" id="closeImportOverlay"></div>
-      <div class="modal__dialog">
-        <div class="modal__header">
-          <h2 id="importModalTitle">Importar personalización</h2>
-          <button class="modal__close" type="button" id="closeImportButton" aria-label="Cerrar">×</button>
-        </div>
-        <div class="modal__body">
-          <div class="import-form">
-            <div class="import-form__field">
-              <label for="importData">Pega los datos JSON:</label>
-              <textarea id="importData" class="import-form__textarea" rows="10" placeholder="Pega aquí los datos de personalización..."></textarea>
-            </div>
-            <div class="import-form__actions">
-              <button class="button button--primary" id="submitImport">Importar</button>
-              <button class="button button--ghost" id="cancelImport">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer class="site-footer">
-      <div class="site-footer__brand">
+    <div class="app-shell">
+      <header class="site-header">
         <a class="brand" href="./index.html" aria-label="Ir al inicio">
           <span class="brand__icon">EN</span>
           <span class="brand__text">El Niño</span>
         </a>
-        <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
-      </div>
 
-      <div class="site-footer__grid">
-        <div>
-          <h3>Explorar</h3>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+          <a href="./index.html">Inicio</a>
           <a href="./misiones.html">Misiones</a>
           <a href="./youtube.html">YouTube</a>
           <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
           <a href="./sorpresa.html">Sorpresa</a>
-          <a href="./regalo-digital.html">Regalo digital</a>
-          <a href="./rincon-gamer.html">Rincón gamer</a>
-        </div>
-        <div>
-          <h3>Social</h3>
-          <a href="./chat.html">Chat</a>
-          <a href="./galeria.html">Galería</a>
-          <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
-        </div>
-        <div>
-          <h3>Gamificación</h3>
           <a href="./leaderboard.html">Leaderboard</a>
           <a href="./perfil.html">Mi Perfil</a>
           <a href="./insignias.html">Insignias</a>
-          <a href="./misiones.html">Misiones</a>
-        </div>
-        <div>
-          <h3>Personalización</h3>
-          <a href="./personalizacion.html">Avatar y Tema</a>
-          <a href="./creador-misiones.html">Creador de Misiones</a>
-          <a href="./tarjetas.html">Tarjetas Digitales</a>
-        </div>
-        <div>
-          <h3>Legal</h3>
-          <a href="./cookies.html">Cookies</a>
-          <a href="./privacidad.html">Privacidad</a>
-          <a href="./terminos.html">Términos</a>
+          <a href="./chat.html">Chat</a>
+          <a href="./galeria.html">Galería</a>
+          <a href="./personalizacion.html">Personalización</a>
+          <a href="./creador-misiones.html">Creador</a>
+          <a href="./tarjetas.html">Tarjetas</a>
+          <a href="./proyecto.html">Proyecto</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Tu estilo único</p>
+          <h1>Personalización</h1>
+          <p class="hero__description">
+            Crea tu avatar gamer, personaliza el tema de la plataforma y haz que tu perfil sea único. Express yourself!
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="./creador-misiones.html">Crear misiones</a>
+            <a class="button button--ghost" href="./tarjetas.html">Diseñar tarjetas</a>
+          </div>
+        </section>
+
+        <section class="section two-column">
+          <article class="content-panel">
+            <p class="eyebrow">Avatar</p>
+            <h2>Editor de Avatar</h2>
+            <div id="avatarEditorContainer"></div>
+          </article>
+          <article class="content-panel">
+            <p class="eyebrow">Tema</p>
+            <h2>Selector de Tema</h2>
+            <div id="themeSelectorContainer"></div>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <p class="eyebrow">Datos</p>
+            <h2>Exportar/Importar</h2>
+          </div>
+          <div class="data-actions">
+            <button class="button button--primary" id="exportBtn">Exportar personalización</button>
+            <button class="button button--ghost" id="importBtn">Importar personalización</button>
+            <button class="button button--ghost" id="resetBtn">Restablecer valores</button>
+          </div>
+        </section>
+      </main>
+
+      <div class="floating-buttons">
+        <button
+          class="floating-button floating-button--install"
+          type="button"
+          id="installPWA"
+          aria-label="Instalar app"
+          title="Instalar app"
+        >
+          📲
+        </button>
+        <button
+          class="floating-button floating-button--music"
+          type="button"
+          id="openMusicApp"
+          aria-label="Abrir app de música"
+          title="App de música"
+        >
+          🎵
+        </button>
+        <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">
+          ⬆️
+        </button>
+      </div>
+
+      <!-- Modal para importar -->
+      <div class="modal" id="importModal" aria-hidden="true" role="dialog" aria-labelledby="importModalTitle">
+        <div class="modal__overlay" id="closeImportOverlay"></div>
+        <div class="modal__dialog">
+          <div class="modal__header">
+            <h2 id="importModalTitle">Importar personalización</h2>
+            <button class="modal__close" type="button" id="closeImportButton" aria-label="Cerrar">×</button>
+          </div>
+          <div class="modal__body">
+            <div class="import-form">
+              <div class="import-form__field">
+                <label for="importData">Pega los datos JSON:</label>
+                <textarea
+                  id="importData"
+                  class="import-form__textarea"
+                  rows="10"
+                  placeholder="Pega aquí los datos de personalización..."
+                ></textarea>
+              </div>
+              <div class="import-form__actions">
+                <button class="button button--primary" id="submitImport">Importar</button>
+                <button class="button button--ghost" id="cancelImport">Cancelar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="site-footer__bottom">
-        <span class="site-footer__copyright">© 2026 El Niño. Todos los recuerdos reservados.<br><a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">Ver proyecto en GitHub</a></span>
-        <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
-      </div>
-    </footer>
-  </div>
+      <footer class="site-footer">
+        <div class="site-footer__brand">
+          <a class="brand" href="./index.html" aria-label="Ir al inicio">
+            <span class="brand__icon">EN</span>
+            <span class="brand__text">El Niño</span>
+          </a>
+          <p>
+            Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas
+            digitales.
+          </p>
+        </div>
 
-  <script type="module" src="./src/js/app.js"></script>
-  <script type="module">
-    import { renderAvatarEditor, renderThemeSelector } from "./src/js/ui/customization-view.js";
-    import { exportCustomization, importCustomization, resetCustomization } from "./src/js/services/customization-service.js";
+        <div class="site-footer__grid">
+          <div>
+            <h3>Explorar</h3>
+            <a href="./misiones.html">Misiones</a>
+            <a href="./youtube.html">YouTube</a>
+            <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+            <a href="./sorpresa.html">Sorpresa</a>
+            <a href="./regalo-digital.html">Regalo digital</a>
+            <a href="./rincon-gamer.html">Rincón gamer</a>
+          </div>
+          <div>
+            <h3>Social</h3>
+            <a href="./chat.html">Chat</a>
+            <a href="./galeria.html">Galería</a>
+            <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+          </div>
+          <div>
+            <h3>Gamificación</h3>
+            <a href="./leaderboard.html">Leaderboard</a>
+            <a href="./perfil.html">Mi Perfil</a>
+            <a href="./insignias.html">Insignias</a>
+            <a href="./misiones.html">Misiones</a>
+          </div>
+          <div>
+            <h3>Personalización</h3>
+            <a href="./personalizacion.html">Avatar y Tema</a>
+            <a href="./creador-misiones.html">Creador de Misiones</a>
+            <a href="./tarjetas.html">Tarjetas Digitales</a>
+          </div>
+          <div>
+            <h3>Legal</h3>
+            <a href="./cookies.html">Cookies</a>
+            <a href="./privacidad.html">Privacidad</a>
+            <a href="./terminos.html">Términos</a>
+          </div>
+        </div>
 
-    // Renderizar componentes
-    renderAvatarEditor(document.getElementById('avatarEditorContainer'));
-    renderThemeSelector(document.getElementById('themeSelectorContainer'));
+        <div class="site-footer__bottom">
+          <span class="site-footer__copyright"
+            >© 2026 El Niño. Todos los recuerdos reservados.<br /><a
+              href="https://github.com/urukaisk-maker/plataforma-el-ni-o"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Ver proyecto en GitHub</a
+            ></span
+          >
+          <span>Modo gamer activado</span
+          ><span
+            ><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer"
+              >Desarrollado por Urukais Klick</a
+            ></span
+          >
+        </div>
+      </footer>
+    </div>
 
-    // Event listeners para exportar/importar
-    document.getElementById('exportBtn').addEventListener('click', exportCustomization);
+    <script type="module" src="./src/js/app.js"></script>
+    <script type="module">
+      import { renderAvatarEditor, renderThemeSelector } from './src/js/ui/customization-view.js';
+      import {
+        exportCustomization,
+        importCustomization,
+        resetCustomization,
+      } from './src/js/services/customization-service.js';
 
-    const importModal = document.getElementById('importModal');
-    const importBtn = document.getElementById('importBtn');
-    const closeImportButton = document.getElementById('closeImportButton');
-    const closeImportOverlay = document.getElementById('closeImportOverlay');
-    const cancelImport = document.getElementById('cancelImport');
-    const submitImport = document.getElementById('submitImport');
+      // Renderizar componentes
+      renderAvatarEditor(document.getElementById('avatarEditorContainer'));
+      renderThemeSelector(document.getElementById('themeSelectorContainer'));
 
-    importBtn?.addEventListener('click', () => {
-      importModal.setAttribute('aria-hidden', 'false');
-      importModal.style.display = 'grid';
-    });
+      // Event listeners para exportar/importar
+      document.getElementById('exportBtn').addEventListener('click', exportCustomization);
 
-    const closeModal = () => {
-      importModal.setAttribute('aria-hidden', 'true');
-      importModal.style.display = 'none';
-    };
+      const importModal = document.getElementById('importModal');
+      const importBtn = document.getElementById('importBtn');
+      const closeImportButton = document.getElementById('closeImportButton');
+      const closeImportOverlay = document.getElementById('closeImportOverlay');
+      const cancelImport = document.getElementById('cancelImport');
+      const submitImport = document.getElementById('submitImport');
 
-    closeImportButton?.addEventListener('click', closeModal);
-    closeImportOverlay?.addEventListener('click', closeModal);
-    cancelImport?.addEventListener('click', closeModal);
+      importBtn?.addEventListener('click', () => {
+        importModal.setAttribute('aria-hidden', 'false');
+        importModal.style.display = 'grid';
+      });
 
-    submitImport?.addEventListener('click', () => {
-      const importData = document.getElementById('importData').value.trim();
-      if (importData) {
-        const result = importCustomization(importData);
-        if (result.success) {
-          closeModal();
-          document.getElementById('importData').value = '';
-          alert('Personalización importada correctamente');
+      const closeModal = () => {
+        importModal.setAttribute('aria-hidden', 'true');
+        importModal.style.display = 'none';
+      };
+
+      closeImportButton?.addEventListener('click', closeModal);
+      closeImportOverlay?.addEventListener('click', closeModal);
+      cancelImport?.addEventListener('click', closeModal);
+
+      submitImport?.addEventListener('click', () => {
+        const importData = document.getElementById('importData').value.trim();
+        if (importData) {
+          const result = importCustomization(importData);
+          if (result.success) {
+            closeModal();
+            document.getElementById('importData').value = '';
+            alert('Personalización importada correctamente');
+            renderAvatarEditor(document.getElementById('avatarEditorContainer'));
+            renderThemeSelector(document.getElementById('themeSelectorContainer'));
+          } else {
+            alert('Error al importar: ' + result.error);
+          }
+        }
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        if (confirm('¿Estás seguro de restablecer todos los valores de personalización?')) {
+          resetCustomization();
           renderAvatarEditor(document.getElementById('avatarEditorContainer'));
           renderThemeSelector(document.getElementById('themeSelectorContainer'));
-        } else {
-          alert('Error al importar: ' + result.error);
         }
-      }
-    });
+      });
+    </script>
+    <script>
+      document.getElementById('scrollToTop').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
-    document.getElementById('resetBtn').addEventListener('click', () => {
-      if (confirm('¿Estás seguro de restablecer todos los valores de personalización?')) {
-        resetCustomization();
-        renderAvatarEditor(document.getElementById('avatarEditorContainer'));
-        renderThemeSelector(document.getElementById('themeSelectorContainer'));
-      }
-    });
-  </script>
-  <script>
-    document.getElementById('scrollToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.getElementById('openMusicApp').addEventListener('click', () => {
-      window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
-    });
-  </script>
-</body>
+      document.getElementById('openMusicApp').addEventListener('click', () => {
+        window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+      });
+    </script>
+  </body>
 </html>

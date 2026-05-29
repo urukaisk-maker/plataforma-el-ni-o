@@ -18,8 +18,8 @@ import {
   togglePhotoLike,
   getPhotoComments,
   addPhotoComment,
-  uploadPhoto as uploadPhotoService
-} from "../services/social-service.js";
+  uploadPhoto as uploadPhotoService,
+} from '../services/social-service.js';
 
 // ==================== COMENTARIOS ====================
 
@@ -57,11 +57,15 @@ export function renderCommentsSection(container, targetType, targetId) {
       </div>
       
       <div class="comments-section__list" id="commentsList">
-        ${comments.length === 0 ? `
+        ${
+          comments.length === 0
+            ? `
           <div class="comments-section__empty">
             <p>Aún no hay comentarios. ¡Sé el primero en comentar!</p>
           </div>
-        ` : comments.map(comment => renderCommentItem(comment, reactions, currentUser)).join('')}
+        `
+            : comments.map(comment => renderCommentItem(comment, reactions, currentUser)).join('')
+        }
       </div>
     </div>
   `;
@@ -88,13 +92,13 @@ export function renderCommentsSection(container, targetType, targetId) {
       btn.addEventListener('click', () => {
         const reactionId = btn.dataset.reactionId;
         const currentReaction = item.dataset.userReaction;
-        
+
         if (currentReaction === reactionId) {
           removeCommentReaction(commentId);
         } else {
           addCommentReaction(commentId, reactionId);
         }
-        
+
         renderCommentsSection(container, targetType, targetId);
       });
     });
@@ -124,18 +128,23 @@ function renderCommentItem(comment, reactions, currentUser) {
         <div class="comment-item__header">
           <span class="comment-item__author">${comment.authorName}</span>
           <span class="comment-item__time">${comment.relativeTime}</span>
-          ${isOwn ? `
+          ${
+            isOwn
+              ? `
             <button class="comment-item__delete" title="Eliminar comentario">
               🗑️
             </button>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
         <p class="comment-item__text">${comment.content}</p>
         <div class="comment-item__reactions">
-          ${reactions.map(reaction => {
-            const count = comment.reactions.filter(r => r.reactionId === reaction.id).length;
-            const isActive = userReaction === reaction.id;
-            return `
+          ${reactions
+            .map(reaction => {
+              const count = comment.reactions.filter(r => r.reactionId === reaction.id).length;
+              const isActive = userReaction === reaction.id;
+              return `
               <button 
                 class="comment-reaction-btn ${isActive ? 'comment-reaction-btn--active' : ''}" 
                 data-reaction-id="${reaction.id}"
@@ -144,7 +153,8 @@ function renderCommentItem(comment, reactions, currentUser) {
                 ${reaction.emoji} ${count > 0 ? count : ''}
               </button>
             `;
-          }).join('')}
+            })
+            .join('')}
         </div>
       </div>
     </div>
@@ -215,11 +225,15 @@ export function renderChat(container) {
       </div>
       
       <div class="chat-container__messages" id="chatMessages">
-        ${messages.length === 0 ? `
+        ${
+          messages.length === 0
+            ? `
           <div class="chat-container__empty">
             <p>¡Inicia la conversación con tu familia!</p>
           </div>
-        ` : messages.map(msg => renderChatMessage(msg, currentUser)).join('')}
+        `
+            : messages.map(msg => renderChatMessage(msg, currentUser)).join('')
+        }
       </div>
       
       <div class="chat-container__input">
@@ -260,7 +274,7 @@ export function renderChat(container) {
   };
 
   sendBtn?.addEventListener('click', handleSend);
-  chatInput?.addEventListener('keypress', (e) => {
+  chatInput?.addEventListener('keypress', e => {
     if (e.key === 'Enter') {
       handleSend();
     }
@@ -300,24 +314,34 @@ function renderChatMessage(message, currentUser) {
           <span class="chat-message__time">${message.relativeTime}</span>
         </div>
         <p class="chat-message__text">${message.content}</p>
-        ${message.reactions.length > 0 ? `
+        ${
+          message.reactions.length > 0
+            ? `
           <div class="chat-message__reactions-summary">
-            ${message.reactions.map(r => {
-              const reaction = reactions.find(reac => reac.id === r.reactionId);
-              return reaction ? reaction.emoji : '';
-            }).join(' ')}
+            ${message.reactions
+              .map(r => {
+                const reaction = reactions.find(reac => reac.id === r.reactionId);
+                return reaction ? reaction.emoji : '';
+              })
+              .join(' ')}
           </div>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="chat-message__actions">
           <button class="chat-message__reactions-toggle" title="Reaccionar">
             😊
           </button>
           <div class="chat-message__reactions-menu">
-            ${reactions.map(reaction => `
+            ${reactions
+              .map(
+                reaction => `
               <button class="chat-reaction-btn" data-reaction-id="${reaction.id}" title="${reaction.name}">
                 ${reaction.emoji}
               </button>
-            `).join('')}
+            `
+              )
+              .join('')}
           </div>
         </div>
       </div>
@@ -341,11 +365,15 @@ export function renderGallery(container) {
       </div>
       
       <div class="gallery__grid">
-        ${photos.length === 0 ? `
+        ${
+          photos.length === 0
+            ? `
           <div class="gallery__empty">
             <p>Aún no hay fotos. ¡Sube la primera!</p>
           </div>
-        ` : photos.map(photo => renderPhotoCard(photo)).join('')}
+        `
+            : photos.map(photo => renderPhotoCard(photo)).join('')
+        }
       </div>
     </div>
   `;
@@ -364,7 +392,7 @@ export function renderGallery(container) {
     // Comentarios
     const commentToggle = card.querySelector('.photo-card__comments-toggle');
     const commentsSection = card.querySelector('.photo-card__comments');
-    
+
     commentToggle?.addEventListener('click', () => {
       commentsSection.classList.toggle('photo-card__comments--visible');
       if (commentsSection.classList.contains('photo-card__comments--visible')) {
@@ -416,9 +444,14 @@ function renderPhotoComments(container, photoId) {
   container.innerHTML = `
     <div class="photo-comments">
       <div class="photo-comments__list">
-        ${comments.length === 0 ? `
+        ${
+          comments.length === 0
+            ? `
           <p class="photo-comments__empty">Sin comentarios</p>
-        ` : comments.map(comment => `
+        `
+            : comments
+                .map(
+                  comment => `
           <div class="photo-comment">
             <span class="photo-comment__avatar">${comment.authorAvatar}</span>
             <div class="photo-comment__content">
@@ -427,7 +460,10 @@ function renderPhotoComments(container, photoId) {
               <span class="photo-comment__time">${comment.relativeTime}</span>
             </div>
           </div>
-        `).join('')}
+        `
+                )
+                .join('')
+        }
       </div>
       <div class="photo-comments__form">
         <div class="photo-comment-input">
@@ -457,7 +493,7 @@ function renderPhotoComments(container, photoId) {
   };
 
   sendBtn?.addEventListener('click', handleSend);
-  input?.addEventListener('keypress', (e) => {
+  input?.addEventListener('keypress', e => {
     if (e.key === 'Enter') {
       handleSend();
     }
@@ -481,9 +517,13 @@ export function renderFloatingChatWidget(container) {
     <div class="floating-chat-widget" id="floatingChatWidget">
       <button class="floating-chat-widget__toggle" id="chatWidgetToggle">
         <span class="floating-chat-widget__icon">💬</span>
-        ${unreadCount > 0 ? `
+        ${
+          unreadCount > 0
+            ? `
           <span class="floating-chat-widget__badge">${unreadCount}</span>
-        ` : ''}
+        `
+            : ''
+        }
       </button>
       
       <div class="floating-chat-widget__panel" id="chatWidgetPanel">
@@ -492,7 +532,10 @@ export function renderFloatingChatWidget(container) {
           <button class="floating-chat-widget__close" id="chatWidgetClose">×</button>
         </div>
         <div class="floating-chat-widget__messages">
-          ${messages.slice(-3).map(msg => `
+          ${messages
+            .slice(-3)
+            .map(
+              msg => `
             <div class="floating-chat-message">
               <span class="floating-chat-message__avatar">${msg.authorAvatar}</span>
               <div class="floating-chat-message__content">
@@ -500,7 +543,9 @@ export function renderFloatingChatWidget(container) {
                 <p class="floating-chat-message__text">${msg.content}</p>
               </div>
             </div>
-          `).join('')}
+          `
+            )
+            .join('')}
         </div>
         <button class="button button--primary floating-chat-widget__open-full" id="openFullChat">
           Abrir chat completo

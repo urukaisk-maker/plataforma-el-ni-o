@@ -1,6 +1,6 @@
 // Vista de insignias/achievements - Componentes UI para mostrar logros desbloqueados
-import { getPlayerStats } from "../services/gamification-service.js";
-import { BADGES } from "../data/gamification.js";
+import { getPlayerStats } from '../services/gamification-service.js';
+import { BADGES } from '../data/gamification.js';
 
 // Renderizar cuadrícula de insignias
 export function renderBadgesGrid(container) {
@@ -43,7 +43,7 @@ export function renderRecentBadges(container, limit = 3) {
   const stats = getPlayerStats();
   const { player } = stats;
   const unlockedBadgeIds = new Set(player.badges);
-  
+
   const unlockedBadges = BADGES.filter(badge => unlockedBadgeIds.has(badge.id));
   const recentBadges = unlockedBadges.slice(-limit).reverse();
 
@@ -60,7 +60,9 @@ export function renderRecentBadges(container, limit = 3) {
     <div class="recent-badges">
       <h3 class="recent-badges__title">🎖️ Insignias Recientes</h3>
       <div class="recent-badges__list">
-        ${recentBadges.map(badge => `
+        ${recentBadges
+          .map(
+            badge => `
           <div class="recent-badge-item">
             <div class="recent-badge-item__icon">${badge.icon}</div>
             <div class="recent-badge-item__info">
@@ -69,7 +71,9 @@ export function renderRecentBadges(container, limit = 3) {
             </div>
             <div class="recent-badge-item__xp">+${badge.xpReward} XP</div>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     </div>
   `;
@@ -128,11 +132,15 @@ export function renderBadgeDetail(container, badgeId) {
         <span class="badge-detail__reward-icon">⭐</span>
         Recompensa: ${badge.xpReward} XP
       </div>
-      ${!isUnlocked ? `
+      ${
+        !isUnlocked
+          ? `
         <div class="badge-detail__hint">
           <p>💡 Sigue completando misiones y actividades para desbloquear esta insignia</p>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
   `;
 }
@@ -149,7 +157,8 @@ export function renderBadgesByCategory(container, category) {
   const categoryBadges = BADGES.filter(badge => {
     if (category === 'missions') return badge.id.includes('mission');
     if (category === 'daily') return badge.id.includes('daily') || badge.id.includes('streak');
-    if (category === 'content') return badge.id.includes('memory') || badge.id.includes('youtube') || badge.id.includes('music');
+    if (category === 'content')
+      {return badge.id.includes('memory') || badge.id.includes('youtube') || badge.id.includes('music');}
     if (category === 'level') return badge.id.includes('level');
     return true;
   });
@@ -158,9 +167,10 @@ export function renderBadgesByCategory(container, category) {
     <div class="badges-category">
       <h3 class="badges-category__title">${getCategoryTitle(category)}</h3>
       <div class="badges-category__items">
-        ${categoryBadges.map(badge => {
-          const isUnlocked = unlockedBadgeIds.has(badge.id);
-          return `
+        ${categoryBadges
+          .map(badge => {
+            const isUnlocked = unlockedBadgeIds.has(badge.id);
+            return `
             <div class="badge-card ${isUnlocked ? 'badge-card--unlocked' : 'badge-card--locked'}">
               <div class="badge-card__icon">${isUnlocked ? badge.icon : '🔒'}</div>
               <div class="badge-card__info">
@@ -171,7 +181,8 @@ export function renderBadgesByCategory(container, category) {
               ${isUnlocked ? '<div class="badge-card__status">✅</div>' : ''}
             </div>
           `;
-        }).join('')}
+          })
+          .join('')}
       </div>
     </div>
   `;
@@ -184,7 +195,7 @@ function getCategoryTitle(category) {
     daily: '🔥 Insignias Diarias',
     content: '📺 Insignias de Contenido',
     level: '🌟 Insignias de Nivel',
-    all: '🏅 Todas las Insignias'
+    all: '🏅 Todas las Insignias',
   };
   return titles[category] || titles.all;
 }

@@ -1,410 +1,1452 @@
-﻿
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;700;900&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--s:#FF6B00;--sd:#CC5500;--n:#0A0A0C;--n2:#111115;--n3:#1A1A20;--n4:#242430;--t:#F0EDE8;--tm:#888090}
-#app{background:var(--n);color:var(--t);font-family:'Barlow Condensed',sans-serif}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:13px 22px;border-bottom:2px solid var(--n4);background:var(--n)}
-.logo{display:flex;align-items:center;gap:8px;cursor:pointer}
-.logo-eye{width:20px;height:20px;border:2px solid var(--s);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-eye::after{content:'';width:8px;height:8px;background:var(--s);border-radius:50%}
-.logo-text{font-family:'Black Han Sans',sans-serif;font-size:21px;letter-spacing:2px;color:var(--s)}
-.logo-sub{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:3px;display:block;line-height:1;margin-top:-3px}
-.nav-links{display:flex;gap:18px;align-items:center}
-.nlink{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--tm);cursor:pointer;font-weight:700;transition:color .15s;background:none;border:none;font-family:'Barlow Condensed',sans-serif;padding:0}
-.nlink:hover{color:var(--s)}
-.nav-btn{background:var(--s);color:var(--n);border:none;padding:6px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
-#player-panel{display:none;border-bottom:3px solid var(--s);background:var(--n2)}
-.pw{display:grid;grid-template-columns:1fr 290px;min-height:350px}
-.pframe{background:#000}
-.pframe iframe{width:100%;height:100%;min-height:350px;border:none;display:block}
-.psidebar{background:var(--n2);border-left:1px solid var(--n4);display:flex;flex-direction:column;min-height:350px}
-.phead{padding:10px 14px;border-bottom:1px solid var(--n4);display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.ptitle{font-family:'Black Han Sans',sans-serif;font-size:13px;letter-spacing:1px;line-height:1.2;flex:1}
-.pch{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
-.closex{background:var(--n4);border:none;color:var(--tm);width:24px;height:24px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
-.closex:hover{background:var(--s);color:var(--n)}
-.plhead{padding:7px 14px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--n4);display:flex;justify-content:space-between}
-.pllist{overflow-y:auto;flex:1;max-height:200px}
-.plitem{display:flex;gap:7px;padding:7px 10px;cursor:pointer;border-bottom:1px solid var(--n4);transition:background .12s;align-items:center}
-.plitem:hover,.plitem.on{background:var(--n3)}
-.plitem.on{border-left:2px solid var(--s)}
-.plthumb{width:52px;height:34px;flex-shrink:0;background:var(--n4);overflow:hidden}
-.plthumb img{width:100%;height:100%;object-fit:cover;display:block}
-.plinfo{flex:1;min-width:0}
-.plname{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.plmeta{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:1px;margin-top:2px}
-.pnav{padding:8px 14px;border-top:1px solid var(--n4);display:flex;align-items:center;gap:6px}
-.pnavbtn{background:var(--n4);border:none;color:var(--t);padding:4px 9px;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background .15s}
-.pnavbtn:hover{background:var(--s);color:var(--n)}
-.pctr{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:2px;flex:1;text-align:center}
-.seen-row{padding:7px 14px;border-top:1px solid var(--n4);display:flex;align-items:center;gap:8px;font-size:10px}
-.seen-row input[type=checkbox]{accent-color:var(--s);width:12px;height:12px;cursor:pointer}
-.seen-row label{color:var(--tm);cursor:pointer;font-size:10px;letter-spacing:1px}
-.seen-row select{background:var(--n4);border:none;color:var(--t);font-family:'Share Tech Mono',monospace;font-size:8px;padding:3px 5px;cursor:pointer;flex:1}
-.shdr{padding:20px 22px 12px;display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--n4)}
-.stitle{font-family:'Black Han Sans',sans-serif;font-size:20px;letter-spacing:1px}
-.slabel{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:3px;text-transform:uppercase}
-.fbar{padding:10px 22px;border-bottom:1px solid var(--n4);display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--n2)}
-.fbar input,.fbar select{background:var(--n3);border:1px solid var(--n4);color:var(--t);font-family:'Barlow Condensed',sans-serif;font-size:12px;padding:5px 8px;outline:none;letter-spacing:1px}
-.fbar input{flex:1;min-width:140px}
-.fbar input::placeholder{color:var(--tm)}
-.fbar input:focus,.fbar select:focus{border-color:var(--s)}
-.fstat{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:1px;white-space:nowrap}
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--n4)}
-.pcard{border-right:1px solid var(--n4);border-bottom:1px solid var(--n4);cursor:pointer;transition:background .15s;overflow:hidden}
-.pcard:nth-child(3n){border-right:none}
-.pcard:hover{background:var(--n2)}
-.pcard.on{border-top:2px solid var(--s)}
-.pcthumb{width:100%;height:105px;background:var(--n4);overflow:hidden;position:relative}
-.pcthumb img{width:100%;height:115%;object-fit:cover;display:block;transition:transform .3s}
-.pcard:hover .pcthumb img{transform:scale(1.04)}
-.pcplay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}
-.pcard:hover .pcplay{opacity:1}
-.pcplaybtn{width:32px;height:32px;background:var(--s);display:flex;align-items:center;justify-content:center}
-.pcbody{padding:10px 14px 12px}
-.pcgenre{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
-.pctitle{font-family:'Black Han Sans',sans-serif;font-size:14px;letter-spacing:1px;margin-bottom:3px;line-height:1.2}
-.pcdesc{font-size:10px;color:var(--tm);line-height:1.4;font-weight:300;margin-bottom:6px}
-.pctags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
-.vtag{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--tm);letter-spacing:1px;background:var(--n3);padding:2px 4px}
-.pcstats{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:.5px}
-.mgrid{display:grid;grid-template-columns:repeat(3,1fr)}
-.mcard{padding:18px;border-right:1px solid var(--n4);border-bottom:1px solid var(--n4);cursor:pointer;transition:background .15s}
-.mcard:nth-child(3n){border-right:none}
-.mcard:hover,.mcard.on{background:var(--n2)}
-.mcard.on{border-top:2px solid var(--s)}
-.micon{font-size:26px;margin-bottom:7px}
-.mtype{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
-.mtitle{font-family:'Black Han Sans',sans-serif;font-size:15px;letter-spacing:1px;margin-bottom:4px}
-.mdesc{font-size:10px;color:var(--tm);line-height:1.4;font-weight:300;margin-bottom:9px}
-.mbtn{background:var(--n4);border:none;color:var(--t);padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .15s}
-.mbtn:hover{background:var(--s);color:var(--n)}
-.ddet{background:var(--n2);border-top:1px solid var(--n4)}
-.ddet-inner{display:grid;grid-template-columns:1fr 1fr}
-.ddet-info{padding:20px}
-.ddet-player{background:#000}
-.ddet-player iframe{width:100%;height:100%;min-height:280px;border:none;display:block}
-.dclose{background:var(--n3);border:none;color:var(--tm);padding:9px 20px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%;border-top:1px solid var(--n4)}
-.dclose:hover{background:var(--n4)}
-.misgrid{display:grid;grid-template-columns:repeat(3,1fr)}
-.miscard{padding:18px;border-right:1px solid var(--n4);border-bottom:1px solid var(--n4);cursor:pointer;transition:background .15s}
-.miscard:nth-child(3n){border-right:none}
-.miscard:hover,.miscard.on{background:var(--n2)}
-.miscard.on{border-top:2px solid var(--s)}
-.misnum{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:7px}
-.mistitle{font-family:'Black Han Sans',sans-serif;font-size:15px;letter-spacing:1px;margin-bottom:5px}
-.misdesc{font-size:10px;color:var(--tm);line-height:1.4;font-weight:300;margin-bottom:10px}
-.misacts{display:flex;gap:7px}
-.misbtn{background:var(--s);color:var(--n);border:none;padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
-.misbtn2{background:transparent;border:1px solid var(--n4);color:var(--t);padding:5px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:border-color .15s}
-.misbtn2:hover{border-color:var(--s);color:var(--s)}
-.hero{padding:44px 22px 36px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;border-bottom:2px solid var(--n4)}
-.hbadge{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--s);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.hbadge::before{content:'';width:18px;height:2px;background:var(--s)}
-.htitle{font-family:'Black Han Sans',sans-serif;font-size:58px;line-height:.9;letter-spacing:-2px;margin-bottom:6px}
-.htitle span{color:var(--s);display:block}
-.hsub{font-size:12px;color:var(--tm);line-height:1.6;margin-top:14px;margin-bottom:22px;max-width:320px;font-weight:300}
-.hacts{display:flex;gap:9px}
-.btnp{background:var(--s);color:var(--n);border:2px solid var(--s);padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
-.btnp:hover{background:var(--sd)}
-.btng{background:transparent;color:var(--t);border:2px solid var(--n4);padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
-.hvis{position:relative;height:220px;display:flex;align-items:center;justify-content:center}
-.stc{width:170px;height:170px;border:3px solid var(--n4);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
-.stc::before{content:'';position:absolute;width:132px;height:132px;border:2px solid var(--n3);border-radius:50%}
-.sti{font-size:52px;line-height:1}
-.stt{position:absolute;background:var(--n3);border:1px solid var(--n4);padding:5px 9px;font-family:'Share Tech Mono',monospace}
-.stt .nn{font-size:15px;font-weight:900;color:var(--s);font-family:'Black Han Sans',sans-serif;display:block}
-.stt .ll{color:var(--tm);font-size:7px;letter-spacing:2px;text-transform:uppercase;display:block}
-.tl{top:6px;left:0}.br2{bottom:6px;right:0}.tr2{top:32px;right:0}
-.bottom{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--n4)}
-.bpanel{padding:20px 22px;border-right:1px solid var(--n4)}
-.bpanel:last-child{border-right:none}
-.bhead{font-family:'Black Han Sans',sans-serif;font-size:15px;margin-bottom:10px;letter-spacing:1px}
-.rrow{display:flex;align-items:center;gap:9px;padding:5px 0;border-bottom:1px solid var(--n4);font-size:11px}
-.rn{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--s);width:15px;font-weight:900}
-.rname{flex:1;font-weight:700;letter-spacing:1px}
-.rpts{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm);letter-spacing:1px}
-.evit{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--n4);align-items:flex-start}
-.evd{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--s);letter-spacing:1px;text-transform:uppercase;min-width:38px;padding-top:2px}
-.evn{font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:1px}
-.evdet{font-size:9px;color:var(--tm);font-weight:300}
-footer{border-top:2px solid var(--n4);padding:11px 22px;display:flex;align-items:center;justify-content:space-between}
-.fb{font-family:'Black Han Sans',sans-serif;font-size:13px;color:var(--s);letter-spacing:2px}
-.fdev{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--tm);letter-spacing:3px;text-transform:uppercase}
-.flinks{display:flex;gap:14px;font-size:10px;color:var(--tm);letter-spacing:1px;font-weight:700}
+﻿<style>
+  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;700;900&display=swap');
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  :root {
+    --s: #ff6b00;
+    --sd: #cc5500;
+    --n: #0a0a0c;
+    --n2: #111115;
+    --n3: #1a1a20;
+    --n4: #242430;
+    --t: #f0ede8;
+    --tm: #888090;
+  }
+  #app {
+    background: var(--n);
+    color: var(--t);
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 22px;
+    border-bottom: 2px solid var(--n4);
+    background: var(--n);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .logo-eye {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--s);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-eye::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--s);
+    border-radius: 50%;
+  }
+  .logo-text {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 21px;
+    letter-spacing: 2px;
+    color: var(--s);
+  }
+  .logo-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 3px;
+    display: block;
+    line-height: 1;
+    margin-top: -3px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+  }
+  .nlink {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--tm);
+    cursor: pointer;
+    font-weight: 700;
+    transition: color 0.15s;
+    background: none;
+    border: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    padding: 0;
+  }
+  .nlink:hover {
+    color: var(--s);
+  }
+  .nav-btn {
+    background: var(--s);
+    color: var(--n);
+    border: none;
+    padding: 6px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  #player-panel {
+    display: none;
+    border-bottom: 3px solid var(--s);
+    background: var(--n2);
+  }
+  .pw {
+    display: grid;
+    grid-template-columns: 1fr 290px;
+    min-height: 350px;
+  }
+  .pframe {
+    background: #000;
+  }
+  .pframe iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+    border: none;
+    display: block;
+  }
+  .psidebar {
+    background: var(--n2);
+    border-left: 1px solid var(--n4);
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+  }
+  .phead {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--n4);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .ptitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    flex: 1;
+  }
+  .pch {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--s);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .closex {
+    background: var(--n4);
+    border: none;
+    color: var(--tm);
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .closex:hover {
+    background: var(--s);
+    color: var(--n);
+  }
+  .plhead {
+    padding: 7px 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--n4);
+    display: flex;
+    justify-content: space-between;
+  }
+  .pllist {
+    overflow-y: auto;
+    flex: 1;
+    max-height: 200px;
+  }
+  .plitem {
+    display: flex;
+    gap: 7px;
+    padding: 7px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--n4);
+    transition: background 0.12s;
+    align-items: center;
+  }
+  .plitem:hover,
+  .plitem.on {
+    background: var(--n3);
+  }
+  .plitem.on {
+    border-left: 2px solid var(--s);
+  }
+  .plthumb {
+    width: 52px;
+    height: 34px;
+    flex-shrink: 0;
+    background: var(--n4);
+    overflow: hidden;
+  }
+  .plthumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .plinfo {
+    flex: 1;
+    min-width: 0;
+  }
+  .plname {
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .plmeta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .pnav {
+    padding: 8px 14px;
+    border-top: 1px solid var(--n4);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pnavbtn {
+    background: var(--n4);
+    border: none;
+    color: var(--t);
+    padding: 4px 9px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.15s;
+  }
+  .pnavbtn:hover {
+    background: var(--s);
+    color: var(--n);
+  }
+  .pctr {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 2px;
+    flex: 1;
+    text-align: center;
+  }
+  .seen-row {
+    padding: 7px 14px;
+    border-top: 1px solid var(--n4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+  }
+  .seen-row input[type='checkbox'] {
+    accent-color: var(--s);
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+  }
+  .seen-row label {
+    color: var(--tm);
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+  .seen-row select {
+    background: var(--n4);
+    border: none;
+    color: var(--t);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    padding: 3px 5px;
+    cursor: pointer;
+    flex: 1;
+  }
+  .shdr {
+    padding: 20px 22px 12px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--n4);
+  }
+  .stitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  .slabel {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .fbar {
+    padding: 10px 22px;
+    border-bottom: 1px solid var(--n4);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--n2);
+  }
+  .fbar input,
+  .fbar select {
+    background: var(--n3);
+    border: 1px solid var(--n4);
+    color: var(--t);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    padding: 5px 8px;
+    outline: none;
+    letter-spacing: 1px;
+  }
+  .fbar input {
+    flex: 1;
+    min-width: 140px;
+  }
+  .fbar input::placeholder {
+    color: var(--tm);
+  }
+  .fbar input:focus,
+  .fbar select:focus {
+    border-color: var(--s);
+  }
+  .fstat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .pgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 2px solid var(--n4);
+  }
+  .pcard {
+    border-right: 1px solid var(--n4);
+    border-bottom: 1px solid var(--n4);
+    cursor: pointer;
+    transition: background 0.15s;
+    overflow: hidden;
+  }
+  .pcard:nth-child(3n) {
+    border-right: none;
+  }
+  .pcard:hover {
+    background: var(--n2);
+  }
+  .pcard.on {
+    border-top: 2px solid var(--s);
+  }
+  .pcthumb {
+    width: 100%;
+    height: 105px;
+    background: var(--n4);
+    overflow: hidden;
+    position: relative;
+  }
+  .pcthumb img {
+    width: 100%;
+    height: 115%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .pcard:hover .pcthumb img {
+    transform: scale(1.04);
+  }
+  .pcplay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .pcard:hover .pcplay {
+    opacity: 1;
+  }
+  .pcplaybtn {
+    width: 32px;
+    height: 32px;
+    background: var(--s);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pcbody {
+    padding: 10px 14px 12px;
+  }
+  .pcgenre {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--s);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .pctitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .pcdesc {
+    font-size: 10px;
+    color: var(--tm);
+    line-height: 1.4;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .pctags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+  }
+  .vtag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    color: var(--tm);
+    letter-spacing: 1px;
+    background: var(--n3);
+    padding: 2px 4px;
+  }
+  .pcstats {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 0.5px;
+  }
+  .mgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .mcard {
+    padding: 18px;
+    border-right: 1px solid var(--n4);
+    border-bottom: 1px solid var(--n4);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .mcard:nth-child(3n) {
+    border-right: none;
+  }
+  .mcard:hover,
+  .mcard.on {
+    background: var(--n2);
+  }
+  .mcard.on {
+    border-top: 2px solid var(--s);
+  }
+  .micon {
+    font-size: 26px;
+    margin-bottom: 7px;
+  }
+  .mtype {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    color: var(--s);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .mtitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .mdesc {
+    font-size: 10px;
+    color: var(--tm);
+    line-height: 1.4;
+    font-weight: 300;
+    margin-bottom: 9px;
+  }
+  .mbtn {
+    background: var(--n4);
+    border: none;
+    color: var(--t);
+    padding: 5px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .mbtn:hover {
+    background: var(--s);
+    color: var(--n);
+  }
+  .ddet {
+    background: var(--n2);
+    border-top: 1px solid var(--n4);
+  }
+  .ddet-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .ddet-info {
+    padding: 20px;
+  }
+  .ddet-player {
+    background: #000;
+  }
+  .ddet-player iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    border: none;
+    display: block;
+  }
+  .dclose {
+    background: var(--n3);
+    border: none;
+    color: var(--tm);
+    padding: 9px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    border-top: 1px solid var(--n4);
+  }
+  .dclose:hover {
+    background: var(--n4);
+  }
+  .misgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .miscard {
+    padding: 18px;
+    border-right: 1px solid var(--n4);
+    border-bottom: 1px solid var(--n4);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .miscard:nth-child(3n) {
+    border-right: none;
+  }
+  .miscard:hover,
+  .miscard.on {
+    background: var(--n2);
+  }
+  .miscard.on {
+    border-top: 2px solid var(--s);
+  }
+  .misnum {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--s);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+  .mistitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  .misdesc {
+    font-size: 10px;
+    color: var(--tm);
+    line-height: 1.4;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+  .misacts {
+    display: flex;
+    gap: 7px;
+  }
+  .misbtn {
+    background: var(--s);
+    color: var(--n);
+    border: none;
+    padding: 5px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .misbtn2 {
+    background: transparent;
+    border: 1px solid var(--n4);
+    color: var(--t);
+    padding: 5px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .misbtn2:hover {
+    border-color: var(--s);
+    color: var(--s);
+  }
+  .hero {
+    padding: 44px 22px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center;
+    border-bottom: 2px solid var(--n4);
+  }
+  .hbadge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--s);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hbadge::before {
+    content: '';
+    width: 18px;
+    height: 2px;
+    background: var(--s);
+  }
+  .htitle {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 58px;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 6px;
+  }
+  .htitle span {
+    color: var(--s);
+    display: block;
+  }
+  .hsub {
+    font-size: 12px;
+    color: var(--tm);
+    line-height: 1.6;
+    margin-top: 14px;
+    margin-bottom: 22px;
+    max-width: 320px;
+    font-weight: 300;
+  }
+  .hacts {
+    display: flex;
+    gap: 9px;
+  }
+  .btnp {
+    background: var(--s);
+    color: var(--n);
+    border: 2px solid var(--s);
+    padding: 9px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .btnp:hover {
+    background: var(--sd);
+  }
+  .btng {
+    background: transparent;
+    color: var(--t);
+    border: 2px solid var(--n4);
+    padding: 9px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .hvis {
+    position: relative;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stc {
+    width: 170px;
+    height: 170px;
+    border: 3px solid var(--n4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .stc::before {
+    content: '';
+    position: absolute;
+    width: 132px;
+    height: 132px;
+    border: 2px solid var(--n3);
+    border-radius: 50%;
+  }
+  .sti {
+    font-size: 52px;
+    line-height: 1;
+  }
+  .stt {
+    position: absolute;
+    background: var(--n3);
+    border: 1px solid var(--n4);
+    padding: 5px 9px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  .stt .nn {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--s);
+    font-family: 'Black Han Sans', sans-serif;
+    display: block;
+  }
+  .stt .ll {
+    color: var(--tm);
+    font-size: 7px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+  }
+  .tl {
+    top: 6px;
+    left: 0;
+  }
+  .br2 {
+    bottom: 6px;
+    right: 0;
+  }
+  .tr2 {
+    top: 32px;
+    right: 0;
+  }
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 2px solid var(--n4);
+  }
+  .bpanel {
+    padding: 20px 22px;
+    border-right: 1px solid var(--n4);
+  }
+  .bpanel:last-child {
+    border-right: none;
+  }
+  .bhead {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .rrow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--n4);
+    font-size: 11px;
+  }
+  .rn {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: var(--s);
+    width: 15px;
+    font-weight: 900;
+  }
+  .rname {
+    flex: 1;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .rpts {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: var(--tm);
+    letter-spacing: 1px;
+  }
+  .evit {
+    display: flex;
+    gap: 9px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--n4);
+    align-items: flex-start;
+  }
+  .evd {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    color: var(--s);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    min-width: 38px;
+    padding-top: 2px;
+  }
+  .evn {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1px;
+  }
+  .evdet {
+    font-size: 9px;
+    color: var(--tm);
+    font-weight: 300;
+  }
+  footer {
+    border-top: 2px solid var(--n4);
+    padding: 11px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .fb {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px;
+    color: var(--s);
+    letter-spacing: 2px;
+  }
+  .fdev {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    color: var(--tm);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .flinks {
+    display: flex;
+    gap: 14px;
+    font-size: 10px;
+    color: var(--tm);
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
 </style>
 
 <div id="app">
-<nav class="nav">
-  <div class="logo">
-    <div class="logo-eye"></div>
-    <div><span class="logo-text">EL NIÑO</span><span class="logo-sub">gaming platform</span></div>
-  </div>
-  <div class="nav-links">
-    <button class="nlink" onclick="goto('videos')">Videos</button>
-    <button class="nlink" onclick="goto('memorias')">Memorias</button>
-    <button class="nlink" onclick="goto('misiones')">Misiones</button>
-    <button class="nlink" onclick="goto('ranking')">Ranking</button>
-    <button class="nav-btn">Unirse</button>
-  </div>
-</nav>
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-eye"></div>
+      <div><span class="logo-text">EL NIÑO</span><span class="logo-sub">gaming platform</span></div>
+    </div>
+    <div class="nav-links">
+      <button class="nlink" onclick="goto('videos')">Videos</button>
+      <button class="nlink" onclick="goto('memorias')">Memorias</button>
+      <button class="nlink" onclick="goto('misiones')">Misiones</button>
+      <button class="nlink" onclick="goto('ranking')">Ranking</button>
+      <button class="nav-btn">Unirse</button>
+    </div>
+  </nav>
 
-<div id="player-panel">
-  <div class="pw">
-    <div class="pframe"><iframe id="ytf" src="" allowfullscreen allow="autoplay;encrypted-media"></iframe></div>
-    <div class="psidebar">
-      <div class="phead">
-        <div><div class="ptitle" id="pt">—</div><div class="pch" id="pch">El Niño TV</div></div>
-        <button class="closex" onclick="closePlayer()">✕</button>
-      </div>
-      <div class="plhead"><span id="pln">Playlist</span><span id="pctr" style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--tm)">1 de 1</span></div>
-      <div class="pllist" id="pllist"></div>
-      <div class="seen-row">
-        <input type="checkbox" id="scb" onchange="toggleSeen()">
-        <label for="scb">Visto</label>
-        <select id="rsel" onchange="saveRating()">
-          <option value="">☆ Sin valorar</option>
-          <option value="1">★ 1/5</option><option value="2">★★ 2/5</option>
-          <option value="3">★★★ 3/5</option><option value="4">★★★★ 4/5</option>
-          <option value="5">★★★★★ 5/5</option>
-        </select>
-      </div>
-      <div class="pnav">
-        <button class="pnavbtn" onclick="nav(-1)"><i class="ti ti-chevron-left" aria-hidden="true"></i> Ant</button>
-        <div class="pctr" id="pctrb"></div>
-        <button class="pnavbtn" onclick="nav(1)">Sig <i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+  <div id="player-panel">
+    <div class="pw">
+      <div class="pframe"><iframe id="ytf" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe></div>
+      <div class="psidebar">
+        <div class="phead">
+          <div>
+            <div class="ptitle" id="pt">—</div>
+            <div class="pch" id="pch">El Niño TV</div>
+          </div>
+          <button class="closex" onclick="closePlayer()">✕</button>
+        </div>
+        <div class="plhead">
+          <span id="pln">Playlist</span
+          ><span id="pctr" style="font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--tm)"
+            >1 de 1</span
+          >
+        </div>
+        <div class="pllist" id="pllist"></div>
+        <div class="seen-row">
+          <input type="checkbox" id="scb" onchange="toggleSeen()" />
+          <label for="scb">Visto</label>
+          <select id="rsel" onchange="saveRating()">
+            <option value="">☆ Sin valorar</option>
+            <option value="1">★ 1/5</option>
+            <option value="2">★★ 2/5</option>
+            <option value="3">★★★ 3/5</option>
+            <option value="4">★★★★ 4/5</option>
+            <option value="5">★★★★★ 5/5</option>
+          </select>
+        </div>
+        <div class="pnav">
+          <button class="pnavbtn" onclick="nav(-1)"><i class="ti ti-chevron-left" aria-hidden="true"></i> Ant</button>
+          <div class="pctr" id="pctrb"></div>
+          <button class="pnavbtn" onclick="nav(1)">Sig <i class="ti ti-chevron-right" aria-hidden="true"></i></button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="hero">
-  <div>
-    <div class="hbadge">Temporada 01 — Activa</div>
-    <div class="htitle">LA<br><span>TORMENTA</span>LLEGÓ</div>
-    <p class="hsub">La plataforma gamer más brutal de la red. Compite, sube de nivel y demuestra quién manda. El Niño no perdona.</p>
-    <div class="hacts">
-      <button class="btnp">Entrar ahora</button>
-      <button class="btng" onclick="goto('videos')">Ver videos</button>
+  <div class="hero">
+    <div>
+      <div class="hbadge">Temporada 01 — Activa</div>
+      <div class="htitle">LA<br /><span>TORMENTA</span>LLEGÓ</div>
+      <p class="hsub">
+        La plataforma gamer más brutal de la red. Compite, sube de nivel y demuestra quién manda. El Niño no perdona.
+      </p>
+      <div class="hacts">
+        <button class="btnp">Entrar ahora</button>
+        <button class="btng" onclick="goto('videos')">Ver videos</button>
+      </div>
+    </div>
+    <div class="hvis">
+      <div class="stc"><div class="sti">🌪️</div></div>
+      <div class="stt tl"><span class="nn">48K</span><span class="ll">Online ahora</span></div>
+      <div class="stt br2"><span class="nn">$25K</span><span class="ll">Premio torneo</span></div>
+      <div class="stt tr2"><span class="nn">57</span><span class="ll">Videos</span></div>
     </div>
   </div>
-  <div class="hvis">
-    <div class="stc"><div class="sti">🌪️</div></div>
-    <div class="stt tl"><span class="nn">48K</span><span class="ll">Online ahora</span></div>
-    <div class="stt br2"><span class="nn">$25K</span><span class="ll">Premio torneo</span></div>
-    <div class="stt tr2"><span class="nn">57</span><span class="ll">Videos</span></div>
-  </div>
-</div>
 
-<div id="videos">
-  <div class="shdr">
-    <div class="stitle">📺 El Niño TV</div>
-    <div class="slabel">// Haz clic en una lista para reproducir</div>
+  <div id="videos">
+    <div class="shdr">
+      <div class="stitle">📺 El Niño TV</div>
+      <div class="slabel">// Haz clic en una lista para reproducir</div>
+    </div>
+    <div class="fbar">
+      <input type="text" id="srch" placeholder="Buscar en las listas..." oninput="renderPL()" />
+      <select id="dsel" onchange="renderPL()">
+        <option value="all">Duración: todas</option>
+        <option value="short">Cortos (-10 min)</option>
+        <option value="medium">Medios (10-30 min)</option>
+        <option value="long">Largos (+30 min)</option>
+      </select>
+      <select id="sosel" onchange="renderPL()">
+        <option value="recent">Más recientes</option>
+        <option value="views">Más vistos</option>
+        <option value="longest">Más largos</option>
+        <option value="oldest">Más antiguos</option>
+      </select>
+      <span class="fstat" id="fst"></span>
+    </div>
+    <div class="pgrid" id="pgrid"></div>
   </div>
-  <div class="fbar">
-    <input type="text" id="srch" placeholder="Buscar en las listas..." oninput="renderPL()">
-    <select id="dsel" onchange="renderPL()">
-      <option value="all">Duración: todas</option>
-      <option value="short">Cortos (-10 min)</option>
-      <option value="medium">Medios (10-30 min)</option>
-      <option value="long">Largos (+30 min)</option>
-    </select>
-    <select id="sosel" onchange="renderPL()">
-      <option value="recent">Más recientes</option>
-      <option value="views">Más vistos</option>
-      <option value="longest">Más largos</option>
-      <option value="oldest">Más antiguos</option>
-    </select>
-    <span class="fstat" id="fst"></span>
-  </div>
-  <div class="pgrid" id="pgrid"></div>
-</div>
 
-<div id="memorias" style="border-top:2px solid var(--n4)">
-  <div class="shdr">
-    <div class="stitle">🏆 Sala de Recuerdos</div>
-    <div class="slabel">// Momentos legendarios</div>
+  <div id="memorias" style="border-top: 2px solid var(--n4)">
+    <div class="shdr">
+      <div class="stitle">🏆 Sala de Recuerdos</div>
+      <div class="slabel">// Momentos legendarios</div>
+    </div>
+    <div class="mgrid" id="mgrid"></div>
+    <div id="mdet" style="display: none"></div>
   </div>
-  <div class="mgrid" id="mgrid"></div>
-  <div id="mdet" style="display:none"></div>
-</div>
 
-<div id="misiones" style="border-top:2px solid var(--n4)">
-  <div class="shdr">
-    <div class="stitle">🗺️ Misiones Activas</div>
-    <div class="slabel">// Completa la campaña</div>
+  <div id="misiones" style="border-top: 2px solid var(--n4)">
+    <div class="shdr">
+      <div class="stitle">🗺️ Misiones Activas</div>
+      <div class="slabel">// Completa la campaña</div>
+    </div>
+    <div class="misgrid" id="misgrid"></div>
+    <div id="misdet" style="display: none"></div>
   </div>
-  <div class="misgrid" id="misgrid"></div>
-  <div id="misdet" style="display:none"></div>
-</div>
 
-<div id="ranking" class="bottom">
-  <div class="bpanel">
-    <div class="bhead">Ranking Global</div>
-    <div class="rrow"><span class="rn">01</span><span class="rname">SHADOWBYTE_X</span><span class="rpts">98,440 pts</span></div>
-    <div class="rrow"><span class="rn">02</span><span class="rname">EL_VENENO99</span><span class="rpts">91,120 pts</span></div>
-    <div class="rrow"><span class="rn">03</span><span class="rname">KRAKEN_GG</span><span class="rpts">87,300 pts</span></div>
-    <div class="rrow"><span class="rn">04</span><span class="rname">DEATHSTRIKE</span><span class="rpts">82,770 pts</span></div>
-    <div class="rrow"><span class="rn">05</span><span class="rname">NIGHTCLAW_</span><span class="rpts">79,090 pts</span></div>
+  <div id="ranking" class="bottom">
+    <div class="bpanel">
+      <div class="bhead">Ranking Global</div>
+      <div class="rrow">
+        <span class="rn">01</span><span class="rname">SHADOWBYTE_X</span><span class="rpts">98,440 pts</span>
+      </div>
+      <div class="rrow">
+        <span class="rn">02</span><span class="rname">EL_VENENO99</span><span class="rpts">91,120 pts</span>
+      </div>
+      <div class="rrow">
+        <span class="rn">03</span><span class="rname">KRAKEN_GG</span><span class="rpts">87,300 pts</span>
+      </div>
+      <div class="rrow">
+        <span class="rn">04</span><span class="rname">DEATHSTRIKE</span><span class="rpts">82,770 pts</span>
+      </div>
+      <div class="rrow">
+        <span class="rn">05</span><span class="rname">NIGHTCLAW_</span><span class="rpts">79,090 pts</span>
+      </div>
+    </div>
+    <div class="bpanel">
+      <div class="bhead">Próximos Torneos</div>
+      <div class="evit">
+        <span class="evd">31 MAY</span>
+        <div>
+          <div class="evn">Copa El Niño S01</div>
+          <div class="evdet">Storm Arena · $10,000 · 512 plazas</div>
+        </div>
+      </div>
+      <div class="evit">
+        <span class="evd">07 JUN</span>
+        <div>
+          <div class="evn">Liga Punto Cero</div>
+          <div class="evdet">FPS Táctico · $5,000 · 128 plazas</div>
+        </div>
+      </div>
+      <div class="evit">
+        <span class="evd">15 JUN</span>
+        <div>
+          <div class="evn">Gran Torneo MOBA</div>
+          <div class="evdet">Campo de Furia · $25,000 · Open</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="bpanel">
-    <div class="bhead">Próximos Torneos</div>
-    <div class="evit"><span class="evd">31 MAY</span><div><div class="evn">Copa El Niño S01</div><div class="evdet">Storm Arena · $10,000 · 512 plazas</div></div></div>
-    <div class="evit"><span class="evd">07 JUN</span><div><div class="evn">Liga Punto Cero</div><div class="evdet">FPS Táctico · $5,000 · 128 plazas</div></div></div>
-    <div class="evit"><span class="evd">15 JUN</span><div><div class="evn">Gran Torneo MOBA</div><div class="evdet">Campo de Furia · $25,000 · Open</div></div></div>
-  </div>
-</div>
 
-<footer>
-  <div><div class="fb">EL NIÑO</div><div class="fdev">Desarrollado por Manuel Casimiro Carrasco</div></div>
-  <div class="flinks"><span>Términos</span><span>Privacidad</span><span>Soporte</span><span>Discord</span></div>
-</footer>
+  <footer>
+    <div>
+      <div class="fb">EL NIÑO</div>
+      <div class="fdev">Desarrollado por Manuel Casimiro Carrasco</div>
+    </div>
+    <div class="flinks"><span>Términos</span><span>Privacidad</span><span>Soporte</span><span>Discord</span></div>
+  </footer>
 </div>
 
 <script>
-const RP=[
-  {title:"Lista 1: Los Reyes del Entretenimiento",desc:"Humor, variedad, carisma y partidas llenas de risas para pasar un buen rato.",vids:["2ZPgJRNm6x0","vPAKpEFQ2p0","b_9zcgfbs08","A-dvR9jn9Hw","rBoa9eQec0M","P3rAIy28kYw","xv56qM4P19A","l2-mkyGPHzo","-6LZMizP2YU","dwA716rQafk","6jHJZ3AmKVA","HdccnA0Njn8"]},
-  {title:"Lista 2: Análisis, Lore y Curiosidades",desc:"Teorías, secretos e historia de los juegos para entender mejor cada aventura.",vids:["Cg5tOkW6Vus","iLNXliI0dAI","YdOXS_9_P4U","2yn06fCvGmc","wGSrT8owIAI","dNajqAokx3I","1-mKvbuJPgY","RQWpF2Gb-gU","Dr5zebXpO-M","4acH43NjSqY","I0KYawk98KA"]},
-  {title:"Lista 3: Guías y Mejora Competitiva",desc:"Tutoriales, estrategias y consejos para mejorar el rendimiento competitivo.",vids:["7gCoxLTNzm4","9gGY4DOn-Ig","Vt59hHC9ibk","fJG4ReZ7Hjs","_imSx91vQOM","AD5GY6_1e1M","x9VLOMMNIas","R1t06fQTido"]},
-  {title:"Lista 4: La Élite Hispana",desc:"Grandes referentes de España y Latinoamérica que dominan el gaming en español.",vids:["wbuGj3dDrKg","iEhofueeSKs","z4e6RdiTtYQ","e8afUMpAZLM","-yPKDsoDmUo","1zlkT53b5wg"]},
-  {title:"Lista 5: Indies, Terror y Experiencias Únicas",desc:"Joyas ocultas, juegos narrativos, terror y experiencias diferentes.",vids:["MJSFIzPdpAE","pOOFGDT4kUY","ekdiEDVl5Co","nmxbGZCLYr4","2IoDnuQOMJ4","KR5aJfv7C7w","2WgcP_jjCO4","R2XAcKxvAEg","1IL4LgKSUzk","f7aV46LLgEA"]},
-  {title:"Lista 6: Los Más Vistos del Mundo",desc:"Contenido viral, Minecraft, GTA y fenómenos globales del mundo gamer.",vids:["R83V5sAhDWY","uTX--zje45Q","IeG7yquP2zY","Unej5rXw5mQ","jk4XzpRfnwc","X7dOVuoYHCQ","9dYFeNFSLy0","ukmXfZvAO6o","d1h93jQuBBQ","zpq_K6cdmQc"]}
-];
-const MEM=[
-  {title:"Foto especial",type:"Captura legendaria",icon:"📸",desc:"Una imagen para guardar el comienzo de la aventura gamer de El Niño.",story:"Este recuerdo representa el momento en que El Niño deja de ser solo jugador y se convierte en protagonista de su propia historia.",reward:"Insignia desbloqueada: Primer recuerdo de la arena",videoId:"AfaalnUU9uM"},
-  {title:"Video familiar",type:"Clip de comunidad",icon:"🎬",desc:"Un video con mensajes, risas y energía para acompañar al jugador principal.",story:"Todo streamer necesita comunidad. Este video familiar es el chat más importante de El Niño: las voces que animan, los mensajes que dan fuerza.",reward:"Insignia desbloqueada: Comunidad activa",videoId:"IpSz-Nm745Q"},
-  {title:"Mensaje sorpresa",type:"Transmisión secreta",icon:"💌",desc:"Un mensaje preparado para aparecer cuando la misión necesita más emoción.",story:"En mitad de la campaña aparece una transmisión secreta de quienes quieren ver sonreír a El Niño. Sube la vida al máximo.",reward:"Insignia desbloqueada: Corazón al máximo",videoId:"NijZkzjT-1s"},
-  {title:"Invitados",type:"Equipo de partida",icon:"🕹️",desc:"Las personas que se unen a la celebración como compañeros de escuadra.",story:"Cada invitado es parte del equipo. Todos suman experiencia a la misma misión: celebrar a El Niño como se merece.",reward:"Insignia desbloqueada: Squad completo",videoId:"Hy2VigrZbJM"},
-  {title:"Regalos",type:"Botín desbloqueado",icon:"🎁",desc:"Recompensas físicas y digitales que aparecen al avanzar en la campaña.",story:"Los regalos son el botín de esta aventura. El verdadero premio está en recordar quién pensó en El Niño.",reward:"Insignia desbloqueada: Loot legendario",videoId:"8ONbP1s44uA"},
-  {title:"Momento final",type:"Final de temporada",icon:"🏆",desc:"El cierre de la misión principal y el inicio de nuevas partidas.",story:"Cuando termina la celebración, queda el recuerdo. El momento final no apaga la pantalla: guarda la partida.",reward:"Insignia desbloqueada: Victoria guardada",videoId:null}
-];
-const MIS=[
-  {title:"Misión 01: Entrar a la arena",desc:"El jugador principal llega a su mundo gamer personalizado y desbloquea la celebración.",vid:"2ZPgJRNm6x0",vtitle:"Gameplay de entrada a la arena"},
-  {title:"Misión 02: Subir de nivel",desc:"Cada felicitación, foto y sorpresa suma experiencia para un cumpleaños inolvidable.",vid:"7gCoxLTNzm4",vtitle:"Gameplay para subir de nivel"},
-  {title:"Misión 03: Victoria final",desc:"La partida termina con regalos, recuerdos y una sorpresa digital preparada con cariño.",vid:"d-INPu9TMWw",vtitle:"Gameplay de victoria final"}
-];
+  const RP = [
+    {
+      title: 'Lista 1: Los Reyes del Entretenimiento',
+      desc: 'Humor, variedad, carisma y partidas llenas de risas para pasar un buen rato.',
+      vids: [
+        '2ZPgJRNm6x0',
+        'vPAKpEFQ2p0',
+        'b_9zcgfbs08',
+        'A-dvR9jn9Hw',
+        'rBoa9eQec0M',
+        'P3rAIy28kYw',
+        'xv56qM4P19A',
+        'l2-mkyGPHzo',
+        '-6LZMizP2YU',
+        'dwA716rQafk',
+        '6jHJZ3AmKVA',
+        'HdccnA0Njn8',
+      ],
+    },
+    {
+      title: 'Lista 2: Análisis, Lore y Curiosidades',
+      desc: 'Teorías, secretos e historia de los juegos para entender mejor cada aventura.',
+      vids: [
+        'Cg5tOkW6Vus',
+        'iLNXliI0dAI',
+        'YdOXS_9_P4U',
+        '2yn06fCvGmc',
+        'wGSrT8owIAI',
+        'dNajqAokx3I',
+        '1-mKvbuJPgY',
+        'RQWpF2Gb-gU',
+        'Dr5zebXpO-M',
+        '4acH43NjSqY',
+        'I0KYawk98KA',
+      ],
+    },
+    {
+      title: 'Lista 3: Guías y Mejora Competitiva',
+      desc: 'Tutoriales, estrategias y consejos para mejorar el rendimiento competitivo.',
+      vids: [
+        '7gCoxLTNzm4',
+        '9gGY4DOn-Ig',
+        'Vt59hHC9ibk',
+        'fJG4ReZ7Hjs',
+        '_imSx91vQOM',
+        'AD5GY6_1e1M',
+        'x9VLOMMNIas',
+        'R1t06fQTido',
+      ],
+    },
+    {
+      title: 'Lista 4: La Élite Hispana',
+      desc: 'Grandes referentes de España y Latinoamérica que dominan el gaming en español.',
+      vids: ['wbuGj3dDrKg', 'iEhofueeSKs', 'z4e6RdiTtYQ', 'e8afUMpAZLM', '-yPKDsoDmUo', '1zlkT53b5wg'],
+    },
+    {
+      title: 'Lista 5: Indies, Terror y Experiencias Únicas',
+      desc: 'Joyas ocultas, juegos narrativos, terror y experiencias diferentes.',
+      vids: [
+        'MJSFIzPdpAE',
+        'pOOFGDT4kUY',
+        'ekdiEDVl5Co',
+        'nmxbGZCLYr4',
+        '2IoDnuQOMJ4',
+        'KR5aJfv7C7w',
+        '2WgcP_jjCO4',
+        'R2XAcKxvAEg',
+        '1IL4LgKSUzk',
+        'f7aV46LLgEA',
+      ],
+    },
+    {
+      title: 'Lista 6: Los Más Vistos del Mundo',
+      desc: 'Contenido viral, Minecraft, GTA y fenómenos globales del mundo gamer.',
+      vids: [
+        'R83V5sAhDWY',
+        'uTX--zje45Q',
+        'IeG7yquP2zY',
+        'Unej5rXw5mQ',
+        'jk4XzpRfnwc',
+        'X7dOVuoYHCQ',
+        '9dYFeNFSLy0',
+        'ukmXfZvAO6o',
+        'd1h93jQuBBQ',
+        'zpq_K6cdmQc',
+      ],
+    },
+  ];
+  const MEM = [
+    {
+      title: 'Foto especial',
+      type: 'Captura legendaria',
+      icon: '📸',
+      desc: 'Una imagen para guardar el comienzo de la aventura gamer de El Niño.',
+      story:
+        'Este recuerdo representa el momento en que El Niño deja de ser solo jugador y se convierte en protagonista de su propia historia.',
+      reward: 'Insignia desbloqueada: Primer recuerdo de la arena',
+      videoId: 'AfaalnUU9uM',
+    },
+    {
+      title: 'Video familiar',
+      type: 'Clip de comunidad',
+      icon: '🎬',
+      desc: 'Un video con mensajes, risas y energía para acompañar al jugador principal.',
+      story:
+        'Todo streamer necesita comunidad. Este video familiar es el chat más importante de El Niño: las voces que animan, los mensajes que dan fuerza.',
+      reward: 'Insignia desbloqueada: Comunidad activa',
+      videoId: 'IpSz-Nm745Q',
+    },
+    {
+      title: 'Mensaje sorpresa',
+      type: 'Transmisión secreta',
+      icon: '💌',
+      desc: 'Un mensaje preparado para aparecer cuando la misión necesita más emoción.',
+      story:
+        'En mitad de la campaña aparece una transmisión secreta de quienes quieren ver sonreír a El Niño. Sube la vida al máximo.',
+      reward: 'Insignia desbloqueada: Corazón al máximo',
+      videoId: 'NijZkzjT-1s',
+    },
+    {
+      title: 'Invitados',
+      type: 'Equipo de partida',
+      icon: '🕹️',
+      desc: 'Las personas que se unen a la celebración como compañeros de escuadra.',
+      story:
+        'Cada invitado es parte del equipo. Todos suman experiencia a la misma misión: celebrar a El Niño como se merece.',
+      reward: 'Insignia desbloqueada: Squad completo',
+      videoId: 'Hy2VigrZbJM',
+    },
+    {
+      title: 'Regalos',
+      type: 'Botín desbloqueado',
+      icon: '🎁',
+      desc: 'Recompensas físicas y digitales que aparecen al avanzar en la campaña.',
+      story: 'Los regalos son el botín de esta aventura. El verdadero premio está en recordar quién pensó en El Niño.',
+      reward: 'Insignia desbloqueada: Loot legendario',
+      videoId: '8ONbP1s44uA',
+    },
+    {
+      title: 'Momento final',
+      type: 'Final de temporada',
+      icon: '🏆',
+      desc: 'El cierre de la misión principal y el inicio de nuevas partidas.',
+      story:
+        'Cuando termina la celebración, queda el recuerdo. El momento final no apaga la pantalla: guarda la partida.',
+      reward: 'Insignia desbloqueada: Victoria guardada',
+      videoId: null,
+    },
+  ];
+  const MIS = [
+    {
+      title: 'Misión 01: Entrar a la arena',
+      desc: 'El jugador principal llega a su mundo gamer personalizado y desbloquea la celebración.',
+      vid: '2ZPgJRNm6x0',
+      vtitle: 'Gameplay de entrada a la arena',
+    },
+    {
+      title: 'Misión 02: Subir de nivel',
+      desc: 'Cada felicitación, foto y sorpresa suma experiencia para un cumpleaños inolvidable.',
+      vid: '7gCoxLTNzm4',
+      vtitle: 'Gameplay para subir de nivel',
+    },
+    {
+      title: 'Misión 03: Victoria final',
+      desc: 'La partida termina con regalos, recuerdos y una sorpresa digital preparada con cariño.',
+      vid: 'd-INPu9TMWw',
+      vtitle: 'Gameplay de victoria final',
+    },
+  ];
 
-function getTags(t){const l=t.toLowerCase();if(l.includes("terror")||l.includes("indie"))return["#terror","#indie","#fnaf"];if(l.includes("guía")||l.includes("guias"))return["#guía","#gameplay","#minecraft"];if(l.includes("visto"))return["#minecraft","#gta","#gameplay"];if(l.includes("sis")||l.includes("nal"))return["#lore","#curiosidades","#guía"];if(l.includes("lite")||l.includes("hisp"))return["#español","#hispano","#gamer"];return["#gameplay","#gamer","#español"];}
-function fmtD(m){return`${m} min`;}
-function fmtV(v){return`${(v/1e6).toFixed(1)}M views`;}
-function durT(m){return m<10?'short':m<=30?'medium':'long';}
-function norm(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
+  function getTags(t) {
+    const l = t.toLowerCase();
+    if (l.includes('terror') || l.includes('indie')) return ['#terror', '#indie', '#fnaf'];
+    if (l.includes('guía') || l.includes('guias')) return ['#guía', '#gameplay', '#minecraft'];
+    if (l.includes('visto')) return ['#minecraft', '#gta', '#gameplay'];
+    if (l.includes('sis') || l.includes('nal')) return ['#lore', '#curiosidades', '#guía'];
+    if (l.includes('lite') || l.includes('hisp')) return ['#español', '#hispano', '#gamer'];
+    return ['#gameplay', '#gamer', '#español'];
+  }
+  function fmtD(m) {
+    return `${m} min`;
+  }
+  function fmtV(v) {
+    return `${(v / 1e6).toFixed(1)}M views`;
+  }
+  function durT(m) {
+    return m < 10 ? 'short' : m <= 30 ? 'medium' : 'long';
+  }
+  function norm(s) {
+    return s
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
 
-const PL=RP.map((p,pi)=>{
-  const tags=getTags(p.title);
-  const videos=p.vids.map((id,vi)=>{
-    const dm=6+((pi+vi)%9)*5;
-    const views=850000+(pi+1)*420000+vi*175000;
-    return{id,title:`Video ${vi+1}`,channel:"El Niño TV",thumbnail:`https://img.youtube.com/vi/${id}/hqdefault.jpg`,tags,dm,durationType:durT(dm),views,likes:Math.floor(views*.048),publishedAt:new Date(2026,Math.max(0,5-pi),Math.max(1,24-vi*2)).toISOString()};
+  const PL = RP.map((p, pi) => {
+    const tags = getTags(p.title);
+    const videos = p.vids.map((id, vi) => {
+      const dm = 6 + ((pi + vi) % 9) * 5;
+      const views = 850000 + (pi + 1) * 420000 + vi * 175000;
+      return {
+        id,
+        title: `Video ${vi + 1}`,
+        channel: 'El Niño TV',
+        thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+        tags,
+        dm,
+        durationType: durT(dm),
+        views,
+        likes: Math.floor(views * 0.048),
+        publishedAt: new Date(2026, Math.max(0, 5 - pi), Math.max(1, 24 - vi * 2)).toISOString(),
+      };
+    });
+    return { ...p, tags, videos };
   });
-  return{...p,tags,videos};
-});
 
-const S={vst:{},apl:null,ci:0,am:-1,ams:-1};
+  const S = { vst: {}, apl: null, ci: 0, am: -1, ams: -1 };
 
-async function loadSt(){try{const r=await window.storage.get('en-vst');if(r)S.vst=JSON.parse(r.value);}catch{}}
-async function saveSt(){try{await window.storage.set('en-vst',JSON.stringify(S.vst));}catch{}}
-
-function openPlayer(i){
-  const fpl=filterSort();
-  if(!fpl[i])return;
-  S.apl=fpl[i];S.ci=0;
-  playVid(0);
-  const pp=document.getElementById('player-panel');
-  pp.style.display='block';
-  pp.scrollIntoView({behavior:'smooth',block:'start'});
-  renderPL();
-}
-function playVid(idx){
-  if(!S.apl)return;
-  S.ci=(idx+S.apl.videos.length)%S.apl.videos.length;
-  const v=S.apl.videos[S.ci];
-  document.getElementById('ytf').src=`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
-  document.getElementById('pt').textContent=`${S.apl.title.split(':').slice(1).join(':').trim()||S.apl.title} — Video ${S.ci+1}`;
-  document.getElementById('pch').textContent=`El Niño TV · ${v.tags.join(' ')}`;
-  document.getElementById('pln').textContent=S.apl.title.split(':')[0];
-  const ctr=`Video ${S.ci+1} de ${S.apl.videos.length}`;
-  document.getElementById('pctr').textContent=ctr;
-  document.getElementById('pctrb').textContent=ctr;
-  const vs=S.vst[v.id]||{};
-  document.getElementById('scb').checked=!!vs.seen;
-  document.getElementById('rsel').value=vs.rating||'';
-  const ll=document.getElementById('pllist');
-  ll.innerHTML=S.apl.videos.map((vv,i)=>{const vs2=S.vst[vv.id]||{};return`<div class="plitem ${i===S.ci?'on':''}" onclick="playVid(${i})"><div class="plthumb"><img src="${vv.thumbnail}" loading="lazy" onerror="this.style.opacity=0"></div><div class="plinfo"><div class="plname">Video ${i+1}</div><div class="plmeta">${fmtD(vv.dm)}${vs2.seen?' · ✓':''}${vs2.rating?' · '+vs2.rating+'★':''}</div></div></div>`;}).join('');
-  setTimeout(()=>{const a=ll.querySelector('.on');if(a)a.scrollIntoView({block:'nearest'});},50);
-}
-function closePlayer(){
-  document.getElementById('ytf').src='';
-  document.getElementById('player-panel').style.display='none';
-  S.apl=null;
-  renderPL();
-}
-function nav(d){playVid(S.ci+d);}
-function toggleSeen(){const v=S.apl?.videos[S.ci];if(!v)return;S.vst[v.id]={...S.vst[v.id]||{},seen:document.getElementById('scb').checked};saveSt();playVid(S.ci);}
-function saveRating(){const v=S.apl?.videos[S.ci];if(!v)return;S.vst[v.id]={...S.vst[v.id]||{},rating:document.getElementById('rsel').value};saveSt();}
-
-function filterSort(){
-  const sr=norm(document.getElementById('srch')?.value||'');
-  const du=document.getElementById('dsel')?.value||'all';
-  const so=document.getElementById('sosel')?.value||'recent';
-  let res=PL.map(p=>({...p,videos:p.videos.filter(v=>{const t=norm(`${p.title} ${p.desc} ${v.title} ${v.channel} ${v.tags.join(' ')}`);return(!sr||t.includes(sr))&&(du==='all'||v.durationType===du);})})).filter(p=>p.videos.length);
-  return res.map(p=>({...p,videos:[...p.videos].sort((a,b)=>{if(so==='views')return b.views-a.views;if(so==='longest')return b.dm-a.dm;if(so==='oldest')return new Date(a.publishedAt)-new Date(b.publishedAt);return new Date(b.publishedAt)-new Date(a.publishedAt);})}));
-}
-
-function renderPL(){
-  const fpl=filterSort();
-  const g=document.getElementById('pgrid');
-  const st=document.getElementById('fst');
-  if(!fpl.length){g.innerHTML='<div style="padding:28px;text-align:center;color:var(--tm);font-size:12px;letter-spacing:2px;grid-column:1/-1;border-bottom:1px solid var(--n4)">SIN RESULTADOS</div>';st.textContent='';return;}
-  const tv=fpl.reduce((s,p)=>s+p.videos.length,0);
-  st.textContent=`${fpl.length} listas · ${tv} videos`;
-  g.innerHTML=fpl.map((p,i)=>{
-    const m=p.videos[0];const tm2=p.videos.reduce((s,v)=>s+v.dm,0);const av=p.videos.reduce((s,v)=>s+v.views,0)/p.videos.length;
-    const isOn=S.apl?.title===p.title;
-    return`<div class="pcard ${isOn?'on':''}" onclick="openPlayer(${i})"><div class="pcthumb"><img src="${m.thumbnail}" loading="lazy" onerror="this.style.opacity=0.3" alt=""><div class="pcplay"><div class="pcplaybtn"><i class="ti ti-player-play" style="font-size:14px;color:#0A0A0C" aria-hidden="true"></i></div></div></div><div class="pcbody"><div class="pcgenre">${p.title.split(':')[0]}</div><div class="pctitle">${p.title.split(':').slice(1).join(':').trim()||p.title}</div><div class="pcdesc">${p.desc}</div><div class="pctags">${p.tags.map(t=>`<span class="vtag">${t}</span>`).join('')}</div><div class="pcstats">${p.videos.length} videos · ${fmtD(tm2)} · ${fmtV(av)} media</div></div></div>`;
-  }).join('');
-}
-
-function renderMem(){
-  document.getElementById('mgrid').innerHTML=MEM.map((m,i)=>`<div class="mcard ${S.am===i?'on':''}" onclick="openMem(${i})"><div class="micon">${m.icon}</div><div class="mtype">${m.type}</div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><div class="mbtn">${m.videoId?'Ver video':'Abrir recuerdo'}</div></div>`).join('');
-}
-function openMem(i){
-  if(S.am===i){closeMem();return;}
-  S.am=i;const m=MEM[i];
-  const d=document.getElementById('mdet');d.style.display='block';
-  d.innerHTML=`<div class="ddet-inner"><div class="ddet-info"><div style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px">${m.type}</div><div style="font-size:32px;margin-bottom:10px">${m.icon}</div><div style="font-family:'Black Han Sans',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:7px">${m.title}</div><div style="font-size:11px;color:var(--tm);line-height:1.5;margin-bottom:10px;font-weight:300">${m.desc}</div><div style="font-size:12px;line-height:1.7;margin-bottom:12px;color:var(--t)">${m.story}</div><div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--s);letter-spacing:1px;border:1px solid var(--n4);padding:7px 11px;display:inline-block">${m.reward}</div></div>${m.videoId?`<div class="ddet-player"><iframe src="https://www.youtube-nocookie.com/embed/${m.videoId}?autoplay=0&rel=0&modestbranding=1" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;min-height:280px;border:none;display:block"></iframe></div>`:`<div class="ddet-player" style="display:flex;align-items:center;justify-content:center;min-height:280px;font-size:64px">${m.icon}</div>`}</div><button class="dclose" onclick="closeMem()">Cerrar recuerdo ✕</button>`;
-  d.scrollIntoView({behavior:'smooth',block:'nearest'});
-  renderMem();
-}
-function closeMem(){S.am=-1;document.getElementById('mdet').style.display='none';renderMem();}
-
-function renderMis(){
-  document.getElementById('misgrid').innerHTML=MIS.map((m,i)=>`<div class="miscard ${S.ams===i?'on':''}" id="msc${i}"><div class="misnum">// Misión 0${i+1}</div><div class="mistitle">${m.title.split(':').slice(1).join(':').trim()}</div><div class="misdesc">${m.desc}</div><div class="misacts"><button class="misbtn" onclick="openMis(${i})"><i class="ti ti-player-play" style="font-size:10px;vertical-align:-1px" aria-hidden="true"></i> Ver video</button><button class="misbtn2">Ver misión</button></div></div>`).join('');
-}
-function openMis(i){
-  if(S.ams===i){closeMis();return;}
-  S.ams=i;const m=MIS[i];
-  const d=document.getElementById('misdet');d.style.display='block';
-  d.innerHTML=`<div class="ddet-inner"><div class="ddet-info"><div style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:9px">// Misión 0${i+1}</div><div style="font-family:'Black Han Sans',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:7px">${m.title.split(':').slice(1).join(':').trim()}</div><div style="font-size:12px;color:var(--tm);line-height:1.6;margin-bottom:14px;font-weight:300">${m.desc}</div><div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--s);letter-spacing:1px;border:1px solid var(--n4);padding:7px 11px;display:inline-block">${m.vtitle}</div></div><div class="ddet-player"><iframe src="https://www.youtube-nocookie.com/embed/${m.vid}?autoplay=0&rel=0&modestbranding=1" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;min-height:280px;border:none;display:block"></iframe></div></div><button class="dclose" onclick="closeMis()">Cerrar misión ✕</button>`;
-  d.scrollIntoView({behavior:'smooth',block:'nearest'});
-  renderMis();
-}
-function closeMis(){S.ams=-1;document.getElementById('misdet').style.display='none';renderMis();}
-function goto(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    if(document.getElementById('player-panel').style.display!=='none')closePlayer();
-    else if(S.am!==-1)closeMem();
-    else if(S.ams!==-1)closeMis();
+  async function loadSt() {
+    try {
+      const r = await window.storage.get('en-vst');
+      if (r) S.vst = JSON.parse(r.value);
+    } catch {}
   }
-  if(document.getElementById('player-panel').style.display!=='none'){
-    if(e.key==='ArrowLeft')nav(-1);
-    if(e.key==='ArrowRight')nav(1);
+  async function saveSt() {
+    try {
+      await window.storage.set('en-vst', JSON.stringify(S.vst));
+    } catch {}
   }
-});
 
-loadSt().then(()=>{renderPL();renderMem();renderMis();});
+  function openPlayer(i) {
+    const fpl = filterSort();
+    if (!fpl[i]) return;
+    S.apl = fpl[i];
+    S.ci = 0;
+    playVid(0);
+    const pp = document.getElementById('player-panel');
+    pp.style.display = 'block';
+    pp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    renderPL();
+  }
+  function playVid(idx) {
+    if (!S.apl) return;
+    S.ci = (idx + S.apl.videos.length) % S.apl.videos.length;
+    const v = S.apl.videos[S.ci];
+    document.getElementById('ytf').src =
+      `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1`;
+    document.getElementById('pt').textContent =
+      `${S.apl.title.split(':').slice(1).join(':').trim() || S.apl.title} — Video ${S.ci + 1}`;
+    document.getElementById('pch').textContent = `El Niño TV · ${v.tags.join(' ')}`;
+    document.getElementById('pln').textContent = S.apl.title.split(':')[0];
+    const ctr = `Video ${S.ci + 1} de ${S.apl.videos.length}`;
+    document.getElementById('pctr').textContent = ctr;
+    document.getElementById('pctrb').textContent = ctr;
+    const vs = S.vst[v.id] || {};
+    document.getElementById('scb').checked = !!vs.seen;
+    document.getElementById('rsel').value = vs.rating || '';
+    const ll = document.getElementById('pllist');
+    ll.innerHTML = S.apl.videos
+      .map((vv, i) => {
+        const vs2 = S.vst[vv.id] || {};
+        return `<div class="plitem ${i === S.ci ? 'on' : ''}" onclick="playVid(${i})"><div class="plthumb"><img src="${vv.thumbnail}" loading="lazy" onerror="this.style.opacity=0"></div><div class="plinfo"><div class="plname">Video ${i + 1}</div><div class="plmeta">${fmtD(vv.dm)}${vs2.seen ? ' · ✓' : ''}${vs2.rating ? ' · ' + vs2.rating + '★' : ''}</div></div></div>`;
+      })
+      .join('');
+    setTimeout(() => {
+      const a = ll.querySelector('.on');
+      if (a) a.scrollIntoView({ block: 'nearest' });
+    }, 50);
+  }
+  function closePlayer() {
+    document.getElementById('ytf').src = '';
+    document.getElementById('player-panel').style.display = 'none';
+    S.apl = null;
+    renderPL();
+  }
+  function nav(d) {
+    playVid(S.ci + d);
+  }
+  function toggleSeen() {
+    const v = S.apl?.videos[S.ci];
+    if (!v) return;
+    S.vst[v.id] = { ...(S.vst[v.id] || {}), seen: document.getElementById('scb').checked };
+    saveSt();
+    playVid(S.ci);
+  }
+  function saveRating() {
+    const v = S.apl?.videos[S.ci];
+    if (!v) return;
+    S.vst[v.id] = { ...(S.vst[v.id] || {}), rating: document.getElementById('rsel').value };
+    saveSt();
+  }
+
+  function filterSort() {
+    const sr = norm(document.getElementById('srch')?.value || '');
+    const du = document.getElementById('dsel')?.value || 'all';
+    const so = document.getElementById('sosel')?.value || 'recent';
+    let res = PL.map(p => ({
+      ...p,
+      videos: p.videos.filter(v => {
+        const t = norm(`${p.title} ${p.desc} ${v.title} ${v.channel} ${v.tags.join(' ')}`);
+        return (!sr || t.includes(sr)) && (du === 'all' || v.durationType === du);
+      }),
+    })).filter(p => p.videos.length);
+    return res.map(p => ({
+      ...p,
+      videos: [...p.videos].sort((a, b) => {
+        if (so === 'views') return b.views - a.views;
+        if (so === 'longest') return b.dm - a.dm;
+        if (so === 'oldest') return new Date(a.publishedAt) - new Date(b.publishedAt);
+        return new Date(b.publishedAt) - new Date(a.publishedAt);
+      }),
+    }));
+  }
+
+  function renderPL() {
+    const fpl = filterSort();
+    const g = document.getElementById('pgrid');
+    const st = document.getElementById('fst');
+    if (!fpl.length) {
+      g.innerHTML =
+        '<div style="padding:28px;text-align:center;color:var(--tm);font-size:12px;letter-spacing:2px;grid-column:1/-1;border-bottom:1px solid var(--n4)">SIN RESULTADOS</div>';
+      st.textContent = '';
+      return;
+    }
+    const tv = fpl.reduce((s, p) => s + p.videos.length, 0);
+    st.textContent = `${fpl.length} listas · ${tv} videos`;
+    g.innerHTML = fpl
+      .map((p, i) => {
+        const m = p.videos[0];
+        const tm2 = p.videos.reduce((s, v) => s + v.dm, 0);
+        const av = p.videos.reduce((s, v) => s + v.views, 0) / p.videos.length;
+        const isOn = S.apl?.title === p.title;
+        return `<div class="pcard ${isOn ? 'on' : ''}" onclick="openPlayer(${i})"><div class="pcthumb"><img src="${m.thumbnail}" loading="lazy" onerror="this.style.opacity=0.3" alt=""><div class="pcplay"><div class="pcplaybtn"><i class="ti ti-player-play" style="font-size:14px;color:#0A0A0C" aria-hidden="true"></i></div></div></div><div class="pcbody"><div class="pcgenre">${p.title.split(':')[0]}</div><div class="pctitle">${p.title.split(':').slice(1).join(':').trim() || p.title}</div><div class="pcdesc">${p.desc}</div><div class="pctags">${p.tags.map(t => `<span class="vtag">${t}</span>`).join('')}</div><div class="pcstats">${p.videos.length} videos · ${fmtD(tm2)} · ${fmtV(av)} media</div></div></div>`;
+      })
+      .join('');
+  }
+
+  function renderMem() {
+    document.getElementById('mgrid').innerHTML = MEM.map(
+      (m, i) =>
+        `<div class="mcard ${S.am === i ? 'on' : ''}" onclick="openMem(${i})"><div class="micon">${m.icon}</div><div class="mtype">${m.type}</div><div class="mtitle">${m.title}</div><div class="mdesc">${m.desc}</div><div class="mbtn">${m.videoId ? 'Ver video' : 'Abrir recuerdo'}</div></div>`
+    ).join('');
+  }
+  function openMem(i) {
+    if (S.am === i) {
+      closeMem();
+      return;
+    }
+    S.am = i;
+    const m = MEM[i];
+    const d = document.getElementById('mdet');
+    d.style.display = 'block';
+    d.innerHTML = `<div class="ddet-inner"><div class="ddet-info"><div style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px">${m.type}</div><div style="font-size:32px;margin-bottom:10px">${m.icon}</div><div style="font-family:'Black Han Sans',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:7px">${m.title}</div><div style="font-size:11px;color:var(--tm);line-height:1.5;margin-bottom:10px;font-weight:300">${m.desc}</div><div style="font-size:12px;line-height:1.7;margin-bottom:12px;color:var(--t)">${m.story}</div><div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--s);letter-spacing:1px;border:1px solid var(--n4);padding:7px 11px;display:inline-block">${m.reward}</div></div>${m.videoId ? `<div class="ddet-player"><iframe src="https://www.youtube-nocookie.com/embed/${m.videoId}?autoplay=0&rel=0&modestbranding=1" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;min-height:280px;border:none;display:block"></iframe></div>` : `<div class="ddet-player" style="display:flex;align-items:center;justify-content:center;min-height:280px;font-size:64px">${m.icon}</div>`}</div><button class="dclose" onclick="closeMem()">Cerrar recuerdo ✕</button>`;
+    d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    renderMem();
+  }
+  function closeMem() {
+    S.am = -1;
+    document.getElementById('mdet').style.display = 'none';
+    renderMem();
+  }
+
+  function renderMis() {
+    document.getElementById('misgrid').innerHTML = MIS.map(
+      (m, i) =>
+        `<div class="miscard ${S.ams === i ? 'on' : ''}" id="msc${i}"><div class="misnum">// Misión 0${i + 1}</div><div class="mistitle">${m.title.split(':').slice(1).join(':').trim()}</div><div class="misdesc">${m.desc}</div><div class="misacts"><button class="misbtn" onclick="openMis(${i})"><i class="ti ti-player-play" style="font-size:10px;vertical-align:-1px" aria-hidden="true"></i> Ver video</button><button class="misbtn2">Ver misión</button></div></div>`
+    ).join('');
+  }
+  function openMis(i) {
+    if (S.ams === i) {
+      closeMis();
+      return;
+    }
+    S.ams = i;
+    const m = MIS[i];
+    const d = document.getElementById('misdet');
+    d.style.display = 'block';
+    d.innerHTML = `<div class="ddet-inner"><div class="ddet-info"><div style="font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--s);letter-spacing:3px;text-transform:uppercase;margin-bottom:9px">// Misión 0${i + 1}</div><div style="font-family:'Black Han Sans',sans-serif;font-size:20px;letter-spacing:1px;margin-bottom:7px">${m.title.split(':').slice(1).join(':').trim()}</div><div style="font-size:12px;color:var(--tm);line-height:1.6;margin-bottom:14px;font-weight:300">${m.desc}</div><div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--s);letter-spacing:1px;border:1px solid var(--n4);padding:7px 11px;display:inline-block">${m.vtitle}</div></div><div class="ddet-player"><iframe src="https://www.youtube-nocookie.com/embed/${m.vid}?autoplay=0&rel=0&modestbranding=1" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="width:100%;height:100%;min-height:280px;border:none;display:block"></iframe></div></div><button class="dclose" onclick="closeMis()">Cerrar misión ✕</button>`;
+    d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    renderMis();
+  }
+  function closeMis() {
+    S.ams = -1;
+    document.getElementById('misdet').style.display = 'none';
+    renderMis();
+  }
+  function goto(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('player-panel').style.display !== 'none') closePlayer();
+      else if (S.am !== -1) closeMem();
+      else if (S.ams !== -1) closeMis();
+    }
+    if (document.getElementById('player-panel').style.display !== 'none') {
+      if (e.key === 'ArrowLeft') nav(-1);
+      if (e.key === 'ArrowRight') nav(1);
+    }
+  });
+
+  loadSt().then(() => {
+    renderPL();
+    renderMem();
+    renderMis();
+  });
 </script>
-

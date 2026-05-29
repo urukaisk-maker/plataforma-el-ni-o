@@ -4,14 +4,10 @@
   "description": "Plataforma web progresiva (PWA) gamer para El Niño. Misiones, galería, chat, recuerdos y gamificación.",
   "type": "module",
   "scripts": {
-    "dev": "npx vite --open",
-    "build": "echo 'No build step needed for static PWA'",
     "lint": "eslint src/ sw.js",
     "lint:fix": "eslint src/ sw.js --fix",
     "format": "prettier --write '**/*.{js,html,css,json,md}'",
-    "format:check": "prettier --check '**/*.{js,html,css,json,md}'",
-    "test": "jest",
-    "prepare": "husky"
+    "format:check": "prettier --check '**/*.{js,html,css,json,md}'"
   },
   "keywords": [
     "pwa",
@@ -30,7 +26,6 @@
     "globals": "^15.0.0",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0",
-    "prettier": "^3.0.0",
-    "vite": "^5.0.0"
+    "prettier": "^3.0.0"
   }
 }

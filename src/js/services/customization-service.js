@@ -1,12 +1,12 @@
 // Servicio de personalización - Gestión de avatar, temas, misiones personalizadas y tarjetas con localStorage
-import { 
-  INITIAL_CUSTOMIZATION, 
+import {
+  INITIAL_CUSTOMIZATION,
   generateAvatar,
   validateCustomMission,
-  validateCustomCard
-} from "../data/customization.js";
+  validateCustomCard,
+} from '../data/customization.js';
 
-const CUSTOMIZATION_STORAGE_KEY = "elnino_customization";
+const CUSTOMIZATION_STORAGE_KEY = 'elnino_customization';
 
 // Obtener datos de personalización del localStorage
 export function getCustomizationData() {
@@ -17,7 +17,7 @@ export function getCustomizationData() {
     }
     return INITIAL_CUSTOMIZATION;
   } catch (error) {
-    console.error("Error al obtener datos de personalización:", error);
+    console.error('Error al obtener datos de personalización:', error);
     return INITIAL_CUSTOMIZATION;
   }
 }
@@ -27,7 +27,7 @@ export function saveCustomizationData(data) {
   try {
     localStorage.setItem(CUSTOMIZATION_STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error("Error al guardar datos de personalización:", error);
+    console.error('Error al guardar datos de personalización:', error);
   }
 }
 
@@ -93,9 +93,9 @@ export function getCurrentTheme() {
 export function applyThemeColors(themeId) {
   const data = getCustomizationData();
   const themeIdToUse = themeId || data.theme;
-  
+
   // Importar THEMES dinámicamente
-  import("../data/customization.js").then(({ THEMES }) => {
+  import('../data/customization.js').then(({ THEMES }) => {
     const theme = THEMES.find(t => t.id === themeIdToUse);
     if (theme) {
       const root = document.documentElement;
@@ -120,12 +120,12 @@ export function createCustomMission(missionData) {
     id: `custom_mission_${Date.now()}`,
     ...missionData,
     createdAt: new Date().toISOString(),
-    completed: false
+    completed: false,
   };
-  
+
   data.customMissions.push(newMission);
   saveCustomizationData(data);
-  
+
   return { success: true, mission: newMission };
 }
 
@@ -139,36 +139,36 @@ export function getCustomMissions() {
 export function updateCustomMission(missionId, missionData) {
   const data = getCustomizationData();
   const missionIndex = data.customMissions.findIndex(m => m.id === missionId);
-  
+
   if (missionIndex >= 0) {
     const validation = validateCustomMission(missionData);
     if (!validation.isValid) {
       return { success: false, errors: validation.errors };
     }
-    
+
     data.customMissions[missionIndex] = {
       ...data.customMissions[missionIndex],
-      ...missionData
+      ...missionData,
     };
     saveCustomizationData(data);
-    
+
     return { success: true, mission: data.customMissions[missionIndex] };
   }
-  
-  return { success: false, errors: ["Misión no encontrada"] };
+
+  return { success: false, errors: ['Misión no encontrada'] };
 }
 
 // Eliminar misión personalizada
 export function deleteCustomMission(missionId) {
   const data = getCustomizationData();
   const missionIndex = data.customMissions.findIndex(m => m.id === missionId);
-  
+
   if (missionIndex >= 0) {
     data.customMissions.splice(missionIndex, 1);
     saveCustomizationData(data);
     return true;
   }
-  
+
   return false;
 }
 
@@ -176,14 +176,14 @@ export function deleteCustomMission(missionId) {
 export function completeCustomMission(missionId) {
   const data = getCustomizationData();
   const mission = data.customMissions.find(m => m.id === missionId);
-  
+
   if (mission) {
     mission.completed = true;
     mission.completedAt = new Date().toISOString();
     saveCustomizationData(data);
     return true;
   }
-  
+
   return false;
 }
 
@@ -200,12 +200,12 @@ export function createCustomCard(cardData) {
   const newCard = {
     id: `custom_card_${Date.now()}`,
     ...cardData,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
-  
+
   data.customCards.push(newCard);
   saveCustomizationData(data);
-  
+
   return { success: true, card: newCard };
 }
 
@@ -219,36 +219,36 @@ export function getCustomCards() {
 export function updateCustomCard(cardId, cardData) {
   const data = getCustomizationData();
   const cardIndex = data.customCards.findIndex(c => c.id === cardId);
-  
+
   if (cardIndex >= 0) {
     const validation = validateCustomCard(cardData);
     if (!validation.isValid) {
       return { success: false, errors: validation.errors };
     }
-    
+
     data.customCards[cardIndex] = {
       ...data.customCards[cardIndex],
-      ...cardData
+      ...cardData,
     };
     saveCustomizationData(data);
-    
+
     return { success: true, card: data.customCards[cardIndex] };
   }
-  
-  return { success: false, errors: ["Tarjeta no encontrada"] };
+
+  return { success: false, errors: ['Tarjeta no encontrada'] };
 }
 
 // Eliminar tarjeta personalizada
 export function deleteCustomCard(cardId) {
   const data = getCustomizationData();
   const cardIndex = data.customCards.findIndex(c => c.id === cardId);
-  
+
   if (cardIndex >= 0) {
     data.customCards.splice(cardIndex, 1);
     saveCustomizationData(data);
     return true;
   }
-  
+
   return false;
 }
 
@@ -258,17 +258,17 @@ export function deleteCustomCard(cardId) {
 export function resetCustomization() {
   localStorage.removeItem(CUSTOMIZATION_STORAGE_KEY);
   // Aplicar tema por defecto
-  applyThemeColors("default");
+  applyThemeColors('default');
 }
 
 // Exportar datos de personalización
 export function exportCustomization() {
   const data = getCustomizationData();
   const jsonString = JSON.stringify(data, null, 2);
-  const blob = new Blob([jsonString], { type: "application/json" });
+  const blob = new Blob([jsonString], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  
-  const a = document.createElement("a");
+
+  const a = document.createElement('a');
   a.href = url;
   a.download = `elnino_customization_${Date.now()}.json`;
   document.body.appendChild(a);
@@ -285,6 +285,6 @@ export function importCustomization(jsonString) {
     applyThemeColors(data.theme);
     return { success: true };
   } catch (error) {
-    return { success: false, error: "Formato inválido" };
+    return { success: false, error: 'Formato inválido' };
   }
 }

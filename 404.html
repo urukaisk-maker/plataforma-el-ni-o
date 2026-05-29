@@ -1,325 +1,410 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 — Nivel no encontrado | El Niño</title>
-  <meta name="description" content="Página no encontrada en la plataforma gamer El Niño. Vuelve al inicio para continuar la partida.">
-  <meta name="theme-color" content="#00f5ff">
-  <link rel="manifest" href="./manifest.json">
-  <meta property="og:title" content="404 — Nivel no encontrado | El Niño">
-  <meta property="og:description" content="Página no encontrada en la plataforma gamer El Niño. Vuelve al inicio para continuar la partida.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/404.html">
-  <meta property="og:image" content="https://silly-boba-dc057e.netlify.app/icon-512.png">
-  <meta property="og:locale" content="es_ES">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./src/styles/main.css">
-  <style>
-    .error-hero {
-      display: grid;
-      place-items: center;
-      text-align: center;
-      min-height: 70vh;
-      padding: 40px 24px;
-      position: relative;
-      overflow: hidden;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Nivel no encontrado | El Niño</title>
+    <meta
+      name="description"
+      content="Página no encontrada en la plataforma gamer El Niño. Vuelve al inicio para continuar la partida."
+    />
+    <meta name="theme-color" content="#00f5ff" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta property="og:title" content="404 — Nivel no encontrado | El Niño" />
+    <meta
+      property="og:description"
+      content="Página no encontrada en la plataforma gamer El Niño. Vuelve al inicio para continuar la partida."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://silly-boba-dc057e.netlify.app/404.html" />
+    <meta property="og:image" content="https://silly-boba-dc057e.netlify.app/icon-512.png" />
+    <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <style>
+      .error-hero {
+        display: grid;
+        place-items: center;
+        text-align: center;
+        min-height: 70vh;
+        padding: 40px 24px;
+        position: relative;
+        overflow: hidden;
+      }
 
-    .error-code {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(6rem, 15vw, 12rem);
-      font-weight: 900;
-      line-height: 1;
-      margin: 0;
-      background: linear-gradient(135deg, #00f5ff 0%, #ff2bd6 50%, #ffd700 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glitch 2s infinite;
-      position: relative;
-    }
+      .error-code {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(6rem, 15vw, 12rem);
+        font-weight: 900;
+        line-height: 1;
+        margin: 0;
+        background: linear-gradient(135deg, #00f5ff 0%, #ff2bd6 50%, #ffd700 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glitch 2s infinite;
+        position: relative;
+      }
 
-    .error-code::before,
-    .error-code::after {
-      content: '404';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #00f5ff 0%, #ff2bd6 50%, #ffd700 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+      .error-code::before,
+      .error-code::after {
+        content: '404';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #00f5ff 0%, #ff2bd6 50%, #ffd700 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-    .error-code::before {
-      animation: glitch-1 1.5s infinite linear alternate-reverse;
-      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-      transform: translate(-2px, -1px);
-      opacity: 0.7;
-    }
+      .error-code::before {
+        animation: glitch-1 1.5s infinite linear alternate-reverse;
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        transform: translate(-2px, -1px);
+        opacity: 0.7;
+      }
 
-    .error-code::after {
-      animation: glitch-2 1.5s infinite linear alternate-reverse;
-      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-      transform: translate(2px, 1px);
-      opacity: 0.7;
-    }
+      .error-code::after {
+        animation: glitch-2 1.5s infinite linear alternate-reverse;
+        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        transform: translate(2px, 1px);
+        opacity: 0.7;
+      }
 
-    @keyframes glitch {
-      0%, 90%, 100% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-    }
+      @keyframes glitch {
+        0%,
+        90%,
+        100% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+      }
 
-    @keyframes glitch-1 {
-      0%, 100% { transform: translate(-2px, -1px); }
-      50% { transform: translate(3px, 1px); }
-    }
+      @keyframes glitch-1 {
+        0%,
+        100% {
+          transform: translate(-2px, -1px);
+        }
+        50% {
+          transform: translate(3px, 1px);
+        }
+      }
 
-    @keyframes glitch-2 {
-      0%, 100% { transform: translate(2px, 1px); }
-      50% { transform: translate(-3px, -1px); }
-    }
+      @keyframes glitch-2 {
+        0%,
+        100% {
+          transform: translate(2px, 1px);
+        }
+        50% {
+          transform: translate(-3px, -1px);
+        }
+      }
 
-    .error-subtitle {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(1.2rem, 3vw, 2rem);
-      color: var(--text);
-      margin: 24px 0 12px;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-    }
+      .error-subtitle {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        color: var(--text);
+        margin: 24px 0 12px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+      }
 
-    .error-message {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 500px;
-      margin: 0 auto 32px;
-      line-height: 1.6;
-    }
+      .error-message {
+        font-size: 1.1rem;
+        color: var(--muted);
+        max-width: 500px;
+        margin: 0 auto 32px;
+        line-height: 1.6;
+      }
 
-    .error-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+      .error-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-    .error-tips {
-      margin-top: 48px;
-      padding: 24px;
-      border: 1px solid rgba(0, 245, 255, 0.15);
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      max-width: 500px;
-    }
+      .error-tips {
+        margin-top: 48px;
+        padding: 24px;
+        border: 1px solid rgba(0, 245, 255, 0.15);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        max-width: 500px;
+      }
 
-    .error-tips h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      margin: 0 0 12px;
-      color: var(--primary);
-    }
+      .error-tips h3 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1rem;
+        margin: 0 0 12px;
+        color: var(--primary);
+      }
 
-    .error-tips ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-    }
+      .error-tips ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+      }
 
-    .error-tips li {
-      padding: 6px 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+      .error-tips li {
+        padding: 6px 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
 
-    .error-tips li::before {
-      content: '▸ ';
-      color: var(--primary);
-    }
+      .error-tips li::before {
+        content: '▸ ';
+        color: var(--primary);
+      }
 
-    .particles-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
+      .particles-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
 
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--primary);
-      border-radius: 50%;
-      opacity: 0.4;
-      animation: float-particle 8s infinite ease-in-out;
-    }
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0.4;
+        animation: float-particle 8s infinite ease-in-out;
+      }
 
-    @keyframes float-particle {
-      0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
-      10% { opacity: 0.4; }
-      90% { opacity: 0.4; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
-  </style>
-</head>
-<body>
-  <div class="app-shell">
-    <header class="site-header">
-      <a class="brand" href="./index.html" aria-label="Ir al inicio">
-        <span class="brand__icon">EN</span>
-        <span class="brand__text">El Niño</span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
-        <a href="./index.html">Inicio</a>
-        <a href="./misiones.html">Misiones</a>
-        <a href="./youtube.html">YouTube</a>
-        <a href="./recuerdos.html">Recuerdos</a>
-        <a href="./sorpresa.html">Sorpresa</a>
-        <a href="./proyecto.html">Proyecto</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="error-hero">
-        <div class="particles-bg" id="particlesBg"></div>
-        <div>
-          <h1 class="error-code">404</h1>
-          <h2 class="error-subtitle">Nivel no encontrado</h2>
-          <p class="error-message">
-            Parece que te has perdido en el mapa. Esta zona aún no ha sido desbloqueada
-            o el enemigo la ha destruido. No te preocupes, siempre hay un camino de vuelta.
-          </p>
-          <div class="error-actions">
-            <a class="button button--primary" href="./index.html">
-              🏠 Volver al inicio
-            </a>
-            <a class="button button--ghost" href="./misiones.html">
-              🎮 Ir a misiones
-            </a>
-            <a class="button button--ghost" href="./sorpresa.html">
-              🎁 Abrir sorpresa
-            </a>
-          </div>
-          <div class="error-tips">
-            <h3>Consejos del jugador</h3>
-            <ul>
-              <li>Revisa la URL por errores de escritura</li>
-              <li>Usa el menú de navegación para explorar</li>
-              <li>Prueba volver al inicio y buscar desde allí</li>
-              <li>Si crees que este nivel debería existir, avisa al Game Master</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div class="floating-buttons">
-      <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app">📲</button>
-      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">🎵</button>
-      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">⬆️</button>
-    </div>
-
- <footer class="site-footer">
-      <div class="site-footer__brand">
+      @keyframes float-particle {
+        0%,
+        100% {
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.4;
+        }
+        90% {
+          opacity: 0.4;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
         <a class="brand" href="./index.html" aria-label="Ir al inicio">
           <span class="brand__icon">EN</span>
           <span class="brand__text">El Niño</span>
         </a>
-        <p>Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas digitales.</p>
-      </div>
-
-      <div class="site-footer__grid">
-        <div>
-          <h3>Explorar</h3>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+          <a href="./index.html">Inicio</a>
           <a href="./misiones.html">Misiones</a>
           <a href="./youtube.html">YouTube</a>
-          <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+          <a href="./recuerdos.html">Recuerdos</a>
           <a href="./sorpresa.html">Sorpresa</a>
-          <a href="./regalo-digital.html">Regalo digital</a>
-          <a href="./rincon-gamer.html">Rincón gamer</a>
-        </div>
-        <div>
-          <h3>Campaña</h3>
-          <a href="./ceremonia-digital.html">Ceremonia digital</a>
-          <a href="./recompensas.html">Recompensas</a>
-          <a href="./premio-sorpresa.html">Premio sorpresa</a>
-          <a href="./final-epico.html">Final épico</a>
-          
-        </div>
-        <div>
-          <h3>Proyecto</h3>
-          <a href="./proyecto.html">Visión general</a>
-          <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
-          <a href="./proyecto.html#api">APIs futuras</a>
-          <a class="footer-download" href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip" download title="Descargar el proyecto con dedicatoria para El Niño">Descargar proyecto para El Niño</a>
-        </div>
-        <div>
-          <h3>Legal</h3>
-          <a href="./cookies.html">Cookies</a>
-          <a href="./privacidad.html">Privacidad</a>
-          <a href="./terminos.html">Términos</a>
-        </div>
+          <a href="./proyecto.html">Proyecto</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="error-hero">
+          <div class="particles-bg" id="particlesBg"></div>
+          <div>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-subtitle">Nivel no encontrado</h2>
+            <p class="error-message">
+              Parece que te has perdido en el mapa. Esta zona aún no ha sido desbloqueada o el enemigo la ha destruido.
+              No te preocupes, siempre hay un camino de vuelta.
+            </p>
+            <div class="error-actions">
+              <a class="button button--primary" href="./index.html"> 🏠 Volver al inicio </a>
+              <a class="button button--ghost" href="./misiones.html"> 🎮 Ir a misiones </a>
+              <a class="button button--ghost" href="./sorpresa.html"> 🎁 Abrir sorpresa </a>
+            </div>
+            <div class="error-tips">
+              <h3>Consejos del jugador</h3>
+              <ul>
+                <li>Revisa la URL por errores de escritura</li>
+                <li>Usa el menú de navegación para explorar</li>
+                <li>Prueba volver al inicio y buscar desde allí</li>
+                <li>Si crees que este nivel debería existir, avisa al Game Master</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="floating-buttons">
+        <button
+          class="floating-button floating-button--install"
+          type="button"
+          id="installPWA"
+          aria-label="Instalar app"
+          title="Instalar app"
+        >
+          📲
+        </button>
+        <button
+          class="floating-button floating-button--music"
+          type="button"
+          id="openMusicApp"
+          aria-label="Abrir app de música"
+          title="App de música"
+        >
+          🎵
+        </button>
+        <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">
+          ⬆️
+        </button>
       </div>
 
-      <div class="site-footer__bottom">
-        <span class="site-footer__copyright">© 2026 El Niño. Todos los recuerdos reservados.<br><a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">Ver proyecto en GitHub</a></span>
-        <span>Modo gamer activado</span><span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
-      </div>
-    </footer>
-  </div>
+      <footer class="site-footer">
+        <div class="site-footer__brand">
+          <a class="brand" href="./index.html" aria-label="Ir al inicio">
+            <span class="brand__icon">EN</span>
+            <span class="brand__text">El Niño</span>
+          </a>
+          <p>
+            Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas
+            digitales.
+          </p>
+        </div>
 
-  <script type="module" src="./src/js/app.js"></script>
-  <script>
-    document.getElementById('scrollToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        <div class="site-footer__grid">
+          <div>
+            <h3>Explorar</h3>
+            <a href="./misiones.html">Misiones</a>
+            <a href="./youtube.html">YouTube</a>
+            <a href="./peliculas.html">Películas</a><a href="./recuerdos.html">Recuerdos</a>
+            <a href="./sorpresa.html">Sorpresa</a>
+            <a href="./regalo-digital.html">Regalo digital</a>
+            <a href="./rincon-gamer.html">Rincón gamer</a>
+          </div>
+          <div>
+            <h3>Campaña</h3>
+            <a href="./ceremonia-digital.html">Ceremonia digital</a>
+            <a href="./recompensas.html">Recompensas</a>
+            <a href="./premio-sorpresa.html">Premio sorpresa</a>
+            <a href="./final-epico.html">Final épico</a>
+          </div>
+          <div>
+            <h3>Proyecto</h3>
+            <a href="./proyecto.html">Visión general</a>
+            <a href="./proyecto.html#escalabilidad">Escalabilidad</a>
+            <a href="./proyecto.html#api">APIs futuras</a>
+            <a
+              class="footer-download"
+              href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip"
+              download
+              title="Descargar el proyecto con dedicatoria para El Niño"
+              >Descargar proyecto <br />El Niño</a
+            >
+          </div>
+          <div>
+            <h3>Legal</h3>
+            <a href="./cookies.html">Cookies</a>
+            <a href="./privacidad.html">Privacidad</a>
+            <a href="./terminos.html">Términos</a>
+          </div>
+        </div>
 
-    document.getElementById('openMusicApp').addEventListener('click', () => {
-      window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
-    });
-  </script>
+        <div class="site-footer__bottom">
+          <span class="site-footer__copyright"
+            >© 2026 El Niño. Todos los recuerdos reservados.<br /><a
+              href="https://github.com/urukaisk-maker/plataforma-el-ni-o"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Ver proyecto en GitHub</a
+            ></span
+          >
+          <span>Modo gamer activado</span
+          ><span
+            ><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer"
+              >Desarrollado por Urukais Klick</a
+            ></span
+          >
+        </div>
+      </footer>
+    </div>
 
-  <script type="module" src="./src/js/app.js"></script>
-  <script>
-    document.getElementById('scrollToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    <script type="module" src="./src/js/app.js"></script>
+    <script>
+      document.getElementById('scrollToTop').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
-    document.getElementById('openMusicApp').addEventListener('click', () => {
-      window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
-    });
+      document.getElementById('openMusicApp').addEventListener('click', () => {
+        window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+      });
+    </script>
 
-    // Generar partículas de fondo
-    (function() {
-      const container = document.getElementById('particlesBg');
-      if (!container) return;
-      const colors = ['#00f5ff', '#ff2bd6', '#ffd700', '#7cff6b'];
-      for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 8 + 's';
-        p.style.animationDuration = (6 + Math.random() * 6) + 's';
-        p.style.background = colors[Math.floor(Math.random() * colors.length)];
-        p.style.width = (2 + Math.random() * 4) + 'px';
-        p.style.height = p.style.width;
-        container.appendChild(p);
-      }
-    })();
-  </script>
-</body>
+    <script type="module" src="./src/js/app.js"></script>
+    <script>
+      document.getElementById('scrollToTop').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('openMusicApp').addEventListener('click', () => {
+        window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+      });
+    </script>
+
+    <script type="module" src="./src/js/app.js"></script>
+    <script>
+      document.getElementById('scrollToTop').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.getElementById('openMusicApp').addEventListener('click', () => {
+        window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer');
+      });
+
+      // Generar partículas de fondo
+      (function () {
+        const container = document.getElementById('particlesBg');
+        if (!container) return;
+        const colors = ['#00f5ff', '#ff2bd6', '#ffd700', '#7cff6b'];
+        for (let i = 0; i < 30; i++) {
+          const p = document.createElement('div');
+          p.className = 'particle';
+          p.style.left = Math.random() * 100 + '%';
+          p.style.animationDelay = Math.random() * 8 + 's';
+          p.style.animationDuration = 6 + Math.random() * 6 + 's';
+          p.style.background = colors[Math.floor(Math.random() * colors.length)];
+          p.style.width = 2 + Math.random() * 4 + 'px';
+          p.style.height = p.style.width;
+          container.appendChild(p);
+        }
+      })();
+    </script>
+  </body>
 </html>

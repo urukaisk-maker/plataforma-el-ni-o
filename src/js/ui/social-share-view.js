@@ -10,8 +10,8 @@ import {
   getAvailablePlatforms,
   generateMissionShareUrl,
   generateBadgeShareUrl,
-  generateLeaderboardShareUrl
-} from "../services/social-share-service.js";
+  generateLeaderboardShareUrl,
+} from '../services/social-share-service.js';
 
 // Renderizar botones de compartir
 export function renderShareButtons(container, options = {}) {
@@ -24,7 +24,9 @@ export function renderShareButtons(container, options = {}) {
     <div class="share-buttons">
       <p class="share-buttons__title">Compartir</p>
       <div class="share-buttons__grid">
-        ${platforms.map(platform => `
+        ${platforms
+          .map(
+            platform => `
           <button 
             class="share-button share-button--${platform.id}" 
             data-platform="${platform.id}"
@@ -33,7 +35,9 @@ export function renderShareButtons(container, options = {}) {
             <span class="share-button__icon">${getPlatformIcon(platform.id)}</span>
             ${showLabel ? `<span class="share-button__label">${platform.name}</span>` : ''}
           </button>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     </div>
   `;
@@ -89,7 +93,7 @@ function getPlatformIcon(platformId) {
     whatsapp: '💬',
     linkedin: '💼',
     telegram: '✈️',
-    copy: '📋'
+    copy: '📋',
   };
   return icons[platformId] || '📤';
 }

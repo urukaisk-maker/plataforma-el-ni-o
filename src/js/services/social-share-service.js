@@ -6,13 +6,13 @@ const APP_NAME = 'El Niño - Plataforma Gamer';
 // Función para compartir usando Web Share API (navegadores modernos)
 export async function shareContent(options) {
   const { title, text, url } = options;
-  
+
   if (navigator.share) {
     try {
       await navigator.share({
         title: title || APP_NAME,
         text: text || '¡Mira esta plataforma gamer increíble!',
-        url: url || APP_URL
+        url: url || APP_URL,
       });
       return { success: true };
     } catch (error) {
@@ -34,18 +34,18 @@ function shareFallback(options) {
   const shareUrl = url || APP_URL;
   const shareText = encodeURIComponent(text || '¡Mira esta plataforma gamer increíble!');
   const shareTitle = encodeURIComponent(title || APP_NAME);
-  
+
   // Abrir ventana de compartir genérica
   const shareWindow = window.open(
     `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`,
     '_blank',
     'width=600,height=400'
   );
-  
+
   if (shareWindow) {
     return { success: true };
   }
-  
+
   return { success: false, error: 'No se pudo abrir la ventana de compartir' };
 }
 
@@ -54,10 +54,10 @@ export function shareOnTwitter(options) {
   const { text, url } = options;
   const shareUrl = url || APP_URL;
   const shareText = encodeURIComponent(text || '¡Mira esta plataforma gamer increíble!');
-  
+
   const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`;
   window.open(twitterUrl, '_blank', 'width=600,height=400');
-  
+
   return { success: true };
 }
 
@@ -65,10 +65,10 @@ export function shareOnTwitter(options) {
 export function shareOnFacebook(options) {
   const { url } = options;
   const shareUrl = url || APP_URL;
-  
+
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   window.open(facebookUrl, '_blank', 'width=600,height=400');
-  
+
   return { success: true };
 }
 
@@ -77,10 +77,10 @@ export function shareOnWhatsApp(options) {
   const { text, url } = options;
   const shareUrl = url || APP_URL;
   const shareText = encodeURIComponent(`${text || '¡Mira esta plataforma gamer increíble!'} ${shareUrl}`);
-  
+
   const whatsappUrl = `https://wa.me/?text=${shareText}`;
   window.open(whatsappUrl, '_blank');
-  
+
   return { success: true };
 }
 
@@ -89,10 +89,10 @@ export function shareOnLinkedIn(options) {
   const { title, url } = options;
   const shareUrl = url || APP_URL;
   const shareTitle = encodeURIComponent(title || APP_NAME);
-  
+
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${shareTitle}`;
   window.open(linkedinUrl, '_blank', 'width=600,height=400');
-  
+
   return { success: true };
 }
 
@@ -101,10 +101,10 @@ export function shareOnTelegram(options) {
   const { text, url } = options;
   const shareUrl = url || APP_URL;
   const shareText = encodeURIComponent(`${text || '¡Mira esta plataforma gamer increíble!'} ${shareUrl}`);
-  
+
   const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${shareText}`;
   window.open(telegramUrl, '_blank');
-  
+
   return { success: true };
 }
 
@@ -112,7 +112,7 @@ export function shareOnTelegram(options) {
 export async function copyLink(options) {
   const { url } = options;
   const shareUrl = url || APP_URL;
-  
+
   try {
     await navigator.clipboard.writeText(shareUrl);
     return { success: true };
@@ -124,7 +124,7 @@ export async function copyLink(options) {
     textArea.style.left = '-999999px';
     document.body.appendChild(textArea);
     textArea.select();
-    
+
     try {
       document.execCommand('copy');
       document.body.removeChild(textArea);
@@ -140,7 +140,7 @@ export async function copyLink(options) {
 export function generateMissionShareUrl(missionId, missionTitle) {
   const url = `${APP_URL}/misiones.html#mission-${missionId}`;
   const text = `¡Acabo de completar la misión "${missionTitle}" en El Niño! 🎮`;
-  
+
   return { url, text };
 }
 
@@ -148,7 +148,7 @@ export function generateMissionShareUrl(missionId, missionTitle) {
 export function generateBadgeShareUrl(badgeId, badgeName) {
   const url = `${APP_URL}/insignias.html#badge-${badgeId}`;
   const text = `¡Desbloqueé la insignia "${badgeName}" en El Niño! 🏆`;
-  
+
   return { url, text };
 }
 
@@ -156,7 +156,7 @@ export function generateBadgeShareUrl(badgeId, badgeName) {
 export function generateLeaderboardShareUrl(rank, xp) {
   const url = `${APP_URL}/leaderboard.html`;
   const text = `¡Estoy en el puesto #${rank} con ${xp} XP en el leaderboard de El Niño! 🏆`;
-  
+
   return { url, text };
 }
 
@@ -174,8 +174,8 @@ export function getAvailablePlatforms() {
     { id: 'whatsapp', name: 'WhatsApp', available: true },
     { id: 'linkedin', name: 'LinkedIn', available: true },
     { id: 'telegram', name: 'Telegram', available: true },
-    { id: 'copy', name: 'Copiar enlace', available: true }
+    { id: 'copy', name: 'Copiar enlace', available: true },
   ];
-  
+
   return platforms.filter(p => p.available);
 }

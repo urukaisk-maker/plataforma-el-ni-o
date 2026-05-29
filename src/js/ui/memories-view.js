@@ -1,16 +1,16 @@
-import { memories } from "../data/memories.js";
+import { memories } from '../data/memories.js';
 
 function ensureMemoryModal() {
-  let modal = document.querySelector("#memoryModal");
+  let modal = document.querySelector('#memoryModal');
 
   if (modal) {
     return modal;
   }
 
-  modal = document.createElement("div");
-  modal.className = "video-modal memory-modal";
-  modal.id = "memoryModal";
-  modal.setAttribute("aria-hidden", "true");
+  modal = document.createElement('div');
+  modal.className = 'video-modal memory-modal';
+  modal.id = 'memoryModal';
+  modal.setAttribute('aria-hidden', 'true');
   modal.innerHTML = `
     <div class="video-modal__overlay" data-memory-close></div>
     <section class="video-modal__dialog memory-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="memoryModalTitle">
@@ -46,23 +46,23 @@ function ensureMemoryModal() {
 
 function setupMemoryModal(container) {
   const modal = ensureMemoryModal();
-  const title = modal.querySelector("#memoryModalTitle");
-  const type = modal.querySelector("#memoryModalType");
-  const description = modal.querySelector("#memoryModalDescription");
-  const icon = modal.querySelector("#memoryModalIcon");
-  const story = modal.querySelector("#memoryModalStory");
-  const reward = modal.querySelector("#memoryModalReward");
-  const frame = modal.querySelector("#memoryModalFrame");
-  const closeButtons = modal.querySelectorAll("[data-memory-close]");
+  const title = modal.querySelector('#memoryModalTitle');
+  const type = modal.querySelector('#memoryModalType');
+  const description = modal.querySelector('#memoryModalDescription');
+  const icon = modal.querySelector('#memoryModalIcon');
+  const story = modal.querySelector('#memoryModalStory');
+  const reward = modal.querySelector('#memoryModalReward');
+  const frame = modal.querySelector('#memoryModalFrame');
+  const closeButtons = modal.querySelectorAll('[data-memory-close]');
 
   function closeModal() {
-    modal.setAttribute("aria-hidden", "true");
-    frame.removeAttribute("src");
-    document.body.classList.remove("is-video-modal-open");
+    modal.setAttribute('aria-hidden', 'true');
+    frame.removeAttribute('src');
+    document.body.classList.remove('is-video-modal-open');
   }
 
-  container.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-memory-index]");
+  container.addEventListener('click', event => {
+    const button = event.target.closest('[data-memory-index]');
 
     if (!button) {
       return;
@@ -76,17 +76,19 @@ function setupMemoryModal(container) {
     icon.textContent = memory.icon;
     story.textContent = memory.story;
     reward.textContent = memory.reward;
-    frame.src = memory.videoId ? `https://www.youtube-nocookie.com/embed/${memory.videoId}?autoplay=1&rel=0&modestbranding=1` : "";
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("is-video-modal-open");
+    frame.src = memory.videoId
+      ? `https://www.youtube-nocookie.com/embed/${memory.videoId}?autoplay=1&rel=0&modestbranding=1`
+      : '';
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-video-modal-open');
   });
 
-  closeButtons.forEach((button) => {
-    button.addEventListener("click", closeModal);
+  closeButtons.forEach(button => {
+    button.addEventListener('click', closeModal);
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
       closeModal();
     }
   });
@@ -100,16 +102,18 @@ export function renderMemories(container, options = {}) {
   const visibleMemories = memories.slice(0, options.limit ?? memories.length);
 
   container.innerHTML = visibleMemories
-    .map((memory, index) => `
+    .map(
+      (memory, index) => `
       <article class="memory-card">
         <span class="memory-card__icon">${memory.icon}</span>
         <small>${memory.type}</small>
         <h3>${memory.title}</h3>
         <p>${memory.description}</p>
-        <button class="button button--ghost" type="button" data-memory-index="${index}">${memory.videoId ? "Ver video" : "Abrir recuerdo"}</button>
+        <button class="button button--ghost" type="button" data-memory-index="${index}">${memory.videoId ? 'Ver video' : 'Abrir recuerdo'}</button>
       </article>
-    `)
-    .join("");
+    `
+    )
+    .join('');
 
   setupMemoryModal(container);
 }

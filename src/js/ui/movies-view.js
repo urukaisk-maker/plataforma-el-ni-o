@@ -1,4 +1,4 @@
-import { movies } from "../data/movies-data.js";
+import { movies } from '../data/movies-data.js';
 
 export function renderMovies(container) {
   if (!container) return;
@@ -13,7 +13,9 @@ export function renderMovies(container) {
     return;
   }
 
-  container.innerHTML = movies.map((movie) => `
+  container.innerHTML = movies
+    .map(
+      movie => `
     <article class="movie-card" data-movie-id="${movie.id}">
       <button type="button" class="movie-card__link" aria-label="Ver ${movie.title}" onclick="window.openMovieModal('${movie.embed}', '${movie.title}')">
         <div class="movie-card__thumb">
@@ -22,9 +24,11 @@ export function renderMovies(container) {
         </div>
         <div class="movie-card__info">
           <h3 class="movie-card__title">${movie.title}</h3>
-          ${movie.description ? `<p class="movie-card__desc">${movie.description}</p>` : ""}
+          ${movie.description ? `<p class="movie-card__desc">${movie.description}</p>` : ''}
         </div>
       </button>
     </article>
-  `).join("");
+  `
+    )
+    .join('');
 }

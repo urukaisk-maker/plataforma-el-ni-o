@@ -1,11 +1,11 @@
-import { youtubePlaylists } from "../data/youtube-playlist.js";
-import { searchVideos } from "../services/youtube-service.js";
+import { youtubePlaylists } from '../data/youtube-playlist.js';
+import { searchVideos } from '../services/youtube-service.js';
 
-const storageKey = "el-nino-video-state";
-const youtubeApiCacheKey = "el-nino-youtube-api-cache";
+const storageKey = 'el-nino-video-state';
+const youtubeApiCacheKey = 'el-nino-youtube-api-cache';
 
 function getVideoState() {
-  return JSON.parse(localStorage.getItem(storageKey) ?? "{}");
+  return JSON.parse(localStorage.getItem(storageKey) ?? '{}');
 }
 
 function setVideoState(videoId, data) {
@@ -15,7 +15,7 @@ function setVideoState(videoId, data) {
 }
 
 function getYoutubeApiCache() {
-  return JSON.parse(localStorage.getItem(youtubeApiCacheKey) ?? "null");
+  return JSON.parse(localStorage.getItem(youtubeApiCacheKey) ?? 'null');
 }
 
 function setYoutubeApiCache(data) {
@@ -23,41 +23,41 @@ function setYoutubeApiCache(data) {
 }
 
 function isFileProtocol() {
-  return typeof window !== "undefined" && window.location.protocol === "file:";
+  return typeof window !== 'undefined' && window.location.protocol === 'file:';
 }
 
 function getTags(playlistTitle) {
   const title = playlistTitle.toLowerCase();
 
-  if (title.includes("terror") || title.includes("indies")) {
-    return ["#terror", "#indie", "#fnaf"];
+  if (title.includes('terror') || title.includes('indies')) {
+    return ['#terror', '#indie', '#fnaf'];
   }
 
-  if (title.includes("guías")) {
-    return ["#guía", "#gameplay", "#minecraft"];
+  if (title.includes('guías')) {
+    return ['#guía', '#gameplay', '#minecraft'];
   }
 
-  if (title.includes("vistos")) {
-    return ["#minecraft", "#gta", "#gameplay"];
+  if (title.includes('vistos')) {
+    return ['#minecraft', '#gta', '#gameplay'];
   }
 
-  if (title.includes("análisis")) {
-    return ["#lore", "#curiosidades", "#guía"];
+  if (title.includes('análisis')) {
+    return ['#lore', '#curiosidades', '#guía'];
   }
 
-  return ["#gameplay", "#gamer", "#español"];
+  return ['#gameplay', '#gamer', '#español'];
 }
 
 function getDurationType(minutes) {
   if (minutes < 10) {
-    return "short";
+    return 'short';
   }
 
   if (minutes <= 30) {
-    return "medium";
+    return 'medium';
   }
 
-  return "long";
+  return 'long';
 }
 
 function formatDuration(minutes) {
@@ -84,7 +84,10 @@ function formatDate(date) {
 }
 
 function normalizeText(value) {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }
 
 function enrichPlaylists(playlists) {
@@ -102,9 +105,9 @@ function enrichPlaylists(playlists) {
         durationType: getDurationType(durationMinutes),
         views,
         likes,
-        ratio: "96%",
-        language: "Español",
-        publishedAt: new Date(2026, Math.max(0, 5 - playlistIndex), Math.max(1, 24 - videoIndex * 2)).toISOString()
+        ratio: '96%',
+        language: 'Español',
+        publishedAt: new Date(2026, Math.max(0, 5 - playlistIndex), Math.max(1, 24 - videoIndex * 2)).toISOString(),
       };
     });
 
@@ -113,36 +116,42 @@ function enrichPlaylists(playlists) {
 }
 
 function mapApiVideos(items) {
-  return items.map((item, index) => {
-    const videoId = item.id?.videoId;
-    const snippet = item.snippet ?? {};
-    const durationMinutes = 10 + index * 3;
+  return items
+    .map((item, index) => {
+      const videoId = item.id?.videoId;
+      const snippet = item.snippet ?? {};
+      const durationMinutes = 10 + index * 3;
 
-    return {
-      id: videoId,
-      title: snippet.title ?? `Video de YouTube ${index + 1}`,
-      channel: snippet.channelTitle ?? "YouTube",
-      url: `https://www.youtube.com/watch?v=${videoId}`,
-      thumbnail: snippet.thumbnails?.high?.url ?? snippet.thumbnails?.medium?.url ?? snippet.thumbnails?.default?.url ?? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-      tags: ["#youtube", "#api", "#gamer"],
-      durationMinutes,
-      durationType: getDurationType(durationMinutes),
-      views: 1000000 + index * 150000,
-      likes: 45000 + index * 2500,
-      ratio: "API",
-      language: "Español",
-      publishedAt: snippet.publishedAt ?? new Date().toISOString()
-    };
-  }).filter((video) => video.id);
+      return {
+        id: videoId,
+        title: snippet.title ?? `Video de YouTube ${index + 1}`,
+        channel: snippet.channelTitle ?? 'YouTube',
+        url: `https://www.youtube.com/watch?v=${videoId}`,
+        thumbnail:
+          snippet.thumbnails?.high?.url ??
+          snippet.thumbnails?.medium?.url ??
+          snippet.thumbnails?.default?.url ??
+          `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+        tags: ['#youtube', '#api', '#gamer'],
+        durationMinutes,
+        durationType: getDurationType(durationMinutes),
+        views: 1000000 + index * 150000,
+        likes: 45000 + index * 2500,
+        ratio: 'API',
+        language: 'Español',
+        publishedAt: snippet.publishedAt ?? new Date().toISOString(),
+      };
+    })
+    .filter(video => video.id);
 }
 
 async function getYoutubePlaylists() {
-  const localPlaylists = enrichPlaylists(youtubePlaylists.filter((playlist) => playlist.videos.length));
+  const localPlaylists = enrichPlaylists(youtubePlaylists.filter(playlist => playlist.videos.length));
 
   if (isFileProtocol()) {
     return {
       playlists: localPlaylists,
-      source: "local"
+      source: 'local',
     };
   }
 
@@ -155,19 +164,19 @@ async function getYoutubePlaylists() {
 
     return {
       playlists: localPlaylists,
-      source: "local"
+      source: 'local',
     };
   } catch (error) {
     return {
       playlists: localPlaylists,
-      source: "local",
-      error
+      source: 'local',
+      error,
     };
   }
 }
 
 function createTags(tags) {
-  return tags.map((tag) => `<span class="video-tag">${tag}</span>`).join("");
+  return tags.map(tag => `<span class="video-tag">${tag}</span>`).join('');
 }
 
 function createVideoCard(playlist, index) {
@@ -195,9 +204,9 @@ function createVideoCard(playlist, index) {
 
 function createPlaylistItem(video, index, currentIndex) {
   const state = getVideoState()[video.id] ?? {};
-  const activeClass = index === currentIndex ? " video-playlist__item--active" : "";
-  const seenText = state.seen ? " · Visto" : "";
-  const ratingText = state.rating ? ` · ${state.rating}/5` : "";
+  const activeClass = index === currentIndex ? ' video-playlist__item--active' : '';
+  const seenText = state.seen ? ' · Visto' : '';
+  const ratingText = state.rating ? ` · ${state.rating}/5` : '';
 
   return `
     <button class="video-playlist__item${activeClass}" type="button" data-video-index="${index}">
@@ -205,36 +214,49 @@ function createPlaylistItem(video, index, currentIndex) {
       <span>
         <strong>${video.title}</strong>
         <small>${video.channel} · ${formatDuration(video.durationMinutes)}${seenText}${ratingText}</small>
-        <small>${video.tags.join(" ")}</small>
+        <small>${video.tags.join(' ')}</small>
       </span>
     </button>
   `;
 }
 
 function setupVideoPlayer(container, playlists) {
-  const modal = document.querySelector("#videoModal");
-  const frame = document.querySelector("#videoFrame");
-  const title = document.querySelector("#videoModalTitle");
-  const channel = document.querySelector("#videoModalChannel");
-  const playlist = document.querySelector("#videoPlaylist");
-  const counter = document.querySelector("#videoCounter");
-  const previousButton = document.querySelector("#videoPrev");
-  const nextButton = document.querySelector("#videoNext");
-  const similarButton = document.querySelector("#videoSimilar");
-  const closeButtons = document.querySelectorAll("[data-video-close]");
-  const meta = document.querySelector("#videoMeta");
-  const seen = document.querySelector("#videoSeen");
-  const rating = document.querySelector("#videoRating");
-  const comment = document.querySelector("#videoComment");
+  const modal = document.querySelector('#videoModal');
+  const frame = document.querySelector('#videoFrame');
+  const title = document.querySelector('#videoModalTitle');
+  const channel = document.querySelector('#videoModalChannel');
+  const playlist = document.querySelector('#videoPlaylist');
+  const counter = document.querySelector('#videoCounter');
+  const previousButton = document.querySelector('#videoPrev');
+  const nextButton = document.querySelector('#videoNext');
+  const similarButton = document.querySelector('#videoSimilar');
+  const closeButtons = document.querySelectorAll('[data-video-close]');
+  const meta = document.querySelector('#videoMeta');
+  const seen = document.querySelector('#videoSeen');
+  const rating = document.querySelector('#videoRating');
+  const comment = document.querySelector('#videoComment');
   let activeVideos = [];
   let currentIndex = 0;
 
-  if (!modal || !frame || !title || !channel || !playlist || !previousButton || !nextButton || !similarButton || !meta || !seen || !rating || !comment) {
+  if (
+    !modal ||
+    !frame ||
+    !title ||
+    !channel ||
+    !playlist ||
+    !previousButton ||
+    !nextButton ||
+    !similarButton ||
+    !meta ||
+    !seen ||
+    !rating ||
+    !comment
+  ) {
     return;
   }
 
   function renderPlaylist() {
-    playlist.innerHTML = activeVideos.map((video, index) => createPlaylistItem(video, index, currentIndex)).join("");
+    playlist.innerHTML = activeVideos.map((video, index) => createPlaylistItem(video, index, currentIndex)).join('');
     if (counter) {
       counter.textContent = `Video ${currentIndex + 1} de ${activeVideos.length}`;
     }
@@ -245,14 +267,14 @@ function setupVideoPlayer(container, playlists) {
     meta.innerHTML = `
       <span>${formatDuration(video.durationMinutes)}</span>
       <span>${formatViews(video.views)}</span>
-      <span>${video.likes.toLocaleString("es-ES")} likes</span>
+      <span>${video.likes.toLocaleString('es-ES')} likes</span>
       <span>Ratio ${video.ratio}</span>
       <span>${formatDate(video.publishedAt)}</span>
       <span>${video.language}</span>
     `;
     seen.checked = Boolean(state.seen);
-    rating.value = state.rating ?? "";
-    comment.value = state.comment ?? "";
+    rating.value = state.rating ?? '';
+    comment.value = state.comment ?? '';
   }
 
   function playVideo(index) {
@@ -260,7 +282,7 @@ function setupVideoPlayer(container, playlists) {
     const video = activeVideos[currentIndex];
 
     title.textContent = video.title;
-    channel.textContent = `${video.channel} · ${video.tags.join(" ")}`;
+    channel.textContent = `${video.channel} · ${video.tags.join(' ')}`;
     frame.src = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&modestbranding=1`;
     renderPlaylist();
     renderDetails(video);
@@ -270,18 +292,18 @@ function setupVideoPlayer(container, playlists) {
     const selectedPlaylist = playlists[index];
     activeVideos = selectedPlaylist.videos;
     playVideo(0);
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("is-video-modal-open");
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-video-modal-open');
   }
 
   function closePlayer() {
-    modal.setAttribute("aria-hidden", "true");
-    frame.removeAttribute("src");
-    document.body.classList.remove("is-video-modal-open");
+    modal.setAttribute('aria-hidden', 'true');
+    frame.removeAttribute('src');
+    document.body.classList.remove('is-video-modal-open');
   }
 
-  container.onclick = (event) => {
-    const button = event.target.closest(".video-card__button");
+  container.onclick = event => {
+    const button = event.target.closest('.video-card__button');
 
     if (!button) {
       return;
@@ -290,8 +312,8 @@ function setupVideoPlayer(container, playlists) {
     openPlayer(Number(button.dataset.playlistIndex));
   };
 
-  playlist.onclick = (event) => {
-    const button = event.target.closest(".video-playlist__item");
+  playlist.onclick = event => {
+    const button = event.target.closest('.video-playlist__item');
 
     if (!button) {
       return;
@@ -318,20 +340,20 @@ function setupVideoPlayer(container, playlists) {
   nextButton.onclick = () => playVideo(currentIndex + 1);
   similarButton.onclick = () => playVideo(currentIndex + 1);
 
-  closeButtons.forEach((button) => {
+  closeButtons.forEach(button => {
     button.onclick = closePlayer;
   });
 
-  document.onkeydown = (event) => {
-    if (event.key === "Escape") {
+  document.onkeydown = event => {
+    if (event.key === 'Escape') {
       closePlayer();
     }
 
-    if (modal.getAttribute("aria-hidden") === "false" && event.key === "ArrowLeft") {
+    if (modal.getAttribute('aria-hidden') === 'false' && event.key === 'ArrowLeft') {
       playVideo(currentIndex - 1);
     }
 
-    if (modal.getAttribute("aria-hidden") === "false" && event.key === "ArrowRight") {
+    if (modal.getAttribute('aria-hidden') === 'false' && event.key === 'ArrowRight') {
       playVideo(currentIndex + 1);
     }
   };
@@ -340,31 +362,35 @@ function setupVideoPlayer(container, playlists) {
 function filterPlaylists(playlists, search, duration) {
   const normalizedSearch = normalizeText(search.trim());
 
-  return playlists.map((playlist) => {
-    const videos = playlist.videos.filter((video) => {
-      const searchableText = normalizeText(`${playlist.title} ${playlist.description} ${video.title} ${video.channel} ${video.tags.join(" ")}`);
-      const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch);
-      const matchesDuration = duration === "all" || video.durationType === duration;
+  return playlists
+    .map(playlist => {
+      const videos = playlist.videos.filter(video => {
+        const searchableText = normalizeText(
+          `${playlist.title} ${playlist.description} ${video.title} ${video.channel} ${video.tags.join(' ')}`
+        );
+        const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch);
+        const matchesDuration = duration === 'all' || video.durationType === duration;
 
-      return matchesSearch && matchesDuration;
-    });
+        return matchesSearch && matchesDuration;
+      });
 
-    return { ...playlist, videos };
-  }).filter((playlist) => playlist.videos.length);
+      return { ...playlist, videos };
+    })
+    .filter(playlist => playlist.videos.length);
 }
 
 function sortPlaylists(playlists, sort) {
-  return playlists.map((playlist) => {
+  return playlists.map(playlist => {
     const videos = [...playlist.videos].sort((a, b) => {
-      if (sort === "views") {
+      if (sort === 'views') {
         return b.views - a.views;
       }
 
-      if (sort === "longest") {
+      if (sort === 'longest') {
         return b.durationMinutes - a.durationMinutes;
       }
 
-      if (sort === "oldest") {
+      if (sort === 'oldest') {
         return new Date(a.publishedAt) - new Date(b.publishedAt);
       }
 
@@ -382,45 +408,48 @@ export async function renderYoutubeResults(container, statusElement) {
 
   try {
     if (statusElement) {
-      statusElement.textContent = "Preparando lista de reproducción...";
+      statusElement.textContent = 'Preparando lista de reproducción...';
     }
 
-    const search = document.querySelector("#videoSearch");
-    const duration = document.querySelector("#videoDurationFilter");
-    const sort = document.querySelector("#videoSort");
+    const search = document.querySelector('#videoSearch');
+    const duration = document.querySelector('#videoDurationFilter');
+    const sort = document.querySelector('#videoSort');
     const youtubeData = await getYoutubePlaylists();
     const playlists = youtubeData.playlists;
 
     function render() {
-      const filteredPlaylists = sortPlaylists(filterPlaylists(playlists, search?.value ?? "", duration?.value ?? "all"), sort?.value ?? "recent");
+      const filteredPlaylists = sortPlaylists(
+        filterPlaylists(playlists, search?.value ?? '', duration?.value ?? 'all'),
+        sort?.value ?? 'recent'
+      );
 
       if (!filteredPlaylists.length) {
-        container.innerHTML = "";
+        container.innerHTML = '';
 
         if (statusElement) {
-          statusElement.textContent = "No se encontraron videos con esos filtros.";
+          statusElement.textContent = 'No se encontraron videos con esos filtros.';
         }
 
         return;
       }
 
-      container.innerHTML = filteredPlaylists.map(createVideoCard).join("");
+      container.innerHTML = filteredPlaylists.map(createVideoCard).join('');
       setupVideoPlayer(container, filteredPlaylists);
 
       if (statusElement) {
         const totalVideos = filteredPlaylists.reduce((total, playlist) => total + playlist.videos.length, 0);
-        const sourceMessage = "desde las listas guardadas";
+        const sourceMessage = 'desde las listas guardadas';
         statusElement.textContent = `Se cargaron ${filteredPlaylists.length} listas y ${totalVideos} videos ${sourceMessage}.`;
       }
     }
 
-    search?.addEventListener("input", render);
-    duration?.addEventListener("change", render);
-    sort?.addEventListener("change", render);
+    search?.addEventListener('input', render);
+    duration?.addEventListener('change', render);
+    sort?.addEventListener('change', render);
     render();
   } catch (error) {
-    const fallbackPlaylists = enrichPlaylists(youtubePlaylists.filter((playlist) => playlist.videos.length));
-    container.innerHTML = fallbackPlaylists.map(createVideoCard).join("");
+    const fallbackPlaylists = enrichPlaylists(youtubePlaylists.filter(playlist => playlist.videos.length));
+    container.innerHTML = fallbackPlaylists.map(createVideoCard).join('');
     setupVideoPlayer(container, fallbackPlaylists);
 
     if (statusElement) {

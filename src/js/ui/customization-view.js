@@ -1,9 +1,5 @@
 // Vista de personalización - Componentes UI para avatar, temas, misiones personalizadas y tarjetas
-import {
-  AVATAR_OPTIONS,
-  THEMES,
-  CARD_TEMPLATES
-} from "../data/customization.js";
+import { AVATAR_OPTIONS, THEMES, CARD_TEMPLATES } from '../data/customization.js';
 import {
   getAvatar,
   updateAvatarName,
@@ -19,8 +15,8 @@ import {
   completeCustomMission,
   createCustomCard,
   getCustomCards,
-  deleteCustomCard
-} from "../services/customization-service.js";
+  deleteCustomCard,
+} from '../services/customization-service.js';
 
 // ==================== EDITOR DE AVATAR ====================
 
@@ -59,7 +55,9 @@ export function renderAvatarEditor(container) {
         <div class="avatar-option-section">
           <h3 class="avatar-option-section__title">Cara</h3>
           <div class="avatar-option-grid">
-            ${AVATAR_OPTIONS.faces.map(face => `
+            ${AVATAR_OPTIONS.faces
+              .map(
+                face => `
               <button 
                 class="avatar-option-btn ${currentAvatar.face === face.id ? 'avatar-option-btn--selected' : ''}" 
                 data-type="face" 
@@ -68,14 +66,18 @@ export function renderAvatarEditor(container) {
               >
                 ${face.emoji}
               </button>
-            `).join('')}
+            `
+              )
+              .join('')}
           </div>
         </div>
 
         <div class="avatar-option-section">
           <h3 class="avatar-option-section__title">Accesorio</h3>
           <div class="avatar-option-grid">
-            ${AVATAR_OPTIONS.accessories.map(acc => `
+            ${AVATAR_OPTIONS.accessories
+              .map(
+                acc => `
               <button 
                 class="avatar-option-btn ${currentAvatar.accessory === acc.id ? 'avatar-option-btn--selected' : ''}" 
                 data-type="accessory" 
@@ -84,14 +86,18 @@ export function renderAvatarEditor(container) {
               >
                 ${acc.emoji}
               </button>
-            `).join('')}
+            `
+              )
+              .join('')}
           </div>
         </div>
 
         <div class="avatar-option-section">
           <h3 class="avatar-option-section__title">Fondo</h3>
           <div class="avatar-option-grid">
-            ${AVATAR_OPTIONS.backgrounds.map(bg => `
+            ${AVATAR_OPTIONS.backgrounds
+              .map(
+                bg => `
               <button 
                 class="avatar-option-btn avatar-option-btn--color ${currentAvatar.background === bg.id ? 'avatar-option-btn--selected' : ''}" 
                 data-type="background" 
@@ -100,7 +106,9 @@ export function renderAvatarEditor(container) {
                 title="${bg.name}"
               >
               </button>
-            `).join('')}
+            `
+              )
+              .join('')}
           </div>
         </div>
       </div>
@@ -133,11 +141,11 @@ export function renderAvatarEditor(container) {
   const nameInput = container.querySelector('#avatarName');
   const titleInput = container.querySelector('#avatarTitle');
 
-  nameInput?.addEventListener('change', (e) => {
+  nameInput?.addEventListener('change', e => {
     updateAvatarName(e.target.value);
   });
 
-  titleInput?.addEventListener('change', (e) => {
+  titleInput?.addEventListener('change', e => {
     updateAvatarTitle(e.target.value);
   });
 }
@@ -154,7 +162,8 @@ export function renderThemeSelector(container) {
     <div class="theme-selector">
       <h3 class="theme-selector__title">Selecciona un tema</h3>
       <div class="theme-grid">
-        ${THEMES.map(theme => `
+        ${THEMES.map(
+          theme => `
           <button 
             class="theme-card ${currentTheme === theme.id ? 'theme-card--selected' : ''}" 
             data-theme-id="${theme.id}"
@@ -170,7 +179,8 @@ export function renderThemeSelector(container) {
             </div>
             ${currentTheme === theme.id ? '<span class="theme-card__check">✓</span>' : ''}
           </button>
-        `).join('')}
+        `
+        ).join('')}
       </div>
     </div>
   `;
@@ -237,13 +247,17 @@ export function renderMissionCreator(container) {
 
       <div class="mission-creator__list">
         <h3 class="mission-creator__title">Misiones personalizadas</h3>
-        ${customMissions.length === 0 ? `
+        ${
+          customMissions.length === 0
+            ? `
           <p class="mission-creator__empty">No hay misiones personalizadas aún.</p>
-        ` : `
+        `
+            : `
           <div class="custom-missions-list">
             ${customMissions.map(mission => renderCustomMissionItem(mission)).join('')}
           </div>
-        `}
+        `
+        }
       </div>
     </div>
   `;
@@ -255,14 +269,18 @@ export function renderMissionCreator(container) {
     const description = container.querySelector('#missionDescription').value.trim();
     const difficulty = container.querySelector('#missionDifficulty').value;
     const xpReward = parseInt(container.querySelector('#missionXP').value) || 0;
-    const rewards = container.querySelector('#missionRewards').value.split(',').map(r => r.trim()).filter(r => r);
+    const rewards = container
+      .querySelector('#missionRewards')
+      .value.split(',')
+      .map(r => r.trim())
+      .filter(r => r);
 
     const result = createCustomMission({
       title,
       description,
       difficulty,
       xpReward,
-      rewards
+      rewards,
     });
 
     if (result.success) {
@@ -306,7 +324,7 @@ function renderCustomMissionItem(mission) {
     easy: '#7cff6b',
     medium: '#ffd700',
     hard: '#ff6b2b',
-    legendary: '#ff2bd4'
+    legendary: '#ff2bd4',
   };
 
   return `
@@ -320,17 +338,25 @@ function renderCustomMissionItem(mission) {
       </div>
       <h4 class="custom-mission-item__title">${mission.title}</h4>
       <p class="custom-mission-item__description">${mission.description}</p>
-      ${mission.rewards.length > 0 ? `
+      ${
+        mission.rewards.length > 0
+          ? `
         <div class="custom-mission-item__rewards">
           <strong>Recompensas:</strong> ${mission.rewards.join(', ')}
         </div>
-      ` : ''}
+      `
+          : ''
+      }
       <div class="custom-mission-item__actions">
-        ${!mission.completed ? `
+        ${
+          !mission.completed
+            ? `
           <button class="button button--primary custom-mission-item__complete">
             Completar
           </button>
-        ` : ''}
+        `
+            : ''
+        }
         <button class="button button--ghost custom-mission-item__delete">
           Eliminar
         </button>
@@ -366,9 +392,11 @@ export function renderCardDesigner(container) {
           <div class="card-form__field">
             <label for="cardTemplate">Plantilla</label>
             <select id="cardTemplate" class="card-form__select">
-              ${CARD_TEMPLATES.map(template => `
+              ${CARD_TEMPLATES.map(
+                template => `
                 <option value="${template.id}">${template.name} - ${template.description}</option>
-              `).join('')}
+              `
+              ).join('')}
             </select>
           </div>
 
@@ -385,13 +413,17 @@ export function renderCardDesigner(container) {
 
       <div class="card-designer__list">
         <h3 class="card-designer__title">Tarjetas creadas</h3>
-        ${customCards.length === 0 ? `
+        ${
+          customCards.length === 0
+            ? `
           <p class="card-designer__empty">No hay tarjetas creadas aún.</p>
-        ` : `
+        `
+            : `
           <div class="custom-cards-list">
             ${customCards.map(card => renderCustomCardItem(card)).join('')}
           </div>
-        `}
+        `
+        }
       </div>
     </div>
   `;
@@ -408,7 +440,7 @@ export function renderCardDesigner(container) {
       title,
       message,
       templateId,
-      recipient
+      recipient,
     });
 
     if (result.success) {
@@ -485,9 +517,13 @@ export function renderCardPreview(container, cardData) {
     ">
       <h2 class="card-preview__title" style="color: ${style.primaryColor}; margin: 0 0 16px 0;">${cardData.title}</h2>
       <p class="card-preview__message" style="margin: 0 0 16px 0; line-height: 1.6;">${cardData.message}</p>
-      ${cardData.recipient ? `
+      ${
+        cardData.recipient
+          ? `
         <p class="card-preview__recipient" style="margin: 0; opacity: 0.8;">Para: ${cardData.recipient}</p>
-      ` : ''}
+      `
+          : ''
+      }
       <p class="card-preview__date" style="margin: 16px 0 0 0; opacity: 0.6; font-size: 0.85rem;">
         ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
       </p>

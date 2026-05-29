@@ -1,5 +1,10 @@
 // Vista de misiones diarias y semanales - Componentes UI para mostrar y gestionar misiones
-import { getPlayerStats, updateDailyMissionProgress, updateWeeklyMissionProgress, dailyLogin } from "../services/gamification-service.js";
+import {
+  getPlayerStats,
+  updateDailyMissionProgress,
+  updateWeeklyMissionProgress,
+  dailyLogin,
+} from '../services/gamification-service.js';
 
 // Renderizar misiones diarias
 export function renderDailyMissions(container) {
@@ -19,12 +24,17 @@ export function renderDailyMissions(container) {
         </div>
       </div>
       <div class="daily-missions__list">
-        ${dailyMissions.length === 0 ? `
+        ${
+          dailyMissions.length === 0
+            ? `
           <div class="daily-missions__empty">
             <p>Inicia sesión para cargar las misiones diarias</p>
             <button class="button button--primary daily-missions__login" id="dailyLoginBtn">Iniciar Sesión</button>
           </div>
-        ` : dailyMissions.map(mission => `
+        `
+            : dailyMissions
+                .map(
+                  mission => `
           <div class="daily-mission-item ${mission.completed ? 'daily-mission-item--completed' : ''}" data-mission-id="${mission.id}">
             <div class="daily-mission-item__icon">${mission.icon}</div>
             <div class="daily-mission-item__info">
@@ -36,15 +46,22 @@ export function renderDailyMissions(container) {
               ${mission.completed ? '✅' : '⬜'}
             </div>
           </div>
-        `).join('')}
+        `
+                )
+                .join('')
+        }
       </div>
-      ${dailyMissions.length > 0 ? `
+      ${
+        dailyMissions.length > 0
+          ? `
         <div class="daily-missions__progress">
           <span class="daily-missions__completed">${dailyMissions.filter(m => m.completed).length}</span>
           <span class="daily-missions__total">de ${dailyMissions.length}</span>
           <span class="daily-missions__label">completadas</span>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
   `;
 
@@ -75,11 +92,16 @@ export function renderWeeklyMissions(container) {
         </div>
       </div>
       <div class="weekly-missions__list">
-        ${weeklyMissions.length === 0 ? `
+        ${
+          weeklyMissions.length === 0
+            ? `
           <div class="weekly-missions__empty">
             <p>Las misiones semanales se cargarán al iniciar sesión</p>
           </div>
-        ` : weeklyMissions.map(mission => `
+        `
+            : weeklyMissions
+                .map(
+                  mission => `
           <div class="weekly-mission-item ${mission.completed ? 'weekly-mission-item--completed' : ''}" data-mission-id="${mission.id}">
             <div class="weekly-mission-item__icon">${mission.icon}</div>
             <div class="weekly-mission-item__info">
@@ -97,15 +119,22 @@ export function renderWeeklyMissions(container) {
               ${mission.completed ? '✅' : '⬜'}
             </div>
           </div>
-        `).join('')}
+        `
+                )
+                .join('')
+        }
       </div>
-      ${weeklyMissions.length > 0 ? `
+      ${
+        weeklyMissions.length > 0
+          ? `
         <div class="weekly-missions__progress">
           <span class="weekly-missions__completed">${weeklyMissions.filter(m => m.completed).length}</span>
           <span class="weekly-missions__total">de ${weeklyMissions.length}</span>
           <span class="weekly-missions__label">completadas</span>
         </div>
-      ` : ''}
+      `
+          : ''
+      }
     </div>
   `;
 
@@ -133,7 +162,7 @@ export function renderMissionCard(container, mission, type = 'daily') {
   if (!container) return;
 
   const isCompleted = mission.completed;
-  const progress = type === 'weekly' ? `${mission.progress}/${mission.target}` : (isCompleted ? '1/1' : '0/1');
+  const progress = type === 'weekly' ? `${mission.progress}/${mission.target}` : isCompleted ? '1/1' : '0/1';
 
   container.innerHTML = `
     <div class="mission-card ${isCompleted ? 'mission-card--completed' : ''}">
@@ -217,16 +246,16 @@ function startWeeklyTimer() {
     const now = new Date();
     const dayOfWeek = now.getDay();
     const daysUntilMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
-    
+
     const nextMonday = new Date(now);
     nextMonday.setDate(now.getDate() + daysUntilMonday);
     nextMonday.setHours(0, 0, 0, 0);
-    
+
     const diff = nextMonday - now;
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
+
     timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 

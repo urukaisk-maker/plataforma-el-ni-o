@@ -1,6 +1,6 @@
 // Vista de gamificación - Componentes UI para mostrar niveles, XP y progreso
-import { getPlayerStats, getLeaderboard } from "../services/gamification-service.js";
-import { LEVELS, BADGES } from "../data/gamification.js";
+import { getPlayerStats, getLeaderboard } from '../services/gamification-service.js';
+import { LEVELS, BADGES } from '../data/gamification.js';
 
 // Renderizar barra de XP del jugador
 export function renderXPBar(container) {
@@ -8,7 +8,7 @@ export function renderXPBar(container) {
 
   const stats = getPlayerStats();
   const { player, levelInfo, xpToNext } = stats;
-  
+
   // Calcular porcentaje de progreso al siguiente nivel
   const currentLevelXP = levelInfo.xpRequired;
   const nextLevelIndex = LEVELS.findIndex(l => l.level === levelInfo.level) + 1;
@@ -112,7 +112,9 @@ export function renderLeaderboard(container) {
     <div class="leaderboard">
       <h3 class="leaderboard__title">🏆 Leaderboard Familiar</h3>
       <div class="leaderboard__list">
-        ${leaderboard.map((player, index) => `
+        ${leaderboard
+          .map(
+            (player, index) => `
           <div class="leaderboard-item ${index === 0 ? 'leaderboard-item--first' : ''} ${index === 1 ? 'leaderboard-item--second' : ''} ${index === 2 ? 'leaderboard-item--third' : ''}">
             <div class="leaderboard-item__rank">
               ${index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`}
@@ -129,7 +131,9 @@ export function renderLeaderboard(container) {
               <span class="leaderboard-item__badge-count">🏅 ${player.badges.length}</span>
             </div>
           </div>
-        `).join('')}
+        `
+          )
+          .join('')}
       </div>
     </div>
   `;
@@ -146,7 +150,8 @@ export function renderLevelsList(container) {
     <div class="levels-list">
       <h3 class="levels-list__title">📊 Niveles y Recompensas</h3>
       <div class="levels-list__grid">
-        ${LEVELS.map(level => `
+        ${LEVELS.map(
+          level => `
           <div class="level-card ${level.level <= currentLevel ? 'level-card--unlocked' : 'level-card--locked'}" style="border-color: ${level.color}">
             <div class="level-card__header">
               <span class="level-card__number">${level.level}</span>
@@ -159,7 +164,8 @@ export function renderLevelsList(container) {
             </div>
             ${level.level <= currentLevel ? '<div class="level-card__status">✅ Desbloqueado</div>' : '<div class="level-card__status">🔒 Bloqueado</div>'}
           </div>
-        `).join('')}
+        `
+        ).join('')}
       </div>
     </div>
   `;

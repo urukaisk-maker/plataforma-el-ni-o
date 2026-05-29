@@ -39,13 +39,13 @@ const STATIC_ASSETS = [
   './favicon.svg',
   './icon-192.png',
   './icon-512.png',
-  './manifest.json'
+  './manifest.json',
 ];
 
 // Instalación del service worker
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
+    caches.open(STATIC_CACHE).then(cache => {
       return cache.addAll(STATIC_ASSETS);
     })
   );
@@ -53,11 +53,11 @@ self.addEventListener('install', (event) => {
 });
 
 // Activación del service worker
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
+        cacheNames.map(cacheName => {
           if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
             return caches.delete(cacheName);
           }
@@ -69,7 +69,7 @@ self.addEventListener('activate', (event) => {
 });
 
 // Estrategia de caché: Stale-While-Revalidate
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -82,7 +82,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
+    caches.match(request).then(cachedResponse => {
       if (cachedResponse) {
         // Devolver respuesta cachetada y actualizar en segundo plano
         fetchAndCache(request);
@@ -97,45 +97,47 @@ self.addEventListener('fetch', (event) => {
 
 // Función para hacer fetch y cachear
 function fetchAndCache(request) {
-  return fetch(request).then((response) => {
-    // Verificar si la respuesta es válida
-    if (!response || response.status !== 200 || response.type !== 'basic') {
+  return fetch(request)
+    .then(response => {
+      // Verificar si la respuesta es válida
+      if (!response || response.status !== 200 || response.type !== 'basic') {
+        return response;
+      }
+
+      // Clonar la respuesta para poder cachearla
+      const responseToCache = response.clone();
+
+      caches.open(DYNAMIC_CACHE).then(cache => {
+        cache.put(request, responseToCache);
+      });
+
       return response;
-    }
+    })
+    .catch(() => {
+      // Si falla el fetch, intentar servir desde caché estático
+      return caches.match(request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
 
-    // Clonar la respuesta para poder cachearla
-    const responseToCache = response.clone();
+        // Si es una solicitud de página HTML, servir la página offline
+        if (request.headers.get('accept').includes('text/html')) {
+          return caches.match('./index.html');
+        }
 
-    caches.open(DYNAMIC_CACHE).then((cache) => {
-      cache.put(request, responseToCache);
-    });
-
-    return response;
-  }).catch(() => {
-    // Si falla el fetch, intentar servir desde caché estático
-    return caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      // Si es una solicitud de página HTML, servir la página offline
-      if (request.headers.get('accept').includes('text/html')) {
-        return caches.match('./index.html');
-      }
-
-      return new Response('Offline - No hay conexión', {
-        status: 503,
-        statusText: 'Service Unavailable',
-        headers: new Headers({
-          'Content-Type': 'text/plain'
-        })
+        return new Response('Offline - No hay conexión', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: new Headers({
+            'Content-Type': 'text/plain',
+          }),
+        });
       });
     });
-  });
 }
 
 // Sincronización en segundo plano (para cuando se implemente backup en la nube)
-self.addEventListener('sync', (event) => {
+self.addEventListener('sync', event => {
   if (event.tag === 'sync-data') {
     event.waitUntil(syncData());
   }
@@ -148,7 +150,7 @@ async function syncData() {
 }
 
 // Manejo de notificaciones push (placeholder para futura implementación)
-self.addEventListener('push', (event) => {
+self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'Nueva notificación de El Niño',
     icon: './favicon.svg',
@@ -156,19 +158,15 @@ self.addEventListener('push', (event) => {
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
-      primaryKey: 1
-    }
+      primaryKey: 1,
+    },
   };
 
-  event.waitUntil(
-    self.registration.showNotification('El Niño', options)
-  );
+  event.waitUntil(self.registration.showNotification('El Niño', options));
 });
 
 // Manejo de clic en notificación
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow('./index.html')
-  );
+  event.waitUntil(clients.openWindow('./index.html'));
 });

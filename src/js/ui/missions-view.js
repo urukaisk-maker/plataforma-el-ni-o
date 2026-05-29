@@ -1,16 +1,16 @@
-import { missions } from "../data/missions.js";
+import { missions } from '../data/missions.js';
 
 function ensureMissionVideoModal() {
-  let modal = document.querySelector("#missionVideoModal");
+  let modal = document.querySelector('#missionVideoModal');
 
   if (modal) {
     return modal;
   }
 
-  modal = document.createElement("div");
-  modal.className = "video-modal";
-  modal.id = "missionVideoModal";
-  modal.setAttribute("aria-hidden", "true");
+  modal = document.createElement('div');
+  modal.className = 'video-modal';
+  modal.id = 'missionVideoModal';
+  modal.setAttribute('aria-hidden', 'true');
   modal.innerHTML = `
     <div class="video-modal__overlay" data-mission-video-close></div>
     <section class="video-modal__dialog video-modal__dialog--mission" role="dialog" aria-modal="true" aria-labelledby="missionVideoTitle">
@@ -38,20 +38,20 @@ function ensureMissionVideoModal() {
 
 function setupMissionVideos(container) {
   const modal = ensureMissionVideoModal();
-  const frame = modal.querySelector("#missionVideoFrame");
-  const title = modal.querySelector("#missionVideoTitle");
-  const description = modal.querySelector("#missionVideoDescription");
-  const link = modal.querySelector("#missionVideoLink");
-  const closeButtons = modal.querySelectorAll("[data-mission-video-close]");
+  const frame = modal.querySelector('#missionVideoFrame');
+  const title = modal.querySelector('#missionVideoTitle');
+  const description = modal.querySelector('#missionVideoDescription');
+  const link = modal.querySelector('#missionVideoLink');
+  const closeButtons = modal.querySelectorAll('[data-mission-video-close]');
 
   function closeModal() {
-    modal.setAttribute("aria-hidden", "true");
-    frame.removeAttribute("src");
-    document.body.classList.remove("is-video-modal-open");
+    modal.setAttribute('aria-hidden', 'true');
+    frame.removeAttribute('src');
+    document.body.classList.remove('is-video-modal-open');
   }
 
-  container.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-mission-video]");
+  container.addEventListener('click', event => {
+    const button = event.target.closest('[data-mission-video]');
 
     if (!button) {
       return;
@@ -63,16 +63,16 @@ function setupMissionVideos(container) {
     description.textContent = mission.description;
     link.href = mission.href;
     frame.src = `https://www.youtube-nocookie.com/embed/${mission.videoId}?autoplay=1&rel=0&modestbranding=1`;
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("is-video-modal-open");
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-video-modal-open');
   });
 
-  closeButtons.forEach((button) => {
-    button.addEventListener("click", closeModal);
+  closeButtons.forEach(button => {
+    button.addEventListener('click', closeModal);
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
       closeModal();
     }
   });
@@ -84,7 +84,8 @@ export function renderMissions(container) {
   }
 
   container.innerHTML = missions
-    .map((mission, index) => `
+    .map(
+      (mission, index) => `
       <article>
         <h3>${mission.title}</h3>
         <p>${mission.description}</p>
@@ -93,8 +94,9 @@ export function renderMissions(container) {
           <a class="button button--ghost" href="${mission.href}">Ver misión</a>
         </div>
       </article>
-    `)
-    .join("");
+    `
+    )
+    .join('');
 
   setupMissionVideos(container);
 }

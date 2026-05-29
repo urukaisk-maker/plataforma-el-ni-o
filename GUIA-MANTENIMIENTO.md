@@ -22,7 +22,7 @@ src/js/data/youtube-playlist.js
 Cada video usa este formato:
 
 ```js
-createVideo("ID_DEL_VIDEO", "Título del video")
+createVideo('ID_DEL_VIDEO', 'Título del video');
 ```
 
 El ID sale de una URL como esta:

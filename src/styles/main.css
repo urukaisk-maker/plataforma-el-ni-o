@@ -22,7 +22,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   color: var(--text);
   background: #080914;
 }
@@ -90,7 +90,9 @@ a {
   border-radius: 24px;
   background: rgba(8, 9, 20, 0.78);
   backdrop-filter: blur(18px);
-  transition: transform 0.24s ease, opacity 0.24s ease;
+  transition:
+    transform 0.24s ease,
+    opacity 0.24s ease;
 }
 
 .site-header.site-header--hidden {
@@ -111,7 +113,10 @@ a {
   justify-content: center;
   gap: 4px;
   padding: 8px;
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .nav-toggle:hover {
@@ -138,7 +143,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
 }
 
@@ -167,7 +172,9 @@ a {
   border: 1px solid var(--line);
   border-radius: 20px;
   background: rgba(8, 9, 20, 0.96);
-  transition: max-height 0.28s ease, opacity 0.28s ease;
+  transition:
+    max-height 0.28s ease,
+    opacity 0.28s ease;
   opacity: 0;
   width: min(320px, calc(100vw - 40px));
   color: var(--muted);
@@ -237,7 +244,7 @@ a {
 .eyebrow {
   margin: 0 0 14px;
   color: var(--primary);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -248,7 +255,7 @@ h1,
 h2,
 h3 {
   margin: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   line-height: 1.02;
 }
 
@@ -335,7 +342,7 @@ p {
 }
 
 .player-card::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: -2px;
   background: linear-gradient(135deg, rgba(0, 245, 255, 0.25), transparent, rgba(255, 43, 214, 0.25));
@@ -388,7 +395,7 @@ p {
 .stats-grid strong {
   display: block;
   color: var(--primary);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .stats-grid span {
@@ -433,7 +440,7 @@ p {
   padding: 26px;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
 }
 
@@ -532,7 +539,7 @@ p {
 
 .memory-card small {
   color: var(--primary);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 800;
 }
 
@@ -587,7 +594,7 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   letter-spacing: 0.04em;
 }
 
@@ -724,7 +731,9 @@ p {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   list-style: none;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .video-list-group summary:hover {
@@ -745,7 +754,9 @@ p {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--text);
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .video-list-group[open] summary::after {
@@ -820,7 +831,10 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .video-item:hover {
@@ -898,7 +912,7 @@ p {
 }
 
 .youtube-hero::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -925,9 +939,7 @@ p {
   padding: 28px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
-    rgba(8, 9, 20, 0.72);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)), rgba(8, 9, 20, 0.72);
   box-shadow: inset 0 0 34px rgba(0, 245, 255, 0.08);
 }
 
@@ -953,9 +965,9 @@ p {
 }
 
 .youtube-hero__stats span::after {
-  content: "ONLINE";
+  content: 'ONLINE';
   color: var(--accent);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
 }
@@ -983,9 +995,7 @@ p {
   grid-template-columns: minmax(0, 0.7fr) minmax(280px, 1fr);
   align-items: center;
   gap: 28px;
-  background:
-    radial-gradient(circle at bottom right, rgba(255, 43, 214, 0.16), transparent 36%),
-    var(--panel);
+  background: radial-gradient(circle at bottom right, rgba(255, 43, 214, 0.16), transparent 36%), var(--panel);
 }
 
 .video-tools {
@@ -1017,10 +1027,10 @@ p {
   border-radius: 14px;
   padding: 12px 14px;
   color: var(--text);
-  background:
-    linear-gradient(135deg, rgba(0, 245, 255, 0.16), rgba(255, 43, 214, 0.12)),
-    rgba(8, 12, 30, 0.9);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 12px 30px rgba(0, 245, 255, 0.08);
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.16), rgba(255, 43, 214, 0.12)), rgba(8, 12, 30, 0.9);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 12px 30px rgba(0, 245, 255, 0.08);
 }
 
 .video-tools input:focus,
@@ -1029,7 +1039,9 @@ p {
 .video-details textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.18), 0 0 24px rgba(255, 43, 214, 0.18);
+  box-shadow:
+    0 0 0 3px rgba(0, 245, 255, 0.18),
+    0 0 24px rgba(255, 43, 214, 0.18);
 }
 
 .video-tools input::placeholder {
@@ -1051,7 +1063,7 @@ p {
 }
 
 .video-card::after {
-  content: "PLAYLIST";
+  content: 'PLAYLIST';
   position: absolute;
   top: 14px;
   right: 14px;
@@ -1060,7 +1072,7 @@ p {
   border-radius: 999px;
   color: var(--primary);
   background: rgba(8, 9, 20, 0.78);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.66rem;
   letter-spacing: 0.14em;
 }
@@ -1148,7 +1160,10 @@ p {
   font-size: 14px;
   font-weight: 500;
   padding: 0 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .floating-button:hover {
@@ -1180,7 +1195,7 @@ p {
   z-index: -1;
   pointer-events: none;
   background: linear-gradient(135deg, rgba(0, 245, 255, 0.12), rgba(255, 43, 214, 0.08));
-  content: "";
+  content: '';
 }
 
 .site-footer__video-bg {
@@ -1255,7 +1270,9 @@ p {
 
 .site-footer__grid .footer-download:hover {
   color: #071018;
-  box-shadow: 0 0 30px rgba(0, 245, 255, 0.28), 0 0 42px rgba(255, 228, 92, 0.22);
+  box-shadow:
+    0 0 30px rgba(0, 245, 255, 0.28),
+    0 0 42px rgba(255, 228, 92, 0.22);
   transform: translateY(-2px);
 }
 
@@ -1279,7 +1296,7 @@ p {
   background: rgba(0, 0, 0, 0.75);
 }
 
-.modal[aria-hidden="true"] {
+.modal[aria-hidden='true'] {
   display: none;
 }
 
@@ -1343,7 +1360,7 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   letter-spacing: 0.04em;
 }
@@ -1393,7 +1410,7 @@ p {
   padding: 24px;
 }
 
-.video-modal[aria-hidden="false"] {
+.video-modal[aria-hidden='false'] {
   display: grid;
   place-items: center;
 }
@@ -1610,13 +1627,16 @@ body::before {
     linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(circle at center, black, transparent 78%);
-  content: "";
+  content: '';
 }
 
 .site-header {
   background: linear-gradient(135deg, rgba(8, 9, 20, 0.88), rgba(18, 20, 42, 0.74));
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
-  transition: transform 0.24s ease, opacity 0.24s ease, border-color 0.24s ease;
+  transition:
+    transform 0.24s ease,
+    opacity 0.24s ease,
+    border-color 0.24s ease;
 }
 
 .site-header:hover {
@@ -1624,7 +1644,11 @@ body::before {
 }
 
 .button {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .button:hover {
@@ -1643,7 +1667,9 @@ textarea:focus-visible {
 }
 
 .button--primary:hover {
-  box-shadow: 0 0 34px rgba(0, 245, 255, 0.24), 0 0 58px rgba(255, 43, 214, 0.16);
+  box-shadow:
+    0 0 34px rgba(0, 245, 255, 0.24),
+    0 0 58px rgba(255, 43, 214, 0.16);
 }
 
 .button--ghost:hover {
@@ -1652,9 +1678,7 @@ textarea:focus-visible {
 }
 
 .content-panel {
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
-    var(--panel);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)), var(--panel);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
 }
 
@@ -1662,7 +1686,10 @@ textarea:focus-visible {
 .memory-card,
 .video-card,
 .feature-panel {
-  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .cards-grid article:hover,
@@ -1670,14 +1697,14 @@ textarea:focus-visible {
 .video-card:hover,
 .feature-panel:hover {
   border-color: rgba(0, 245, 255, 0.34);
-  box-shadow: 0 0 34px rgba(0, 245, 255, 0.24), 0 0 58px rgba(255, 43, 214, 0.16);
+  box-shadow:
+    0 0 34px rgba(0, 245, 255, 0.24),
+    0 0 58px rgba(255, 43, 214, 0.16);
   transform: translateY(-4px);
 }
 
 .video-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)),
-    var(--panel);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)), var(--panel);
 }
 
 .site-footer {
@@ -1714,7 +1741,7 @@ body::after {
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 4px);
   mix-blend-mode: screen;
   opacity: 0.7;
-  content: "";
+  content: '';
 }
 
 .app-shell {
@@ -1731,7 +1758,7 @@ body::after {
   pointer-events: none;
   filter: blur(36px);
   opacity: 0.34;
-  content: "";
+  content: '';
 }
 
 .app-shell::before {
@@ -1748,10 +1775,10 @@ body::after {
 
 .site-header {
   border-color: rgba(0, 245, 255, 0.2);
-  background:
-    linear-gradient(135deg, rgba(8, 9, 20, 0.9), rgba(20, 24, 56, 0.74)),
-    rgba(8, 9, 20, 0.78);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(8, 9, 20, 0.9), rgba(20, 24, 56, 0.74)), rgba(8, 9, 20, 0.78);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .brand__icon {
@@ -1763,7 +1790,10 @@ body::after {
   position: relative;
   padding: 8px 10px;
   border-radius: 999px;
-  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .main-nav a:hover {
@@ -1792,7 +1822,7 @@ h2 {
   transform: translateX(-120%);
   background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.32), transparent);
   transition: transform 0.45s ease;
-  content: "";
+  content: '';
 }
 
 .button:hover::before {
@@ -1807,9 +1837,7 @@ h2 {
 
 .button--ghost {
   border-color: rgba(0, 245, 255, 0.22);
-  background:
-    linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(255, 43, 214, 0.08)),
-    rgba(255, 255, 255, 0.055);
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(255, 43, 214, 0.08)), rgba(255, 255, 255, 0.055);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
@@ -1826,9 +1854,10 @@ h2 {
   border-color: rgba(0, 245, 255, 0.16);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
-    radial-gradient(circle at top left, rgba(0, 245, 255, 0.1), transparent 38%),
-    var(--panel);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    radial-gradient(circle at top left, rgba(0, 245, 255, 0.1), transparent 38%), var(--panel);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .content-panel::after,
@@ -1843,7 +1872,7 @@ h2 {
   background: linear-gradient(135deg, rgba(0, 245, 255, 0.22), transparent 32%, rgba(255, 43, 214, 0.14));
   opacity: 0;
   transition: opacity 0.22s ease;
-  content: "";
+  content: '';
 }
 
 .content-panel:hover::after,
@@ -1871,9 +1900,7 @@ h2 {
 
 .stats-grid div {
   border: 1px solid rgba(0, 245, 255, 0.14);
-  background:
-    linear-gradient(135deg, rgba(0, 245, 255, 0.09), rgba(255, 43, 214, 0.07)),
-    rgba(255, 255, 255, 0.055);
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.09), rgba(255, 43, 214, 0.07)), rgba(255, 255, 255, 0.055);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
@@ -1886,16 +1913,13 @@ h2 {
   border-color: rgba(255, 228, 92, 0.22);
   background:
     radial-gradient(circle at top left, rgba(255, 228, 92, 0.14), transparent 38%),
-    linear-gradient(135deg, rgba(138, 92, 255, 0.12), rgba(0, 245, 255, 0.08)),
-    var(--panel);
+    linear-gradient(135deg, rgba(138, 92, 255, 0.12), rgba(0, 245, 255, 0.08)), var(--panel);
 }
 
 .memory-card__icon,
 .memory-modal__icon {
   border-color: rgba(255, 228, 92, 0.46);
-  background:
-    linear-gradient(135deg, rgba(255, 228, 92, 0.16), rgba(0, 245, 255, 0.12)),
-    rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(255, 228, 92, 0.16), rgba(0, 245, 255, 0.12)), rgba(255, 255, 255, 0.08);
   box-shadow: var(--gold-glow), var(--pink-glow);
 }
 
@@ -1927,10 +1951,10 @@ h2 {
 
 .site-footer {
   border-color: rgba(255, 228, 92, 0.2);
-  background:
-    linear-gradient(135deg, rgba(8, 9, 20, 0.92), rgba(18, 20, 42, 0.82)),
-    rgba(8, 9, 20, 0.88);
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34), var(--pink-glow);
+  background: linear-gradient(135deg, rgba(8, 9, 20, 0.92), rgba(18, 20, 42, 0.82)), rgba(8, 9, 20, 0.88);
+  box-shadow:
+    0 28px 90px rgba(0, 0, 0, 0.34),
+    var(--pink-glow);
 }
 
 .site-footer__grid .footer-download {
@@ -1947,10 +1971,10 @@ h2 {
 
 .video-modal__dialog {
   border-color: rgba(0, 245, 255, 0.26);
-  background:
-    linear-gradient(135deg, rgba(8, 9, 20, 0.98), rgba(18, 20, 42, 0.96)),
-    #070914;
-  box-shadow: 0 30px 120px rgba(0, 245, 255, 0.22), 0 0 70px rgba(255, 43, 214, 0.16);
+  background: linear-gradient(135deg, rgba(8, 9, 20, 0.98), rgba(18, 20, 42, 0.96)), #070914;
+  box-shadow:
+    0 30px 120px rgba(0, 245, 255, 0.22),
+    0 0 70px rgba(255, 43, 214, 0.16);
 }
 
 @media (max-width: 640px) {
@@ -2005,14 +2029,14 @@ h2 {
 }
 
 .xp-bar-level {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.1rem;
   color: var(--primary);
 }
 
 .xp-bar-xp {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--accent);
 }
@@ -2078,14 +2102,14 @@ h2 {
 }
 
 .player-profile__level {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 4px;
 }
 
 .player-profile__xp {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   color: var(--accent);
   font-size: 1.2rem;
@@ -2113,7 +2137,7 @@ h2 {
 }
 
 .stat-item__value {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.3rem;
   color: var(--primary);
@@ -2146,7 +2170,7 @@ h2 {
 }
 
 .streak-item__value {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.2rem;
   color: var(--secondary);
@@ -2187,7 +2211,7 @@ h2 {
 }
 
 .progress-item__value {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--accent);
   font-size: 0.9rem;
@@ -2220,7 +2244,9 @@ h2 {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .leaderboard-item:hover {
@@ -2244,7 +2270,7 @@ h2 {
 }
 
 .leaderboard-item__rank {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.2rem;
   min-width: 40px;
@@ -2265,13 +2291,13 @@ h2 {
 }
 
 .leaderboard-item__level {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
 }
 
 .leaderboard-item__xp {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   color: var(--accent);
   font-size: 1.1rem;
@@ -2336,7 +2362,7 @@ h2 {
 }
 
 .level-card__number {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 2rem;
 }
@@ -2370,7 +2396,7 @@ h2 {
 }
 
 .level-card__status {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
 }
@@ -2409,7 +2435,9 @@ h2 {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.04);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .badge-card:hover {
@@ -2448,7 +2476,7 @@ h2 {
 }
 
 .badge-card__reward {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--accent);
@@ -2517,7 +2545,7 @@ h2 {
 }
 
 .recent-badge-item__xp {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--accent);
   font-size: 0.9rem;
@@ -2565,7 +2593,7 @@ h2 {
 }
 
 .badges-progress__percent {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--accent);
 }
@@ -2736,7 +2764,7 @@ h2 {
 }
 
 .daily-missions__streak-value {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.2rem;
   color: var(--secondary);
@@ -2807,7 +2835,7 @@ h2 {
 }
 
 .daily-mission-item__reward {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.8rem;
   color: var(--accent);
@@ -2828,7 +2856,7 @@ h2 {
 }
 
 .daily-missions__completed {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--success);
 }
@@ -2869,7 +2897,7 @@ h2 {
 }
 
 .weekly-missions__timer-value {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   color: var(--violet);
 }
@@ -2949,14 +2977,14 @@ h2 {
 }
 
 .weekly-mission-item__progress-text {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.8rem;
   color: var(--accent);
 }
 
 .weekly-mission-item__reward {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.8rem;
   color: var(--accent);
@@ -2977,7 +3005,7 @@ h2 {
 }
 
 .weekly-missions__completed {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--success);
 }
@@ -3041,21 +3069,21 @@ h2 {
 }
 
 .mission-card__progress-text {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--accent);
 }
 
 .mission-card__reward {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--accent);
 }
 
 .mission-card__status {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   font-size: 0.85rem;
   margin-top: 8px;
@@ -3077,7 +3105,9 @@ h2 {
   border-radius: 28px;
   background: rgba(8, 9, 20, 0.95);
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 60px rgba(0, 245, 255, 0.4), 0 0 100px rgba(255, 43, 214, 0.2);
+  box-shadow:
+    0 0 60px rgba(0, 245, 255, 0.4),
+    0 0 100px rgba(255, 43, 214, 0.2);
   animation: notificationPop 0.3s ease;
 }
 
@@ -3110,7 +3140,8 @@ h2 {
 }
 
 @keyframes iconBounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -3145,7 +3176,7 @@ h2 {
 .badge-notification__xp,
 .mission-completed-notification__xp {
   margin: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.2rem;
   color: var(--accent);
@@ -3210,7 +3241,7 @@ h2 {
 
 .xp-notification__message {
   margin: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 900;
   font-size: 1.1rem;
   color: var(--accent);
@@ -3750,7 +3781,9 @@ h2 {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.04);
   overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .photo-card:hover {
@@ -4863,7 +4896,9 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .movie-card:hover {
@@ -4919,7 +4954,9 @@ h2 {
   color: var(--primary);
   font-size: 1.5rem;
   text-shadow: 0 0 8px rgba(0, 245, 255, 0.6);
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .movie-card:hover .movie-card__play {
@@ -4930,11 +4967,11 @@ h2 {
 
 .movie-card__info {
   padding: 18px 20px;
-  background: linear-gradient(180deg, rgba(18,20,42,0.4) 0%, var(--panel) 100%);
+  background: linear-gradient(180deg, rgba(18, 20, 42, 0.4) 0%, var(--panel) 100%);
 }
 
 .movie-card__title {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.05rem;
   font-weight: 800;
   margin: 0 0 10px;
@@ -4964,7 +5001,7 @@ h2 {
   border-radius: 50px;
   background: rgba(0, 245, 255, 0.1);
   color: var(--primary);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
   font-weight: 900;
   letter-spacing: 3px;
@@ -4974,8 +5011,15 @@ h2 {
 }
 
 @keyframes victoryPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); transform: scale(1); }
-  50% { box-shadow: 0 0 40px rgba(0, 245, 255, 0.6); transform: scale(1.03); }
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.6);
+    transform: scale(1.03);
+  }
 }
 
 .epic-stats {
@@ -4995,7 +5039,7 @@ h2 {
 
 .epic-stat__number {
   display: block;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 2.6rem;
   font-weight: 900;
   color: var(--primary);
@@ -5028,7 +5072,9 @@ h2 {
   transition: transform 0.2s ease;
 }
 
-.treasure-chest:hover { transform: scale(1.05); }
+.treasure-chest:hover {
+  transform: scale(1.05);
+}
 
 .treasure-chest__body {
   position: absolute;
@@ -5039,7 +5085,7 @@ h2 {
   background: linear-gradient(135deg, #b8860b, #8b6508);
   border-radius: 0 0 12px 12px;
   border: 3px solid #d4af37;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .treasure-chest__lid {
@@ -5067,7 +5113,7 @@ h2 {
   background: #ffd700;
   border-radius: 50%;
   border: 3px solid #b8860b;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .treasure-chest__glow {
@@ -5077,15 +5123,22 @@ h2 {
   transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
   border-radius: 50%;
   animation: glowPulse 2s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
 }
 
 .treasure-chest.is-open .treasure-chest__lid {
@@ -5097,8 +5150,14 @@ h2 {
 }
 
 @keyframes glowBurst {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3);
+  }
 }
 
 .treasure-reveal {
@@ -5106,8 +5165,14 @@ h2 {
 }
 
 @keyframes revealIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.9); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .treasure-reveal__card {
@@ -5115,7 +5180,7 @@ h2 {
   padding: 32px;
   border: 2px solid var(--primary);
   border-radius: 24px;
-  background: linear-gradient(135deg, rgba(0,245,255,0.08), rgba(255,43,214,0.06));
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(255, 43, 214, 0.06));
   max-width: 480px;
 }
 
@@ -5126,8 +5191,13 @@ h2 {
 }
 
 @keyframes crownBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .treasure-reveal__code {
@@ -5136,7 +5206,7 @@ h2 {
   padding: 10px 20px;
   border: 2px dashed var(--accent);
   border-radius: 12px;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 0.9rem;
   font-weight: 800;
   color: var(--accent);
@@ -5157,8 +5227,13 @@ h2 {
 }
 
 @keyframes goldShimmer {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .diploma-card__inner {
@@ -5174,7 +5249,7 @@ h2 {
 }
 
 .diploma-card__inner h3 {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.3rem;
   color: var(--primary);
   margin-bottom: 8px;
@@ -5187,7 +5262,7 @@ h2 {
 }
 
 .diploma-card__name {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 2rem;
   font-weight: 900;
   color: #ffd700;
@@ -5259,14 +5334,12 @@ h2 {
   padding: 32px;
   border: 2px solid var(--line);
   border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(0, 245, 255, 0.04), rgba(255, 43, 214, 0.04)),
-    var(--panel);
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.04), rgba(255, 43, 214, 0.04)), var(--panel);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
 }
 
 .guestbook__form::before {
-  content: "✍️";
+  content: '✍️';
   display: block;
   text-align: center;
   font-size: 2.5rem;
@@ -5286,27 +5359,30 @@ h2 {
   padding: 14px 18px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   font-family: inherit;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 .guestbook__input:hover {
-  background: rgba(255,255,255,0.09);
+  background: rgba(255, 255, 255, 0.09);
   border-color: rgba(0, 245, 255, 0.3);
 }
 
 .guestbook__input:focus {
   border-color: var(--primary);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 0 4px rgba(0, 245, 255, 0.12);
 }
 
 .guestbook__input::placeholder {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255, 255, 255, 0.3);
   font-style: italic;
 }
 
@@ -5323,7 +5399,10 @@ h2 {
   border-radius: 22px;
   background: var(--panel);
   animation: messageIn 0.5s ease-out;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .guestbook__message:hover {
@@ -5333,7 +5412,7 @@ h2 {
 }
 
 .guestbook__message::before {
-  content: "💬";
+  content: '💬';
   position: absolute;
   top: 16px;
   right: 20px;
@@ -5342,12 +5421,18 @@ h2 {
 }
 
 @keyframes messageIn {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .guestbook__message-name {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 8px;
