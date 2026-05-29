@@ -102,6 +102,14 @@
 
         <section class="section">
           <div class="section-heading">
+            <p class="eyebrow">Historial</p>
+            <h2>Mi actividad reciente</h2>
+          </div>
+          <div id="activityTimelineContainer"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
             <p class="eyebrow">Sistema de niveles</p>
             <h2>Recompensas por nivel</h2>
           </div>
@@ -202,6 +210,7 @@
       import { renderDailyMissions, renderWeeklyMissions } from './src/js/ui/daily-missions-view.js';
       import { renderRecentBadges } from './src/js/ui/badges-view.js';
       import { renderLevelsList } from './src/js/ui/gamification-view.js';
+      import { renderActivityTimeline } from './src/js/ui/activity-view.js';
       import { dailyLogin } from './src/js/services/gamification-service.js';
 
       // Iniciar sesión diario y cargar perfil
@@ -213,6 +222,7 @@
       renderWeeklyMissions(document.getElementById('weeklyMissionsContainer'));
       renderRecentBadges(document.getElementById('recentBadgesContainer'));
       renderLevelsList(document.getElementById('levelsListContainer'));
+      renderActivityTimeline(document.getElementById('activityTimelineContainer'));
     </script>
     <script>
       document.getElementById('scrollToTop').addEventListener('click', () => {
