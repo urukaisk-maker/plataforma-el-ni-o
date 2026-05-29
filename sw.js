@@ -1,16 +1,26 @@
 // Service Worker para PWA - Modo offline y caché
-const CACHE_NAME = 'elnino-pwa-v1';
-const STATIC_CACHE = 'elnino-static-v1';
-const DYNAMIC_CACHE = 'elnino-dynamic-v1';
+const STATIC_CACHE = 'elnino-static-v2';
+const DYNAMIC_CACHE = 'elnino-dynamic-v2';
 
 // Recursos estáticos para cachear
 const STATIC_ASSETS = [
   './',
   './index.html',
   './misiones.html',
+  './mision-01.html',
+  './mision-02.html',
+  './mision-03.html',
   './youtube.html',
+  './peliculas.html',
   './recuerdos.html',
   './sorpresa.html',
+  './final-epico.html',
+  './celebracion.html',
+  './regalo-digital.html',
+  './rincon-gamer.html',
+  './ceremonia-digital.html',
+  './recompensas.html',
+  './premio-sorpresa.html',
   './leaderboard.html',
   './perfil.html',
   './insignias.html',
@@ -20,8 +30,14 @@ const STATIC_ASSETS = [
   './creador-misiones.html',
   './tarjetas.html',
   './proyecto.html',
+  './cookies.html',
+  './privacidad.html',
+  './terminos.html',
   './src/styles/main.css',
+  './src/js/app.js',
   './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
   './manifest.json'
 ];
 
