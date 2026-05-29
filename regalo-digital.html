@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -27,7 +27,7 @@
         const isOwner = localStorage.getItem('elnino_owner') === '1';
         const unlockDate = new Date('2026-06-24T00:00:00').getTime();
         if (!isOwner && Date.now() < unlockDate) {
-          alert('El regalo digital no está disponible hasta el 24/06/2026. Volviendo al inicio.');
+          alert('El Regalo digital no está disponible hasta el 24/06/2026. Volviendo al inicio.');
           location.replace('./index.html');
         }
       } catch (e) {
@@ -48,7 +48,7 @@
         <span></span>
       </button>
 
-      <nav class="main-nav main-nav--scroll" id="mainNav" aria-label="Navegación de regalo digital">
+      <nav class="main-nav main-nav--scroll" id="mainNav" aria-label="Navegación de Regalo digital">
         <a href="./index.html">Inicio</a>
         <a href="#regalo">Regalo</a>
         <a href="#mensaje">Mensaje</a>
@@ -61,8 +61,8 @@
     <main>
       <section class="page-hero gift-hero">
         <p class="eyebrow">Regalo desbloqueado</p>
-        <h1>Abrir Regalo Digital</h1>
-        <p class="hero__description">Has superado la misión final. Este regalo digital guarda un mensaje especial, una recompensa gamer y una aventura que empieza hoy.</p>
+        <h1>Abrir Regalo digital</h1>
+        <p class="hero__description">Has superado la misión final. Este Regalo digital guarda un mensaje especial, una recompensa gamer y una aventura que empieza hoy.</p>
         <div class="hero__actions">
           <a class="button button--primary" href="./index.html">Ir al inicio</a>
           <a class="button button--primary" href="#mensaje">Leer mensaje</a>
@@ -73,7 +73,7 @@
       <section id="regalo" class="section gift-unlock" aria-label="Regalo digital desbloqueado">
         <div class="gift-card">
           <p class="eyebrow">Nivel completado</p>
-          <div class="gift-card__icon">??</div>
+          <div class="gift-card__icon"></div>
           <h2>¡Feliz cumpleaños, campeón!</h2>
           <p>Hoy desbloqueas una recompensa legendaria: una plataforma creada especialmente para ti, llena de cariño, diversión y momentos inolvidables.</p>
           <div class="gift-card__code">CODIGO: EL-NINO-LEVEL-UP</div>
@@ -102,7 +102,7 @@
       <section id="mensaje" class="section content-panel gift-message">
         <p class="eyebrow">Mensaje secreto</p>
         <h2>Para el jugador más importante</h2>
-        <p>Esta aventura digital fue creada para celebrar tu día de una forma única. Cada sección de esta plataforma representa una parte especial de tu cumpleaños: las misiones, los recuerdos, los videos y esta sorpresa final.</p>
+        <p>Esta aventura digital fue creada para celebrar tu día de una forma única. Cada sección de esta plataforma representa una parte especial de tu cumpleaños: las Misiones, los Recuerdos, los videos y esta Sorpresa final.</p>
         <p>Que este nuevo nivel venga cargado de alegría, sueños cumplidos, partidas ganadas, abrazos fuertes y momentos que recuerdes siempre.</p>
         <p class="gift-message__signature">Con mucho cariño, tu familia.</p>
       </section>
@@ -138,7 +138,7 @@
               <li>Puedes cerrar la ventana con la X, pulsando fuera o con la tecla Escape.</li>
               <li>Después puedes saltar a la zona YouTube para seguir explorando contenido.</li>
             </ul>
-            <a class="button button--primary" href="./youtube.html">Abrir zona YouTube</a>
+            <a class="button button--primary" href="./youtube.html">Abrir zona📺 YouTube</a>
           </article>
 
           <article class="content-panel">
@@ -149,7 +149,7 @@
               <li>Regalo 02: recompensa especial.</li>
               <li>Regalo 03: celebración final.</li>
             </ul>
-            <a class="button button--ghost" href="./recuerdos.html">Ver recuerdos antes del cine</a>
+            <a class="button button--ghost" href="./recuerdos.html">Ver Recuerdos antes del cine</a>
           </article>
         </div>
 
@@ -228,7 +228,7 @@
           <article class="content-panel">
             <p class="eyebrow">Canales gamer</p>
             <h3>Willyrex y TheWillyrex</h3>
-            <p>Youtube.com/@Willyrex y Youtube.com/@TheWillyrex</p>
+            <p>Youtube.com/@Willyrex y YouTube.com/@TheWillyrex</p>
             <button class="button button--primary gift-video-button" type="button" data-channel-url="https://www.youtube.com/@Willyrex/videos" data-secondary-channel-url="https://www.youtube.com/@TheWillyrex/videos" data-secondary-channel-title="TheWillyrex" data-video-title="Willyrex y TheWillyrex">Abrir videos</button>
           </article>
 
@@ -252,20 +252,20 @@
         <article class="content-panel">
           <p class="eyebrow">Siguiente misión</p>
           <h2>Explorar la plataforma</h2>
-          <p>Después de abrir el regalo, puedes seguir navegando por las zonas de misiones, recuerdos y YouTube.</p>
-          <a class="button button--primary" href="./misiones.html">Ir a misiones</a>
+          <p>Después de abrir el regalo, puedes seguir navegando por las zonas de Misiones, Recuerdos y YouTube.</p>
+          <a class="button button--primary" href="./misiones.html">Ir a🎯 Misiones</a>
         </article>
         <article class="content-panel">
           <p class="eyebrow">Recuerdo especial</p>
           <h2>Guardar este momento</h2>
-          <p>Esta página puede crecer después con fotos reales, audios familiares, videos privados o nuevas sorpresas desbloqueables.</p>
-          <a class="button button--ghost" href="./recuerdos.html">Ver recuerdos</a>
+          <p>Esta página puede crecer después con fotos reales, audios familiares, videos privados o nuevas Sorpresas desbloqueables.</p>
+          <a class="button button--ghost" href="./recuerdos.html">Ver📸 Recuerdos</a>
         </article>
       </section>
           <section class="section content-panel">
         <p class="eyebrow">Video temático</p>
         <h2>Video sobre el cumpleaños gamer</h2>
-        <p>Disfruta un video inspirado en la temática de El Niño: misiones, sorpresas y celebración gamer.</p>
+        <p>Disfruta un video inspirado en la temática de El Niño: Misiones, Sorpresas y celebración gamer.</p>
         <div class="video-embed" style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:20px;margin-top:16px;">
           <iframe src="https://www.youtube.com/embed/T9IKTEBymuM" title="Video sobre cumpleaños gamer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
         </div>
@@ -274,9 +274,9 @@
 
 
     <div class="floating-buttons">
-      <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app">??</button>
-      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música">??</button>
-      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba">??</button>
+      <button class="floating-button floating-button--install" type="button" id="installPWA" aria-label="Instalar app" title="Instalar app"></button>
+      <button class="floating-button floating-button--music" type="button" id="openMusicApp" aria-label="Abrir app de música" title="App de música"></button>
+      <button class="floating-button" type="button" id="scrollToTop" aria-label="Subir arriba" title="Subir arriba"></button>
     </div>
 
     <footer class="site-footer">
@@ -286,51 +286,44 @@
             <span class="brand__text">El Niño</span>
           </a>
           <p>
-            Plataforma gamer familiar creada para celebrar un cumpleaños con misiones, recuerdos, videos y sorpresas
+            Plataforma gamer familiar creada para celebrar un cumpleaños con Misiones, Recuerdos, videos y Sorpresas
             digitales.
           </p>
         </div>
 
         <div class="site-footer__grid">
           <div>
-            <h3> Explorar</h3>
-            <a href="./misiones.html"> Misiones</a>
-            <a href="./cuentos.html"> Cuentos</a>
-            <a href="./concursos.html"> Concursos</a>
-            <a href="./youtube.html"> YouTube</a>
-            <a href="./peliculas.html"> Películas</a>
-            <a href="./recuerdos.html"> Recuerdos</a>
-            <a href="./sorpresa.html"> Sorpresa</a>
-            <a href="./regalo-digital.html"> Regalo digital</a>
-            <a href="./rincon-gamer.html"> Rincón gamer</a>
+            <h3>🎮 Explorar</h3>
+            <a href="./misiones.html">🎯 Misiones</a>
+            <a href="./cuentos.html">📚 Cuentos</a>
+            <a href="./concursos.html">🏆 Concursos</a>
+            <a href="./youtube.html">📺 YouTube</a>
+            <a href="./peliculas.html">🎬 Películas</a>
+            <a href="./recuerdos.html">📸 Recuerdos</a>
+            <a href="./sorpresa.html">🎁 Sorpresa</a>
+            <a href="./regalo-digital.html">🎉 Regalo digital</a>
+            <a href="./rincon-gamer.html">🕹️ Rincón gamer</a>
           </div>
           <div>
-            <h3> Legal & Proyecto</h3>
-            <a href="./proyecto.html"> Visión general</a>
-            <a href="./panel-privacidad.html"> Panel de privacidad</a>
-            <a href="./privacidad.html"> Privacidad</a>
-            <a href="./terminos.html"> Términos</a>
-            <a href="./cookies.html"> Cookies</a>
-            <a
-              class="footer-download"
-              href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip"
-              download
-              title="Descargar el proyecto con dedicatoria para El Niño"
-            >
-               Descargar proyecto El Niño
-            </a>
+            <h3>📋 Legal & Proyecto</h3>
+            <a href="./proyecto.html">🏗️ Visión general</a>
+            <a href="./panel-privacidad.html">🛡️ Panel de privacidad</a>
+            <a href="./privacidad.html">🔒 Privacidad</a>
+            <a href="./terminos.html">📄 Términos</a>
+            <a href="./cookies.html">🍪 Cookies</a>
+            <a class="footer-download" href="https://github.com/urukaisk-maker/plataforma-el-ni-o/archive/refs/heads/main.zip" download title="Descargar el proyecto con dedicatoria para El Niño">📥 Descargar proyecto El Niño</a>
           </div>
           <div>
-            <h3> Apoya el proyecto</h3>
-            <a href="https://www.buymeacoffee.com/urukais" target="_blank" rel="noopener noreferrer"> Buy Me a Coffee</a>
-            <a href="https://ko-fi.com/urukais" target="_blank" rel="noopener noreferrer"> Ko-fi</a>
-            <a href="./docs/ARQUITECTURA_BACKEND.md"> Arquitectura futura</a>
-            <a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer"> GitHub</a>
+            <h3>☕ Apoya el proyecto</h3>
+            <a href="https://www.buymeacoffee.com/urukais" target="_blank" rel="noopener noreferrer">🍵 Buy Me a Coffee</a>
+            <a href="https://ko-fi.com/urukais" target="_blank" rel="noopener noreferrer">❤️ Ko-fi</a>
+            <a href="./docs/ARQUITECTURA_BACKEND.md">🏛️ Arquitectura futura</a>
+            <a href="https://github.com/urukaisk-maker/plataforma-el-ni-o" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
           </div>
         </div>
 
         <div class="site-footer__bottom">
-          <span class="site-footer__copyright"> 2026 El Niño. Todos los recuerdos reservados.</span>
+          <span class="site-footer__copyright"> 2026 El Niño. Todos los derechos reservados.</span>
           <span><a href="https://silly-boba-dc057e.netlify.app/" target="_blank" rel="noopener noreferrer">Desarrollado por Urukais Klick</a></span>
         </div>
       </footer>
