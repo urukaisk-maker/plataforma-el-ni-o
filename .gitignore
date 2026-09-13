@@ -9,3 +9,4 @@ videos/
 .node/
 package-lock.json
 *.jfif
+src/js/config/env.js

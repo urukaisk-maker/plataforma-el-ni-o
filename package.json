@@ -7,7 +7,9 @@
     "lint": "eslint src/ sw.js",
     "lint:fix": "eslint src/ sw.js --fix",
     "format": "prettier --write '**/*.{js,html,css,json,md}'",
-    "format:check": "prettier --check '**/*.{js,html,css,json,md}'"
+    "format:check": "prettier --check '**/*.{js,html,css,json,md}'",
+    "env": "node scripts/generate-env.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [
     "pwa",
@@ -29,5 +31,8 @@
     "jest-environment-jsdom": "^30.4.1",
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.116.0"
   }
 }
