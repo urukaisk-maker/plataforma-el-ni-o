@@ -205,7 +205,14 @@
       document.getElementById('scrollToTop').addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
       document.getElementById('openMusicApp').addEventListener('click', () => { window.open('./servidor%20Urukais/musica.html', 'musicaUrukais', 'width=1200,height=760,noopener,noreferrer'); });
     </script>
-    <script type="module">
+    <script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+<script type="module">
       import { renderStoryLibrary } from './src/js/ui/story-view.js';
       import { getReadingStats } from './src/js/services/story-engine.js';
       renderStoryLibrary(document.getElementById('storyLibrary'));

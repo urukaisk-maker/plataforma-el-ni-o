@@ -174,7 +174,14 @@
       </footer>
     </div>
 
-    <script type="module" src="./src/js/app.js"></script>
+    <script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+<script type="module" src="./src/js/app.js"></script>
     <script type="module">
       import { renderLeaderboard } from './src/js/ui/gamification-view.js';
       import { dailyLogin } from './src/js/services/gamification-service.js';

@@ -26,7 +26,14 @@
       </main>
     </div>
 
-    <script type="module">
+    <script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+<script type="module">
       import { getContest, startContest, answerQuestion, getCurrentQuestion, getContestResult } from './src/js/services/contest-engine.js';
       import { getRanking } from './src/js/services/contest-engine.js';
       import { playClickSound } from './src/js/utils/audio-feedback.js';

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Test Supabase</title>
+<style>
+body { font-family: sans-serif; background: #0a0a0f; color: #fff; padding: 2rem; }
+#log { background: #1a1a24; padding: 1rem; border-radius: 8px; font-family: monospace; white-space: pre-wrap; }
+.ok { color: #00ff88; }
+.err { color: #ff4466; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+</head>
+<body>
+<h1>Test de conexión a Supabase</h1>
+<div id="log">Cargando...</div>
+
+<script type="module">
+const log = document.getElementById('log');
+const escribir = (txt, clase) => {
+  const linea = document.createElement('div');
+  if (clase) linea.className = clase;
+  linea.textContent = txt;
+  log.appendChild(linea);
+};
+
+log.textContent = '';
+
+try {
+  // Test 1: Import basico
+  escribir('1) Importando supabase-js desde CDN...');
+  const { createClient } = await import('@supabase/supabase-js');
+  escribir('   OK: createClient importado', 'ok');
+  
+  // Test 2: Import de env
+  escribir('');
+  escribir('2) Importando env.js...');
+  const { ENV } = await import('./src/js/config/env.js');
+  escribir('   URL: ' + ENV.SUPABASE_URL, 'ok');
+  escribir('   Key: ' + (ENV.SUPABASE_ANON_KEY ? 'presente' : 'FALTA'), 'ok');
+  
+  // Test 3: Crear cliente
+  escribir('');
+  escribir('3) Creando cliente de Supabase...');
+  const supabase = createClient(ENV.SUPABASE_URL, ENV.SUPABASE_ANON_KEY);
+  escribir('   OK: cliente creado', 'ok');
+  
+  // Test 4: Probar conexion
+  escribir('');
+  escribir('4) Probando lectura de tabla profiles...');
+  const { data, error } = await supabase.from('profiles').select('*').limit(1);
+  if (error) {
+    escribir('   Respuesta: ' + error.message, 'ok');
+    escribir('   (Esto es normal si RLS esta activo)', 'ok');
+  } else {
+    escribir('   OK: tabla accesible (' + (data?.length || 0) + ' filas)', 'ok');
+  }
+  
+  // Test 5: Probar magic link (sin enviar, solo verificar que existe)
+  escribir('');
+  escribir('5) Verificando funcion signInWithOtp...');
+  if (typeof supabase.auth.signInWithOtp === 'function') {
+    escribir('   OK: signInWithOtp disponible', 'ok');
+  } else {
+    escribir('   ERROR: signInWithOtp NO disponible', 'err');
+  }
+  
+  escribir('');
+    // Test 6: Enviar magic link de prueba
+  escribir('');
+  escribir('6) Enviando magic link a urukaisk@gmail.com...');
+  const { error: errOtp } = await supabase.auth.signInWithOtp({
+    email: 'urukaisk@gmail.com',
+    options: { shouldCreateUser: true }
+  });
+  if (errOtp) {
+    escribir('   ERROR: ' + errOtp.message, 'err');
+  } else {
+    escribir('   OK: magic link enviado', 'ok');
+  }
+
+  escribir('=== TODOS LOS TESTS COMPLETADOS ===', 'ok');
+  
+} catch (e) {
+  escribir('ERROR: ' + e.message, 'err');
+  escribir('Stack: ' + (e.stack || '').slice(0, 300), 'err');
+}
+</script>
+</body>
+</html>

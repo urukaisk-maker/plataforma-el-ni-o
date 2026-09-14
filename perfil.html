@@ -22,7 +22,62 @@
     />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="stylesheet" href="./src/styles/main.css" />
-  </head>
+  <style>
+.login-panel {
+  background: linear-gradient(135deg, rgba(0,245,255,0.08), rgba(191,0,255,0.08));
+  border: 1px solid rgba(0,245,255,0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.login-panel h2 {
+  color: var(--primary, #00f5ff);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  margin: 0 0 8px;
+}
+.login-panel p { color: var(--muted, #8899aa); margin: 0 0 16px; font-size: 0.95rem; }
+.login-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; }
+.login-form input[type="email"] {
+  flex: 1;
+  min-width: 240px;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(0,245,255,0.4);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+}
+.login-form input[type="email"]:focus { border-color: var(--primary, #00f5ff); }
+.login-status { margin-top: 12px; font-size: 0.9rem; min-height: 1.2rem; }
+.login-status.ok { color: #00ff88; }
+.login-status.err { color: #ff4466; }
+.login-status.info { color: #00f5ff; }
+.sync-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 600;
+  background: rgba(0,245,255,0.15);
+  color: var(--primary, #00f5ff);
+  border: 1px solid rgba(0,245,255,0.3);
+}
+.sync-badge .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #00ff88; animation: pulseSync 2s ease-in-out infinite;
+}
+.sync-badge.offline .dot { background: #ff8800; }
+.sync-badge.pending .dot { background: #ffdd00; }
+@keyframes pulseSync { 0%,100% { opacity: 1 } 50% { opacity: 0.4 } }
+.logged-in-info {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px; background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.3); border-radius: 10px;
+}
+.logged-in-info .user { color: #00ff88; font-weight: 600; }
+</style>
+</head>
   <body>
     <div class="video-background">
       <iframe
@@ -72,10 +127,29 @@
           </div>
         </section>
 
-        <section class="section">
-          <div class="section-heading">
-            <p class="eyebrow">Estadísticas</p>
-            <h2>Mi progreso</h2>
+<section class="section">
+                <div class="login-panel" id="loginPanel">
+                    <h2>🔐 Conecta tu cuenta</h2>
+                    <p>Guarda tu progreso en la nube y sincroniza entre dispositivos. Sin contraseña: te enviamos un enlace mágico a tu email.</p>
+                    <form class="login-form" id="loginForm" onsubmit="return false;">
+                        <input type="email" id="loginEmail" placeholder="tu@email.com" autocomplete="email" />
+                        <button class="button button--primary" type="button" id="btnMagicLink">📧 Enviar enlace</button>
+                    </form>
+                    <div class="login-status" id="loginStatus"></div>
+                    <div id="loggedInInfo" style="display:none;margin-top:12px;"></div>
+                </div>
+            </section>
+
+                    <section class="section">
+            <div class="section-heading">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%;">
+                    <div>
+                        <p class="eyebrow">Estadísticas</p>
+                        <h2>Mi progreso</h2>
+                    </div>
+                    <div class="sync-badge" id="syncBadge"><span class="dot"></span><span id="syncText">Local</span></div>
+                </div>
+            </div>
           </div>
           <div id="playerProfileContainer"></div>
         </section>
@@ -193,7 +267,14 @@
       </footer>
     </div>
 
-    <script type="module" src="./src/js/app.js"></script>
+    <script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+<script type="module" src="./src/js/app.js"></script>
     <script type="module">
       import { renderPlayerProfile } from './src/js/ui/gamification-view.js';
       import { renderDailyMissions, renderWeeklyMissions } from './src/js/ui/daily-missions-view.js';
@@ -220,7 +301,92 @@
       renderRecentBadges(document.getElementById('recentBadgesContainer'));
       renderLevelsList(document.getElementById('levelsListContainer'));
       renderActivityTimeline(document.getElementById('activityTimelineContainer'));
-    </script>
+    
+// ==========================================
+// UI DE LOGIN CON MAGIC LINK
+// ==========================================
+import { enviarMagicLink, obtenerUsuario, cerrarSesion, onAuthChange } from './src/js/services/auth-service.js';
+import { sincronizarTodo, onSyncChange, getEstadoSync, iniciarAutoSync } from './src/js/services/sync-service.js';
+
+const loginPanel = document.getElementById('loginPanel');
+const loginStatus = document.getElementById('loginStatus');
+const loggedInInfo = document.getElementById('loggedInInfo');
+const syncBadge = document.getElementById('syncBadge');
+const syncText = document.getElementById('syncText');
+
+function mostrarEstado(texto, tipo) {
+  if (!loginStatus) return;
+  loginStatus.textContent = texto;
+  loginStatus.className = 'login-status ' + (tipo || '');
+}
+
+function actualizarBadgeSync(estado) {
+  if (!syncBadge || !syncText) return;
+  syncBadge.classList.remove('offline', 'pending');
+  if (!estado.disponible) {
+    syncText.textContent = 'Local';
+    syncBadge.classList.add('offline');
+  } else if (estado.sincronizando) {
+    syncText.textContent = 'Sincronizando...';
+    syncBadge.classList.add('pending');
+  } else if (estado.ultimaSync) {
+    const fecha = new Date(estado.ultimaSync);
+    const hora = String(fecha.getHours()).padStart(2, '0') + ':' + String(fecha.getMinutes()).padStart(2, '0');
+    syncText.textContent = 'Sincronizado ' + hora;
+  } else {
+    syncText.textContent = 'En linea';
+  }
+}
+
+async function actualizarUIUsuario() {
+  const user = await obtenerUsuario();
+  if (user && user.email) {
+    loginPanel.querySelector('h2').textContent = '✅ Sesion activa';
+    loginPanel.querySelector('p').textContent = 'Tu progreso se esta guardando en la nube.';
+    document.getElementById('loginForm').style.display = 'none';
+    loggedInInfo.style.display = 'block';
+    loggedInInfo.innerHTML = '<div class="logged-in-info"><span class="user">' + user.email + '</span><button class="button button--ghost" type="button" id="btnLogout">Cerrar sesion</button></div>';
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', async () => {
+        await cerrarSesion();
+        location.reload();
+      });
+    }
+    iniciarAutoSync(60000);
+    sincronizarTodo();
+  } else {
+    loginPanel.querySelector('h2').textContent = '🔐 Conecta tu cuenta';
+    document.getElementById('loginForm').style.display = 'flex';
+    loggedInInfo.style.display = 'none';
+  }
+  actualizarBadgeSync(getEstadoSync());
+}
+
+const btnMagicLink = document.getElementById('btnMagicLink');
+if (btnMagicLink) {
+  btnMagicLink.addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email || email.indexOf('@') === -1) {
+      mostrarEstado('Introduce un email valido', 'err');
+      return;
+    }
+    mostrarEstado('Enviando enlace magico...', 'info');
+    const res = await enviarMagicLink(email);
+    if (res.ok) {
+      mostrarEstado('✅ Enlace enviado a ' + email + '. Revisa tu correo (y la carpeta de spam).', 'ok');
+    } else {
+      mostrarEstado('❌ ' + (res.error || 'Error desconocido'), 'err');
+    }
+  });
+}
+
+onAuthChange(() => { actualizarUIUsuario(); });
+onSyncChange((estado) => { actualizarBadgeSync(estado); });
+
+actualizarUIUsuario();
+
+</script>
     <script>
       document.getElementById('scrollToTop').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });

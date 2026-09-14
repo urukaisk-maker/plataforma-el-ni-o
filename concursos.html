@@ -33,7 +33,14 @@
       </footer>
     </div>
 
-    <script type="module">
+    <script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+<script type="module">
       import { getActiveContests, getParticipation, getContestResult } from './src/js/services/contest-engine.js';
 
       const contests = getActiveContests();

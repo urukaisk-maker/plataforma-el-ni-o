@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Test OTP</title>
+<style>
+body { font-family: monospace; background: #0a0a0f; color: #fff; padding: 2rem; }
+.ok { color: #00ff88; }
+.err { color: #ff4466; white-space: pre-wrap; }
+.info { color: #00f5ff; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+</head>
+<body>
+<h1>Test envio magic link</h1>
+<div id="log"></div>
+
+<script type="module">
+const log = document.getElementById('log');
+const escribir = (txt, clase) => {
+  const d = document.createElement('div');
+  if (clase) d.className = clase;
+  d.textContent = txt;
+  log.appendChild(d);
+};
+
+escribir('Cargando...', 'info');
+
+try {
+  const { createClient } = await import('@supabase/supabase-js');
+  const { ENV } = await import('./src/js/config/env.js');
+  const supabase = createClient(ENV.SUPABASE_URL, ENV.SUPABASE_ANON_KEY);
+  
+  escribir('Enviando magic link a urukaisk@gmail.com...', 'info');
+  
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email: 'urukaisk@gmail.com',
+    options: { shouldCreateUser: true }
+  });
+  
+  if (error) {
+    escribir('ERROR: ' + error.message, 'err');
+    escribir('Status: ' + (error.status || 'sin status'), 'err');
+    escribir('Code: ' + (error.code || 'sin code'), 'err');
+    escribir('', '');
+    escribir('Stack: ' + (error.stack || 'sin stack').slice(0, 500), 'err');
+  } else {
+    escribir('OK: magic link enviado', 'ok');
+    escribir('Data: ' + JSON.stringify(data), 'ok');
+  }
+} catch (e) {
+  escribir('ERROR FATAL: ' + e.message, 'err');
+  escribir('Stack: ' + (e.stack || 'sin stack').slice(0, 500), 'err');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Test error stack</title>
+<style>
+body { font-family: monospace; background: #0a0a0f; color: #fff; padding: 2rem; }
+.ok { color: #00ff88; }
+.err { color: #ff4466; white-space: pre-wrap; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.116.0"
+  }
+}
+</script>
+</head>
+<body>
+<h1>Stack trace del error</h1>
+<div id="log"></div>
+
+<script type="module">
+const log = document.getElementById('log');
+try {
+  await import('./src/js/app.js');
+  log.innerHTML = '<div class="ok">✅ app.js carga OK</div>';
+} catch (e) {
+  const div = document.createElement('div');
+  div.className = 'err';
+  div.textContent = 'ERROR: ' + e.message + '\n\nSTACK:\n' + (e.stack || 'sin stack');
+  log.appendChild(div);
+}
+</script>
+</body>
+</html>

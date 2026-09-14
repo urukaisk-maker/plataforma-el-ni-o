@@ -54,11 +54,23 @@ export function saveGamificationData(data) {
 }
 
 // Obtener jugador actual
+// Normaliza un jugador: asegura que tenga todos los campos necesarios
+function normalizarJugador(player) {
+  if (!player) return null;
+  const normalizado = { ...player };
+  if (!Array.isArray(normalizado.dailyMissions)) normalizado.dailyMissions = [];
+  if (!Array.isArray(normalizado.weeklyMissions)) normalizado.weeklyMissions = [];
+  if (!Array.isArray(normalizado.badges)) normalizado.badges = [];
+  if (typeof normalizado.xp !== 'number') normalizado.xp = 0;
+  if (typeof normalizado.level !== 'number') normalizado.level = 1;
+  return normalizado;
+}
+
 export function getCurrentPlayer() {
   const playerId = getItem(CURRENT_PLAYER_KEY, 'elnino');
   const data = getGamificationData();
   const player = data.players.find(p => p.id === playerId);
-  return player ? structuredClone(player) : structuredClone(INITIAL_PLAYER_STATE);
+  return normalizarJugador(player) || structuredClone(INITIAL_PLAYER_STATE);
 }
 
 // Guardar estado del jugador actual
@@ -250,6 +262,7 @@ export function dailyLogin() {
 // Actualizar progreso de misión diaria
 export function updateDailyMissionProgress(missionId, progress) {
   const player = getCurrentPlayer();
+  if (!Array.isArray(player.dailyMissions)) player.dailyMissions = [];
   const mission = player.dailyMissions.find(m => m.id === missionId);
 
   if (mission && !mission.completed) {
@@ -275,6 +288,7 @@ export function updateDailyMissionProgress(missionId, progress) {
 // Actualizar progreso de misión semanal
 export function updateWeeklyMissionProgress(missionId, progress) {
   const player = getCurrentPlayer();
+  if (!Array.isArray(player.weeklyMissions)) player.weeklyMissions = [];
   const mission = player.weeklyMissions.find(m => m.id === missionId);
 
   if (mission && !mission.completed) {
